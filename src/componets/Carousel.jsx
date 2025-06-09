@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause, Eye, Zap, Smartphone, Rocket } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -16,7 +17,8 @@ const BeautifulSlider = () => {
       description: "Experience the future of web design with our cutting-edge solutions. Built for performance, designed for beauty.",
       image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Zap className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "Get Started"
+      buttonText: "Get Started",
+      path: "/shop"
     },
     {
       id: 2,
@@ -25,7 +27,8 @@ const BeautifulSlider = () => {
       description: "Optimized for speed and efficiency. Our slider loads in milliseconds and delivers exceptional user experience.",
       image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Rocket className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "Learn More"
+      buttonText: "Learn More",
+      path: "/shop"
     },
     {
       id: 3,
@@ -34,7 +37,8 @@ const BeautifulSlider = () => {
       description: "Modern aesthetics, smooth animations, and premium effects create an engaging visual experience.",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Eye className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "Explore"
+      buttonText: "Explore",
+      path: "/about"
     },
     {
       id: 4,
@@ -43,9 +47,11 @@ const BeautifulSlider = () => {
       description: "Responsive design ensures perfect display on all devices, from desktop to mobile phones.",
       image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       icon: <Smartphone className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "View Demo"
+      buttonText: "View Demo",
+      path: "/contact"
     }
   ];
+  
 
   // Preload images for faster loading
   useEffect(() => {
@@ -172,8 +178,8 @@ const BeautifulSlider = () => {
                       {slide.description}
                     </p>
                     
-                    <button className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm sm:text-base lg:text-lg border-2 border-white/30 hover:bg-white/30 hover:border-white/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl transform transition-all duration-700 delay-500">
-                      <span className="relative z-10">{slide.buttonText}</span>
+                    <button className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm sm:text-base lg:text-lg border-2 border-white/30 hover:bg-white/30 hover:border-white/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl delay-500 cursor-pointer">
+                      <Link  to={slide.path} className="relative z-10">{slide.buttonText}</Link>
                     </button>
                   </div>
                 </div>
@@ -217,8 +223,8 @@ const BeautifulSlider = () => {
             >
               <div className={`w-full h-full rounded-full transition-all duration-300 ${
                 index === currentSlide
-                  ? 'bg-white shadow-lg'
-                  : 'bg-white/40 hover:bg-white/60'
+                  ? 'bg-[#d2af6f] shadow-lg'
+                  : 'bg-[#8b2727] hover:bg-[#d2af6f]'
               }`}></div>
             </button>
           ))}
@@ -245,9 +251,9 @@ const BeautifulSlider = () => {
         </div>
 
         {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20">
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-[#d2af6f] z-20">
           <div
-            className="h-full bg-white/60 transition-all duration-300"
+            className="h-full bg-[#8b2727] transition-all duration-300"
             style={{
               width: `${((currentSlide + 1) / slides.length) * 100}%`,
             }}

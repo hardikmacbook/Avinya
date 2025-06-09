@@ -133,7 +133,7 @@ const BeautifulSlider = () => {
   if (!firstImageLoaded) {
     return (
       <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-        <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[580px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800">
+        <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[580px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl">
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
             <div className="text-center text-white max-w-4xl mx-auto">

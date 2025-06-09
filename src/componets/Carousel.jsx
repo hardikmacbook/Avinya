@@ -1,168 +1,268 @@
-import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/autoplay';
-import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ChevronLeft, ChevronRight, Play, Pause, Eye, Zap, Smartphone, Rocket } from 'lucide-react';
 
-const Carousel = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const BeautifulSlider = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState({});
+  const intervalRef = useRef(null);
 
-  const slideData = [
+  const slides = [
     {
       id: 1,
-      image: 'https://demo4techies.com/etrend/presta/demo/modules/ps_imageslider/images/sample-1.jpg',
-      title: 'Amazing Product 1',
-      details: 'This is an incredible product with amazing features.',
-      buttonText: 'Shop Now',
-      buttonLink: '/product',
-      color: 'from-blue-500 to-purple-600'
+      title: "Welcome to Innovation",
+      subtitle: "Experience the Future",
+      description: "Experience the future of web design with our cutting-edge solutions. Built for performance, designed for beauty.",
+      image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      icon: <Zap className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
+      buttonText: "Get Started"
     },
     {
       id: 2,
-      image: 'https://demo4techies.com/etrend/presta/demo/modules/ps_imageslider/images/sample-2.jpg',
-      title: 'Amazing Product 2',
-      details: 'Discover our newest collection with stunning designs.',
-      buttonText: 'Learn More',
-      buttonLink: '/product',
-      color: 'from-emerald-500 to-teal-600'
+      title: "Lightning Fast Performance",
+      subtitle: "Optimized for Speed",
+      description: "Optimized for speed and efficiency. Our slider loads in milliseconds and delivers exceptional user experience.",
+      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      icon: <Rocket className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
+      buttonText: "Learn More"
     },
     {
       id: 3,
-      image: 'https://demo4techies.com/etrend/presta/demo/modules/ps_imageslider/images/sample-3.jpg',
-      title: 'Amazing Product 3',
-      details: 'Premium quality that exceeds your expectations.',
-      buttonText: 'View Details',
-      buttonLink: '/products/3',
-      color: 'from-amber-500 to-orange-600'
+      title: "Beautiful Design",
+      subtitle: "Modern & Elegant",
+      description: "Modern aesthetics, smooth animations, and premium effects create an engaging visual experience.",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      icon: <Eye className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
+      buttonText: "Explore"
     },
     {
       id: 4,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
-      title: 'Amazing Product 4',
-      details: 'Exclusive offers available for a limited time.',
-      buttonText: 'Buy Now',
-      buttonLink: '/product',
-      color: 'from-pink-500 to-rose-600'
-    },
-    {
-      id: 5,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
-      title: 'Amazing Product 5',
-      details: 'Join thousands of satisfied customers today.',
-      buttonText: 'Explore',
-      buttonLink: '/product',
-      color: 'from-indigo-500 to-violet-600'
-    },
+      title: "Mobile Optimized",
+      subtitle: "Responsive Design",
+      description: "Responsive design ensures perfect display on all devices, from desktop to mobile phones.",
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      icon: <Smartphone className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
+      buttonText: "View Demo"
+    }
   ];
 
+  // Preload images for faster loading
+  useEffect(() => {
+    const preloadImages = () => {
+      slides.forEach((slide, index) => {
+        const img = new Image();
+        img.onload = () => {
+          setImagesLoaded(prev => ({ ...prev, [index]: true }));
+        };
+        img.src = slide.image;
+      });
+    };
+    
+    preloadImages();
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setTimeout(() => setIsTransitioning(false), 500);
+  }, [slides.length, isTransitioning]);
+
+  const prevSlide = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setTimeout(() => setIsTransitioning(false), 500);
+  }, [slides.length, isTransitioning]);
+
+  const goToSlide = useCallback((index) => {
+    if (isTransitioning || index === currentSlide) return;
+    setIsTransitioning(true);
+    setCurrentSlide(index);
+    setTimeout(() => setIsTransitioning(false), 500);
+  }, [currentSlide, isTransitioning]);
+
+  const toggleAutoplay = useCallback(() => {
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
+
+  // Optimized auto-play
+  useEffect(() => {
+    if (isPlaying) {
+      intervalRef.current = setInterval(nextSlide, 4000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [nextSlide, isPlaying]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === ' ') {
+        e.preventDefault();
+        toggleAutoplay();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [nextSlide, prevSlide, toggleAutoplay]);
+
   return (
-    <div className="carousel-container overflow-hidden relative z-10 px-2">
-      <Swiper
-        effect={'coverflow'}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={'auto'}
-        coverflowEffect={{
-          rotate: 35,
-          stretch: 0,
-          depth: 150,
-          modifier: 1.8,
-          slideShadows: true,
-        }}
-        pagination={{
-          clickable: true,
-          dynamicBullets: true,
-        }}
-        navigation={true}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        loop={true}
-        modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
-        className="mySwiper w-full h-full rounded-2xl"
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+    <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+      <div 
+        className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[580px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl"
+        style={{ willChange: 'transform' }}
       >
-        {slideData.map((slide, index) => (
-          <SwiperSlide key={slide.id} className="swiper-slide-custom">
+        {/* Main Slider Container */}
+        <div className="relative w-full h-full overflow-hidden">
+          {slides.map((slide, index) => (
             <div
-              className={`relative h-full w-full overflow-hidden rounded-3xl transform transition-all duration-500
-                ${activeIndex === index ? 'scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)]' : 'scale-95 opacity-80'}`}
+              key={slide.id}
+              className={`absolute inset-0 transition-transform duration-500 ease-out ${
+                index === currentSlide
+                  ? 'translate-x-0'
+                  : index < currentSlide
+                  ? '-translate-x-full'
+                  : 'translate-x-full'
+              }`}
+              style={{ willChange: 'transform' }}
             >
-              {/* Full-sized image with lazy loading */}
-              <img
-                src={slide.image}
-                alt={slide.title}
-                loading="lazy"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/400x300?text=Image+Not+Found';
-                }}
-              />
-
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70"></div>
-
-              {/* Text content */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-    flex flex-col items-center text-center p-8 md:p-12 lg:p-16">
-                <div className="mb-2">
-                  <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-semibold text-white border border-white/30 mb-4">
-                    Featured
-                  </span>
-                </div>
-
-                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.7)]">
-                  {slide.title}
-                </h3>
-
-                <p className="text-white/90 mb-6 md:mb-8 lg:mb-10 text-sm md:text-base lg:text-lg max-w-[80%] md:max-w-[70%] lg:max-w-[60%] drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-                  {slide.details}
-                </p>
-
-                <a
-                  href={slide.buttonLink}
-                  className={`group relative w-fit px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r ${slide.color} text-white font-semibold 
-                    rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] 
-                    hover:scale-105 transform`}
-                >
-                  <span className="relative z-10 flex items-center justify-center">
-                    {slide.buttonText}
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </span>
-                  <span className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-                </a>
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  style={{
+                    opacity: imagesLoaded[index] ? 1 : 0,
+                    transition: 'opacity 0.3s ease-in-out'
+                  }}
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
               </div>
-
-              {/* Decorative gradient blobs */}
-              <div className={`absolute top-4 right-4 w-20 h-20 rounded-full bg-gradient-to-r ${slide.color} opacity-30 blur-xl`}></div>
-              <div className={`absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-gradient-to-r ${slide.color} opacity-20 blur-xl`}></div>
+              
+              {/* Content */}
+              <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+                <div className="text-center text-white max-w-4xl mx-auto">
+                  <div className="flex flex-col items-center">
+                    <div className="transform transition-all duration-700 delay-100">
+                      {slide.icon}
+                    </div>
+                    
+                    <div className="mb-3 sm:mb-4 transform transition-all duration-700 delay-200">
+                      <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium border border-white/30">
+                        {slide.subtitle}
+                      </span>
+                    </div>
+                    
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 transform transition-all duration-700 delay-300 leading-tight">
+                      {slide.title}
+                    </h2>
+                    
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-white/90 max-w-2xl leading-relaxed transform transition-all duration-700 delay-400 px-4">
+                      {slide.description}
+                    </p>
+                    
+                    <button className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm sm:text-base lg:text-lg border-2 border-white/30 hover:bg-white/30 hover:border-white/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl transform transition-all duration-700 delay-500">
+                      <span className="relative z-10">{slide.buttonText}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          ))}
+        </div>
 
-      {/* Custom pagination indicators */}
-      <div className="flex justify-center mt-8 space-x-2 absolute bottom-8 left-0 right-0 z-20">
-        {slideData.map((_, index) => (
+        {/* Navigation Buttons */}
+        <button
+          onClick={prevSlide}
+          disabled={isTransitioning}
+          className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 group z-20 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <div className="relative p-2 sm:p-3 lg:p-4 bg-white/15 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/25 hover:border-white/40 transition-all duration-300 transform hover:scale-110 shadow-lg">
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </div>
+        </button>
+
+        <button
+          onClick={nextSlide}
+          disabled={isTransitioning}
+          className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 group z-20 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <div className="relative p-2 sm:p-3 lg:p-4 bg-white/15 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/25 hover:border-white/40 transition-all duration-300 transform hover:scale-110 shadow-lg">
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </div>
+        </button>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`relative transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'w-8 sm:w-10 lg:w-12 h-2 sm:h-3' 
+                  : 'w-2 sm:w-3 h-2 sm:h-3 hover:w-3 sm:hover:w-4'
+              }`}
+            >
+              <div className={`w-full h-full rounded-full transition-all duration-300 ${
+                index === currentSlide
+                  ? 'bg-white shadow-lg'
+                  : 'bg-white/40 hover:bg-white/60'
+              }`}></div>
+            </button>
+          ))}
+        </div>
+
+        {/* Controls */}
+        <div className="absolute top-3 sm:top-4 lg:top-6 right-3 sm:right-4 lg:right-6 flex items-center space-x-2 sm:space-x-3 z-20">
+          {/* Slide Counter */}
+          <div className="px-2 py-1 sm:px-3 sm:py-2 lg:px-4 lg:py-2 bg-white/15 backdrop-blur-md rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm">
+            {currentSlide + 1} / {slides.length}
+          </div>
+          
+          {/* Play/Pause Button */}
           <button
-            key={index}
-            className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${activeIndex === index ? 'bg-[#d2af6f] scale-125' : 'bg-[#8b2727]'}`}
-            onClick={() => {
-              const swiper = document.querySelector('.swiper').swiper;
-              swiper.slideToLoop(index);
+            onClick={toggleAutoplay}
+            className="p-2 sm:p-3 bg-white/15 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/25 hover:border-white/40 transition-all duration-300 transform hover:scale-110"
+          >
+            {isPlaying ? (
+              <Pause className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            ) : (
+              <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            )}
+          </button>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20">
+          <div
+            className="h-full bg-white/60 transition-all duration-300"
+            style={{
+              width: `${((currentSlide + 1) / slides.length) * 100}%`,
             }}
-          />
-        ))}
+          ></div>
+        </div>
+
+        {/* Loading State */}
+        {!imagesLoaded[currentSlide] && (
+          <div className="absolute inset-0 bg-gray-900 flex items-center justify-center z-30">
+            <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default Carousel;
+export default BeautifulSlider;

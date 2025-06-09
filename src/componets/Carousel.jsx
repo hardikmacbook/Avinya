@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
-
-// import required modules
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 
 const Carousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Slide data array with image, title, details, and button information
   const slideData = [
     {
       id: 1,
@@ -61,16 +56,6 @@ const Carousel = () => {
       buttonLink: '/product',
       color: 'from-indigo-500 to-violet-600'
     },
-    {
-      id: 5,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
-      title: 'Amazing Product 5',
-      details: 'Join thousands of satisfied customers today.',
-      buttonText: 'Explore',
-      buttonLink: '/product',
-      // color: 'from-indigo-500 to-violet-600'
-      color: 'from-red-700 to-black-600'
-    },
   ];
 
   return (
@@ -104,24 +89,25 @@ const Carousel = () => {
       >
         {slideData.map((slide, index) => (
           <SwiperSlide key={slide.id} className="swiper-slide-custom">
-            <div 
-              className={`relative h-full w-full overflow-hidden rounded-3xl transform transition-all duration-500 
+            <div
+              className={`relative h-full w-full overflow-hidden rounded-3xl transform transition-all duration-500
                 ${activeIndex === index ? 'scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)]' : 'scale-95 opacity-80'}`}
             >
-              {/* Full-sized image */}
-              <img 
-                src={slide.image} 
-                alt={slide.title} 
+              {/* Full-sized image with lazy loading */}
+              <img
+                src={slide.image}
+                alt={slide.title}
+                loading="lazy"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/400x300?text=Image+Not+Found';
                 }}
               />
-              
-              {/* Gradient overlay for better text visibility */}
+
+              {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70"></div>
-              
-              {/* Text content positioned directly on the image */}
+
+              {/* Text content */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
     flex flex-col items-center text-center p-8 md:p-12 lg:p-16">
                 <div className="mb-2">
@@ -129,17 +115,17 @@ const Carousel = () => {
                     Featured
                   </span>
                 </div>
-                
-                <h3 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.7)]`}>
+
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 lg:mb-6 text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.7)]">
                   {slide.title}
                 </h3>
-                
+
                 <p className="text-white/90 mb-6 md:mb-8 lg:mb-10 text-sm md:text-base lg:text-lg max-w-[80%] md:max-w-[70%] lg:max-w-[60%] drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
                   {slide.details}
                 </p>
-                
-                <a 
-                  href={slide.buttonLink} 
+
+                <a
+                  href={slide.buttonLink}
                   className={`group relative w-fit px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r ${slide.color} text-white font-semibold 
                     rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] 
                     hover:scale-105 transform`}
@@ -153,22 +139,25 @@ const Carousel = () => {
                   <span className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
                 </a>
               </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute top-4 right-4 w-20 h-20 rounded-full bg-gradient-to-r ${slide.color} opacity-30 blur-xl"></div>
-              <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-gradient-to-r ${slide.color} opacity-20 blur-xl"></div>
+
+              {/* Decorative gradient blobs */}
+              <div className={`absolute top-4 right-4 w-20 h-20 rounded-full bg-gradient-to-r ${slide.color} opacity-30 blur-xl`}></div>
+              <div className={`absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-gradient-to-r ${slide.color} opacity-20 blur-xl`}></div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
-      
+
       {/* Custom pagination indicators */}
       <div className="flex justify-center mt-8 space-x-2 absolute bottom-8 left-0 right-0 z-20">
         {slideData.map((_, index) => (
-          <button 
-            key={index} 
+          <button
+            key={index}
             className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${activeIndex === index ? 'bg-[#d2af6f] scale-125' : 'bg-[#8b2727]'}`}
-            onClick={() => document.querySelector('.swiper-pagination-bullet:nth-child(' + (index + 1) + ')').click()}
+            onClick={() => {
+              const swiper = document.querySelector('.swiper').swiper;
+              swiper.slideToLoop(index);
+            }}
           />
         ))}
       </div>

@@ -46,10 +46,10 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`fixed top-0 w-full transition-all duration-300 ease-in-out z-[100] ${
+        className={`fixed top-0 w-full transition-all duration-300 ease-in-out z-[100] items-center ${
           isScrolled
-            ? "bg-white/15 backdrop-blur-md shadow-lg border-b border-white/20"
-            : "bg-white shadow-xl"
+            ? "bg-white/15 backdrop-blur-md shadow-lg border-b border-white/30 items-center" 
+            : "bg-white shadow-xl items-center"
         }`}
       >
         <div className="mx-auto max-w-[1200px] w-full px-4 sm:px-6 lg:px-8 relative z-[101]">

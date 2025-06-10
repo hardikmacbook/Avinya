@@ -67,7 +67,7 @@ const Navbar = () => {
               </Link>
 
               {/* Address section - hidden on mobile */}
-              <div className="min-h-[30px]">
+              <div className="hidden lg:block relative z-[102]">
                 <SetAddress />
               </div>
             </div>

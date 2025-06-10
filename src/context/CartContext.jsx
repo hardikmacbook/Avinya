@@ -19,16 +19,17 @@ export const CartProvider = ({ children }) => {
   // Add to cart function
   const addToCart = (product) => {
     const existingItem = cart.find(item => item.id === product.id);
+    const productQuantity = product.quantity || 1; // Use provided quantity or default to 1
     
     let updatedCart;
     if (existingItem) {
-      // If item exists, increase quantity
+      // If item exists, add the new quantity to existing quantity
       updatedCart = cart.map(item => 
-        item.id === product.id ? {...item, quantity: item.quantity + 1} : item
+        item.id === product.id ? {...item, quantity: item.quantity + productQuantity} : item
       );
     } else {
-      // If item doesn't exist, add it with quantity 1
-      updatedCart = [...cart, {...product, quantity: 1}];
+      // If item doesn't exist, add it with the specified quantity
+      updatedCart = [...cart, {...product, quantity: productQuantity}];
     }
     
     setCart(updatedCart);

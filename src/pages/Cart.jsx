@@ -66,14 +66,14 @@ const Cart = () => {
                     <div className="flex items-center border border-gray-200 rounded-lg">
                       <button 
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="px-3 py-1 text-gray-600 hover:text-[#8b2727]"
+                        className="px-3 py-1 text-gray-600 cursor-pointer hover:text-[#8b2727]"
                       >
                         -
                       </button>
                       <span className="px-3 py-1 text-center w-10">{item.quantity}</span>
                       <button 
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="px-3 py-1 text-gray-600 hover:text-[#8b2727]"
+                        className="px-3 py-1 cursor-pointer text-gray-600 hover:text-[#8b2727]"
                       >
                         +
                       </button>
@@ -86,7 +86,7 @@ const Cart = () => {
                     <div className="font-bold text-right">${(item.price * item.quantity).toFixed(2)}</div>
                     <button 
                       onClick={() => removeFromCart(item.id)}
-                      className="text-gray-400 hover:text-[#8b2727] ml-4"
+                      className="text-gray-400 cursor-pointer hover:text-[#8b2727] ml-4"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -102,7 +102,7 @@ const Cart = () => {
               <div className="flex justify-between items-center mb-4">
                 <button 
                   onClick={clearCart}
-                  className="text-[#8b2727] hover:text-[#6a1d1d] font-medium"
+                  className="px-6 py-3 bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-lg cursor-pointer"
                 >
                   Clear Cart
                 </button>
@@ -115,7 +115,7 @@ const Cart = () => {
               <div className="flex flex-col sm:flex-row justify-between gap-4 mt-8">
                 <Link 
                   to="/shop"
-                  className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-xl flex items-center justify-center gap-2 transition-colors"
+                  className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -124,7 +124,7 @@ const Cart = () => {
                 </Link>
                 
                 <button 
-                  className="px-6 py-3 bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-lg"
+                  className="px-6 py-3 bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-lg cursor-pointer"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

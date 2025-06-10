@@ -31,8 +31,8 @@ const Navbar = () => {
       setIsScrolled(scrollTop > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleMenu = () => {
@@ -45,25 +45,29 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`fixed top-0 w-full transition-all duration-300 ease-in-out z-[100] ${
-        isScrolled 
-          ? 'bg-white/15 backdrop-blur-md shadow-lg border-b border-white/20' 
-          : 'bg-white shadow-xl'
-      }`}>
+      <div
+        className={`fixed top-0 w-full transition-all duration-300 ease-in-out z-[100] ${
+          isScrolled
+            ? "bg-white/15 backdrop-blur-md shadow-lg border-b border-white/20"
+            : "bg-white shadow-xl"
+        }`}
+      >
         <div className="mx-auto max-w-[1200px] w-full px-4 sm:px-6 lg:px-8 relative z-[101]">
           <div className="flex items-center justify-between py-3">
             {/* Logo and Address section */}
             <div className="flex items-center gap-4 lg:gap-20">
               <Link to={"/"} onClick={closeMenu}>
-                <img 
-                  className="w-[80px] sm:w-[100px] lg:w-[120px] transition-all duration-300" 
-                  src={AvinyaLogo} 
-                  alt="zaptro logo" 
+                <img
+                  className="w-[80px] sm:w-[100px] lg:w-[120px] h-[40px] sm:h-[50px] lg:h-[60px] object-contain transition-all duration-300"
+                  src={AvinyaLogo}
+                  alt="avinya logo"
+                  width="120"
+                  height="60"
                 />
               </Link>
 
               {/* Address section - hidden on mobile */}
-              <div className="hidden lg:block relative z-[102]">
+              <div className="min-h-[30px]">
                 <SetAddress />
               </div>
             </div>
@@ -89,16 +93,19 @@ const Navbar = () => {
                     </li>
                   ))}
                 </ul>
-                
+
                 <div className="flex items-center gap-2 text-red-900 cursor-pointer relative group">
-                  <Link to={"/cart"} className="transition-transform duration-300 group-hover:scale-110">
+                  <Link
+                    to={"/cart"}
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  >
                     <FaLuggageCart className="text-2xl" />
-                    <span className="text-xml px-2 rounded-full absolute bg-[#8b2727] -top-3 -right-5 text-white min-w-[20px] h-5 flex items-center justify-center transition-all duration-300 group-hover:bg-[#d2af6f] group-hover:text-black">
-                      {cartCount}
+                    <span className="text-xs px-1.5 rounded-full absolute bg-[#8b2727] -top-3 -right-5 text-white min-w-[20px] h-5 flex items-center justify-center transition-all duration-300 group-hover:bg-[#d2af6f] group-hover:text-black">
+                      {cartCount ?? 0}
                     </span>
                   </Link>
                 </div>
-                
+
                 <div className="px-3">
                   <SignedOut>
                     <SignInButton className="p-1 text-xl rounded-md px-3 bg-[#8b2727] text-white cursor-pointer hover:bg-[#d2af6f] hover:text-black transition-all duration-300 transform hover:scale-105" />
@@ -116,10 +123,14 @@ const Navbar = () => {
             <div className="flex items-center gap-4 lg:hidden">
               {/* Cart Icon for Mobile */}
               <div className="flex items-center gap-2 text-[#8b2727] cursor-pointer relative group">
-                <Link to={"/cart"} onClick={closeMenu} className="transition-transform duration-300 group-hover:scale-110">
+                <Link
+                  to={"/cart"}
+                  onClick={closeMenu}
+                  className="transition-transform duration-300 group-hover:scale-110"
+                >
                   <FaLuggageCart className="text-xl sm:text-2xl" />
                   <span className="text-xs px-1.5 rounded-full absolute bg-[#8b2727] -top-2 -right-3 text-white min-w-[18px] h-4 flex items-center justify-center transition-all duration-300 group-hover:text-black group-hover:bg-[#d2af6f]">
-                    0
+                    {cartCount ?? 0}
                   </span>
                 </Link>
               </div>
@@ -143,19 +154,19 @@ const Navbar = () => {
                 aria-label="Toggle menu"
               >
                 <div className="relative w-6 h-6 flex items-center justify-center">
-                  <FaBars 
+                  <FaBars
                     className={`absolute transition-all duration-300 ${
-                      isMenuOpen 
-                        ? 'opacity-0 rotate-180 scale-75' 
-                        : 'opacity-100 rotate-0 scale-100'
-                    }`} 
+                      isMenuOpen
+                        ? "opacity-0 rotate-180 scale-75"
+                        : "opacity-100 rotate-0 scale-100"
+                    }`}
                   />
-                  <FaTimes 
+                  <FaTimes
                     className={`absolute transition-all duration-300 ${
-                      isMenuOpen 
-                        ? 'opacity-100 rotate-0 scale-100' 
-                        : 'opacity-0 rotate-180 scale-75'
-                    }`} 
+                      isMenuOpen
+                        ? "opacity-100 rotate-0 scale-100"
+                        : "opacity-0 rotate-180 scale-75"
+                    }`}
                   />
                 </div>
               </button>
@@ -163,15 +174,21 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu */}
-          <div className={`lg:hidden transition-all duration-500 ease-in-out overflow-hidden ${
-            isMenuOpen 
-              ? 'max-h-[500px] opacity-100 pb-4 transform translate-y-0' 
-              : 'max-h-0 opacity-0 transform -translate-y-4'
-          }`}>
+          <div
+            className={`lg:hidden transition-all duration-500 ease-in-out overflow-hidden ${
+              isMenuOpen
+                ? "max-h-[500px] opacity-100 pb-4 transform translate-y-0"
+                : "max-h-0 opacity-0 transform -translate-y-4"
+            }`}
+          >
             {/* Address section for mobile */}
-            <div className={`py-3 border-t border-gray-200 relative z-[102] transition-all duration-300 delay-100 ${
-              isMenuOpen ? 'transform translate-x-0 opacity-100' : 'transform -translate-x-4 opacity-0'
-            }`}>
+            <div
+              className={`py-3 border-t border-gray-200 relative z-[102] transition-all duration-300 delay-100 ${
+                isMenuOpen
+                  ? "transform translate-x-0 opacity-100"
+                  : "transform -translate-x-4 opacity-0"
+              }`}
+            >
               <SetAddress />
             </div>
 
@@ -179,15 +196,17 @@ const Navbar = () => {
             <nav className="pt-2">
               <ul className="flex flex-col gap-2 font-semibold text-lg capitalize">
                 {navItems.map((item, index) => (
-                  <li 
+                  <li
                     key={index}
                     className={`transition-all duration-300 transform ${
-                      isMenuOpen 
-                        ? 'translate-x-0 opacity-100' 
-                        : '-translate-x-8 opacity-0'
+                      isMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "-translate-x-8 opacity-0"
                     }`}
-                    style={{ 
-                      transitionDelay: isMenuOpen ? `${(index + 2) * 100}ms` : '0ms' 
+                    style={{
+                      transitionDelay: isMenuOpen
+                        ? `${(index + 2) * 100}ms`
+                        : "0ms",
                     }}
                   >
                     <NavLink
@@ -210,7 +229,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Spacer to prevent content from hiding behind fixed navbar */}
       <div className="h-[80px] sm:h-[88px] lg:h-[92px]"></div>
     </>

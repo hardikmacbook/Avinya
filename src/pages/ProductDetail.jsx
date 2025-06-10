@@ -172,9 +172,10 @@ const ProductDetails = () => {
                 
                 <button 
                 onClick={(e) => handleAddToCart(e, product)}
-                className="bg-red-900 hover:bg-black text-white px-6 py-2 rounded-lg transition-colors duration-200">
+                className="cursor-pointer bg-red-900 hover:bg-black text-white px-6 py-2 rounded-lg transition-colors duration-200">
                   Add to Cart
                 </button>
+              
               </div>
               
               <div className="border-t pt-4">

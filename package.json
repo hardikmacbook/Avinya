@@ -19,6 +19,7 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.1",
     "react-swiper": "^0.1.5",
+    "styled-components": "^6.1.18",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.8"
   },

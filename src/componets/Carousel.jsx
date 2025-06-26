@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause, Eye, Zap, Smartphone, Rocket } from 'lucide-react';
+import HeroVideo from '../assets/images/hero-video.mp4'
+
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -8,10 +10,21 @@ const BeautifulSlider = () => {
   const intervalRef = useRef(null);
   const imageCache = useRef(new Map());
 
-  // Optimized image URLs with smaller dimensions and better compression
+  // Add video as the first slide
   const slides = useMemo(() => [
     {
-      id: 1,
+      id: 'video',
+      type: 'video',
+      title: 'AI in Motion',
+      subtitle: 'See the Future',
+      description: 'Watch our AI technology in action with this immersive video experience.',
+      video: HeroVideo, // Replace with your video URL
+      icon: <Zap className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
+      buttonText: 'Discover More',
+      path: '/about',
+    },
+    {
+      id: 2,
       title: "Welcome to Innovation",
       subtitle: "Experience the Future",
       description: "Experience the future of web design with our cutting-edge solutions. Built for performance, designed for beauty.",
@@ -21,7 +34,7 @@ const BeautifulSlider = () => {
       path: "/shop"
     },
     {
-      id: 2,
+      id: 3,
       title: "Lightning Fast Performance",
       subtitle: "Optimized for Speed",
       description: "Optimized for speed and efficiency. Our slider loads in milliseconds and delivers exceptional user experience.",
@@ -31,7 +44,7 @@ const BeautifulSlider = () => {
       path: "/shop"
     },
     {
-      id: 3,
+      id: 4,
       title: "Beautiful Design",
       subtitle: "Modern & Elegant",
       description: "Modern aesthetics, smooth animations, and premium effects create an engaging visual experience.",
@@ -41,7 +54,7 @@ const BeautifulSlider = () => {
       path: "/about"
     },
     {
-      id: 4,
+      id: 5,
       title: "Mobile Optimized",
       subtitle: "Responsive Design",
       description: "Responsive design ensures perfect display on all devices, from desktop to mobile phones.",
@@ -55,26 +68,33 @@ const BeautifulSlider = () => {
   // Aggressive image preloading strategy
   useEffect(() => {
     const preloadFirstImage = () => {
-      const firstImg = new Image();
-      firstImg.onload = () => {
+      // For video, consider it always loaded
+      if (slides[0].type === 'video') {
         setFirstImageLoaded(true);
-        imageCache.current.set(0, firstImg);
-      };
-      // Critical: Load smaller, optimized version first
-      firstImg.src = slides[0].image;
-      
+        imageCache.current.set(0, true);
+      } else {
+        const firstImg = new Image();
+        firstImg.onload = () => {
+          setFirstImageLoaded(true);
+          imageCache.current.set(0, firstImg);
+        };
+        firstImg.src = slides[0].image;
+      }
       // Preload next images immediately but with lower priority
       setTimeout(() => {
         slides.slice(1).forEach((slide, index) => {
-          const img = new Image();
-          img.onload = () => {
-            imageCache.current.set(index + 1, img);
-          };
-          img.src = slide.image;
+          if (slide.type === 'video') {
+            imageCache.current.set(index + 1, true);
+          } else {
+            const img = new Image();
+            img.onload = () => {
+              imageCache.current.set(index + 1, img);
+            };
+            img.src = slide.image;
+          }
         });
       }, 100);
     };
-
     preloadFirstImage();
   }, [slides]);
 
@@ -97,16 +117,16 @@ const BeautifulSlider = () => {
   }, []);
 
   // Optimized auto-play
-  useEffect(() => {
-    if (isPlaying && firstImageLoaded) {
-      intervalRef.current = setInterval(nextSlide, 4000);
-    }
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [nextSlide, isPlaying, firstImageLoaded]);
+  // useEffect(() => {
+  //   if (isPlaying && firstImageLoaded) {
+  //     intervalRef.current = setInterval(nextSlide, 4000);
+  //   }
+  //   return () => {
+  //     if (intervalRef.current) {
+  //       clearInterval(intervalRef.current);
+  //     }
+  //   };
+  // }, [nextSlide, isPlaying, firstImageLoaded]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -164,17 +184,29 @@ const BeautifulSlider = () => {
         
         {/* Single optimized slide container */}
         <div className="relative w-full h-full">
-          {/* Background Image with instant switching */}
+          {/* Background Media with instant switching */}
           <div className="absolute inset-0">
-            <img
-              src={slides[currentSlide].image}
-              alt={slides[currentSlide].title}
-              className="w-full h-full object-cover transition-opacity duration-200"
-              style={{
-                opacity: imageCache.current.has(currentSlide) ? 1 : 0.8,
-                transform: 'translateZ(0)' // Hardware acceleration
-              }}
-            />
+            {slides[currentSlide].type === 'video' ? (
+              <video
+                src={slides[currentSlide].video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+                style={{objectFit:'cover'}}
+              />
+            ) : (
+              <img
+                src={slides[currentSlide].image}
+                alt={slides[currentSlide].title}
+                className="w-full h-full object-cover transition-opacity duration-200"
+                style={{
+                  opacity: imageCache.current.has(currentSlide) ? 1 : 0.8,
+                  transform: 'translateZ(0)' // Hardware acceleration
+                }}
+              />
+            )}
             {/* Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
           </div>
@@ -258,7 +290,6 @@ const BeautifulSlider = () => {
           <div className="px-2 py-1 sm:px-3 sm:py-2 lg:px-4 lg:py-2 bg-white/15 backdrop-blur-md rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm">
             {currentSlide + 1} / {slides.length}
           </div>
-          
           {/* Play/Pause Button */}
           <button
             onClick={toggleAutoplay}

@@ -5,10 +5,13 @@ import { useCart } from "./CartContext";
 const ProductCard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false); // added
+
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products?limit=100")
+    fetch("https://dummyjson.com/produs?limit=100")
+    //  fetch("https://dummyjson.com/products?limit=100")
       .then(response => response.json())
       .then(data => {
         setData(data.products);
@@ -16,19 +19,18 @@ const ProductCard = () => {
       })
       .catch(error => {
         console.error('Error fetching products:', error);
+        setError(true); // added
         setLoading(false);
       });
   }, []);
 
-  // Function to create URL-friendly slugs from product titles
   const createSlug = (title) => {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   };
 
-  // Add to cart function
   const handleAddToCart = (e, product) => {
-    e.preventDefault(); // Prevent navigation when clicking the button
-    e.stopPropagation(); // Stop event bubbling
+    e.preventDefault();
+    e.stopPropagation();
     addToCart(product);
   };
 
@@ -36,6 +38,14 @@ const ProductCard = () => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-lg text-gray-600">Loading products...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg text-[#8b2727]">Working on products...</div>
       </div>
     );
   }

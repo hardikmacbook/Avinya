@@ -15,13 +15,7 @@ const BeautifulSlider = () => {
     {
       id: 'video',
       type: 'video',
-      title: 'AI in Motion',
-      subtitle: 'See the Future',
-      description: 'Watch our AI technology in action with this immersive video experience.',
       video: HeroVideo, // Replace with your video URL
-      icon: <Zap className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: 'Discover More',
-      path: '/about',
     },
     {
       id: 2,
@@ -215,27 +209,27 @@ const BeautifulSlider = () => {
           <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
             <div className="text-center text-white max-w-4xl mx-auto">
               <div className="flex flex-col items-center">
-                <div className="mb-4 sm:mb-6 transition-all duration-200">
-                  {slides[currentSlide].icon}
-                </div>
-                
-                <div className="mb-3 sm:mb-4 transition-all duration-200">
-                  <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium border border-white/30">
-                    {slides[currentSlide].subtitle}
-                  </span>
-                </div>
-                
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight transition-all duration-200">
-                  {slides[currentSlide].title}
-                </h2>
-                
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-white/90 max-w-2xl leading-relaxed px-4 transition-all duration-200">
-                  {slides[currentSlide].description}
-                </p>
-                
-                <button className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm sm:text-base lg:text-lg border-2 border-white/30 hover:bg-white/30 hover:border-white/50 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
-                  <span className="relative z-10">{slides[currentSlide].buttonText}</span>
-                </button>
+                {slides[currentSlide].type !== 'video' && (
+                  <>
+                    <div className="mb-4 sm:mb-6 transition-all duration-200">
+                      {slides[currentSlide].icon}
+                    </div>
+                    <div className="mb-3 sm:mb-4 transition-all duration-200">
+                      <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium border border-white/30">
+                        {slides[currentSlide].subtitle}
+                      </span>
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight transition-all duration-200">
+                      {slides[currentSlide].title}
+                    </h2>
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-white/90 max-w-2xl leading-relaxed px-4 transition-all duration-200">
+                      {slides[currentSlide].description}
+                    </p>
+                    <button className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm sm:text-base lg:text-lg border-2 border-white/30 hover:bg-white/30 hover:border-white/50 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+                      <span className="relative z-10">{slides[currentSlide].buttonText}</span>
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

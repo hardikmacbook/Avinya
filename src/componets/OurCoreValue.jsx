@@ -136,7 +136,7 @@ const FlipCards = () => {
                       inset 0 1px 0 rgba(255, 255, 255, 1),
                       inset 0 -1px 0 rgba(0, 0, 0, 0.05)
                     `,
-                    borderColor: '#d2af6f',
+                    borderColor: '#8b2727',
                     borderOpacity: 0.2
                   }}
                 >

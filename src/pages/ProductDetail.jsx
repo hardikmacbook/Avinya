@@ -177,7 +177,7 @@ const ProductDetails = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 backdrop-blur-sm bg-white/90">
+        <div className=" rounded-xl shadow-lg p-6 md:p-8 backdrop-blur-sm bg-white/90">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Product Images Section */}
             <div className="md:w-1/2">

@@ -1,137 +1,128 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const cardData = [
-  { number: '3+', label: 'Years of experience' },
-  { number: '1000+', label: 'Our Products' },
-  { number: '50+', label: 'Our Happy Customers' },
-  { number: '1+', label: 'xyz' },
-];
+const Card = () => {
+  const statusData = [
+    { id: 1, count: "3+", label: 'Years of experience ' },
+    { id: 2, count: "500+", label: 'Products' },
+    { id: 3, count: "75+", label: 'Our Happy Customers' },
+    { id: 4, count: "1+", label: 'demo' }
+  ];
 
-const Card = ({ number, label }) => {
   return (
     <StyledWrapper>
-      <div className="outer">
-        <div className="dot" />
-        <div className="card">
-          <div className="ray" />
-          <div className="text">{number}</div>
-          <div>{label}</div>
-          <div className="line topl" />
-          <div className="line leftl" />
-          <div className="line bottoml" />
-          <div className="line rightl" />
-        </div>
+      <div className="status-container">
+        {statusData.map((item) => (
+          <div key={item.id} className="status">
+            <div className="mac-header">
+              <span className="brown" />
+              <span className="yellow" />
+              <span className="brown" />
+            </div>
+            <span>{item.count}</span>
+            <p>{item.label}</p>
+          </div>
+        ))}
       </div>
     </StyledWrapper>
   );
-};
+}
 
 const StyledWrapper = styled.div`
-  .outer {
-    width: 275px;
-    height: 250px;
-    border-radius: 10px;
-    padding: 1px;
-    background: radial-gradient(circle 230px at 0% 0%, #ffffff, #0c0d0d);
-    position: relative;
-    margin: 10px;
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top:100px;
+
+  .status-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-  }
-
-  .dot {
-    width: 7px;
-    aspect-ratio: 1;
-    position: absolute;
-    background-color: #8b2727;
-    box-shadow: 0 0 10px #ffffff;
-    border-radius: 100px;
-    z-index: 2;
-    right: 20%;
-    top: 20%;
-    animation: moveDot 6s linear infinite;
-  }
-
-  @keyframes moveDot {
-    0%,
-    100% {
-      top: 10%;
-      right: 10%;
-    }
-    25% {
-      top: 10%;
-      right: calc(100% - 35px);
-    }
-    50% {
-      top: calc(100% - 30px);
-      right: calc(100% - 35px);
-    }
-    75% {
-      top: calc(100% - 30px);
-      right: 10%;
-    }
-  }
-
-  .card {
-    z-index: 1;
-    width: 275px;
-    height: 100%;
-    border-radius: 9px;
-    border: solid 1px #202222;
-    background-size: 20px 20px;
-    background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-direction: column;
-    color: #d2af6f;
-  }
-
-  .card .text {
-    font-weight: bolder;
-    font-size: 2rem;
-    background: linear-gradient(45deg, #000000 4%, #d2af6f, #000);
-    background-clip: text;
-    color: transparent;
-  }
-
-  .line {
+    flex-wrap: wrap;
+    gap: 30px;
     width: 100%;
-    height: 1px;
-    position: absolute;
+  }
+
+  .status {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #222533;
+    color: #fbebe2;
+    padding: 24px;
+    width: 250px;
+    height: 220px;
+    border-radius: 26px;
+    margin: 10px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    transition: all 0.3s ease-in-out;
+    border: transparent 1px solid;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .status span {
+    font-size: 3.5rem;
+    font-weight: 900;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .status p {
+    font-size: 12px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .status:hover {
+    background-color: #1d1d1d;
+    transform: scale(1.1);
+    border: #5e63ff 1px solid;
+  }
+
+  .status:hover p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #b1cbf6;
+  }
+
+  .status:hover span {
+    font-size: 4rem;
+    color: #5e63ff;
+  }
+
+  .mac-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+  }
+
+  .mac-header span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .mac-header .brown {
+    background-color: #8b2727;
+  }
+
+  .mac-header .yellow {
     background-color: #d2af6f;
   }
-  .topl {
-    top: 10%;
-    background: linear-gradient(90deg, #888888 30%, #d2af6f 70%);
-  }
-  .bottoml {
-    bottom: 10%;
-  }
-  .leftl {
-    left: 10%;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(180deg, #747474 30%, #d2af6f 70%);
-  }
-  .rightl {
-    right: 10%;
-    width: 1px;
-    height: 100%;
+
+  @media (max-width: 768px) {
+    .status-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
   }
 `;
 
-const App = () => {
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {cardData.map((item, index) => (
-        <Card key={index} number={item.number} label={item.label} />
-      ))}
-    </div>
-  );
-};
-
-export default App;
+export default Card;

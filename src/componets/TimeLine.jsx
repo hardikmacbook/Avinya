@@ -4,36 +4,36 @@ import { Zap, Rocket, Cpu, Shield, Users } from 'lucide-react';
 const milestones = [
   {
     year: '1998',
-    title: 'Founded',
-    description: 'Company established with a vision for AI-driven innovation.',
+    title: 'demo',
+    description: 'demo',
     icon: <Zap className="w-8 h-8 text-blue-500" />, // purple-blue
     img: 'https://demo4techies.com/etrend/presta/demo/modules/ps_imageslider/images/sample-1.jpg',
   },
   {
     year: '2005',
-    title: 'First AI Product',
-    description: 'Launched our first AI-powered product, revolutionizing the industry.',
+    title: 'demo',
+    description: 'demo',
     icon: <Cpu className="w-8 h-8 text-pink-500" />, // pink-orange
     img: 'https://source.unsplash.com/400x220/?ai,technology',
   },
   {
     year: '2010',
-    title: 'Global Expansion',
-    description: 'Expanded operations to 20+ countries, connecting the world.',
+    title: 'demo',
+    description: 'demo',
     icon: <Rocket className="w-8 h-8 text-green-500" />, // green-teal
     img: 'https://source.unsplash.com/400x220/?global,network',
   },
   {
     year: '2015',
-    title: 'AI Security Suite',
-    description: 'Introduced advanced AI security solutions for enterprises.',
+    title: 'demo',
+    description: 'demo',
     icon: <Shield className="w-8 h-8 text-indigo-500" />, // indigo-cyan
     img: 'https://source.unsplash.com/400x220/?security,cyber',
   },
   {
     year: '2020',
-    title: 'Human-AI Collaboration',
-    description: 'Pioneered seamless collaboration between humans and AI.',
+    title: 'demo',
+    description: 'demo',
     icon: <Users className="w-8 h-8 text-fuchsia-500" />, // fuchsia-purple
     img: 'https://source.unsplash.com/400x220/?collaboration,team',
   },

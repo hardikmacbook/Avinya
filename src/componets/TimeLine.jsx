@@ -4,32 +4,32 @@ import { Rocket } from 'lucide-react';
 const milestones = [
   {
     year: '2019',
-    title: 'Foundation Established',
-    description: 'Launched our innovative platform with cutting-edge technology solutions that transformed the industry landscape.',
+    title: 'Demo',
+    description: 'Demo',
     color: 'from-blue-500 to-purple-600',
   },
   {
     year: '2020',
-    title: 'AI Integration',
-    description: 'Integrated advanced artificial intelligence capabilities, revolutionizing automated processes and decision-making.',
+    title: 'Demo',
+    description: 'Demo',
     color: 'from-pink-500 to-orange-500',
   },
   {
     year: '2021',
-    title: 'Global Expansion',
-    description: 'Extended our reach worldwide, establishing partnerships across multiple continents and diverse markets.',
+    title: 'Demo',
+    description: 'Demo',
     color: 'from-green-500 to-teal-500',
   },
   {
     year: '2022',
-    title: 'Security Enhancement',
-    description: 'Implemented enterprise-grade security protocols, ensuring maximum protection for all user data and transactions.',
+    title: 'Demo',
+    description: 'Demo',
     color: 'from-indigo-500 to-cyan-500',
   },
   {
     year: '2023',
-    title: 'Community Growth',
-    description: 'Built a thriving ecosystem of collaborative partners, fostering innovation through shared expertise and resources.',
+    title: 'Demo',
+    description: 'Demo',
     color: 'from-fuchsia-500 to-purple-500',
   },
 ];
@@ -110,14 +110,10 @@ const TimeLine = () => {
         {/* Call to action */}
         <div className="text-center mt-16 lg:mt-32">
           <div className="inline-block">
-            <div className="bg-white/25 backdrop-blur-2xl border-2 border-white/40 text-gray-900 font-black py-6 lg:py-8 px-8 lg:px-12 rounded-2xl lg:rounded-3xl shadow-2xl cursor-pointer relative overflow-hidden">
-              {/* Glass layers */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent rounded-2xl lg:rounded-3xl"></div>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
-              
+            <div className="bg-red-400 backdrop-blur-2xl border-2 border-red-400 text-gray-900 font-black py-5 lg:py-5 px-5 lg:px-7 rounded-2xl lg:rounded-3xl shadow-2xl cursor-pointer relative overflow-hidden">
               {/* Content */}
               <div className="relative z-10 flex items-center gap-3 lg:gap-4">
-                <Rocket className="w-6 h-6 lg:w-8 lg:h-8" />
+                <Rocket className="w-4 h-4 lg:w-6 lg:h-6" />
                 <span className="text-lg lg:text-2xl">Join Our Journey</span>
               </div>
             </div>

@@ -1,0 +1,227 @@
+// time line backup code started 
+
+
+
+import React from 'react';
+import { Rocket, ArrowRight, Calendar, Star, TrendingUp } from 'lucide-react';
+
+const milestones = [
+  {
+    year: '2019',
+    title: 'Company Foundation',
+    description: 'We started our journey with a vision to revolutionize the industry. Our founding team came together with decades of combined experience and shared passion for innovation.',
+    stats: '5 Founders',
+    icon: Star
+  },
+  {
+    year: '2020',
+    title: 'First Major Breakthrough',
+    description: 'Despite global challenges, we achieved our first major milestone by successfully launching our flagship product and gaining initial market traction.',
+    stats: '1K Users',
+    icon: Rocket
+  },
+  {
+    year: '2021',
+    title: 'Global Expansion', 
+    description: 'We expanded our operations internationally, establishing offices in three new countries and growing our team to serve a global customer base.',
+    stats: '50K Users',
+    icon: TrendingUp
+  },
+  {
+    year: '2022',
+    title: 'Innovation Award',
+    description: 'Our commitment to innovation was recognized with the Industry Excellence Award while establishing strategic partnerships with leading companies.',
+    stats: '100K Users',
+    icon: Star
+  },
+  {
+    year: '2023',
+    title: 'Market Leadership',
+    description: 'We achieved market leadership position and our platform now serves users globally with incredible growth and industry recognition.',
+    stats: '1M Users',
+    icon: Calendar
+  },
+];
+
+const TimeLine = () => {
+  return (
+    <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      {/* Container with proper responsive padding */}
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        
+        {/* Header - Fully Responsive */}
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 mb-4 sm:mb-6 tracking-tight leading-tight">
+            Our Journey
+          </h1>
+          <div className="w-16 sm:w-20 md:w-24 h-1 bg-gray-900 mx-auto mb-4 sm:mb-6"></div>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto leading-relaxed px-4">
+            The milestones that defined our path to success
+          </p>
+        </div>
+
+        {/* Timeline Container */}
+        <div className="relative max-w-6xl mx-auto">
+          
+          {/* Timeline line - Responsive positioning */}
+          <div className="absolute left-4 sm:left-6 md:left-8 lg:left-1/2 lg:transform lg:-translate-x-0.5 w-0.5 sm:w-1 h-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 rounded-full"></div>
+
+          {milestones.map((milestone, idx) => {
+            const isLeft = idx % 2 === 0;
+            const IconComponent = milestone.icon;
+            
+            return (
+              <div key={milestone.year} className="relative mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24">
+                
+                {/* Timeline dot - Responsive positioning */}
+                <div className="absolute left-2.5 sm:left-4.5 md:left-6.5 lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10">
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-900 rounded-full border-2 sm:border-3 md:border-4 border-white shadow-lg">
+                    <div className="absolute inset-0 bg-gray-900 rounded-full animate-ping opacity-20"></div>
+                  </div>
+                </div>
+
+                {/* Content Container - PERFECT RESPONSIVE */}
+                <div className="w-full">
+                  
+                  {/* Mobile & Small Tablet (< 1024px) - Single Column */}
+                  <div className="lg:hidden ml-8 sm:ml-12 md:ml-16 pr-2 sm:pr-4">
+                    
+                    {/* Year badge */}
+                    <div className="mb-4 sm:mb-6">
+                      <span className="inline-block bg-gray-900 text-white px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-bold">
+                        {milestone.year}
+                      </span>
+                    </div>
+
+                    {/* Card */}
+                    <div className="w-full bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                      
+                      {/* Card header */}
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6">
+                        <div className="flex-1 mb-4 sm:mb-0">
+                          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div className="bg-gray-100 px-2 sm:px-3 py-1 rounded-full text-gray-700 font-semibold text-xs sm:text-sm">
+                              {milestone.stats}
+                            </div>
+                          </div>
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
+                            {milestone.title}
+                          </h3>
+                        </div>
+                        <div className="bg-gray-50 p-2 sm:p-3 rounded-lg sm:rounded-xl group-hover:bg-gray-100 transition-colors self-start sm:ml-4">
+                          <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-600" />
+                        </div>
+                      </div>
+                      
+                      {/* Accent line */}
+                      <div className="w-12 sm:w-16 h-0.5 sm:h-1 bg-gray-900 rounded-full mb-4 sm:mb-6 group-hover:w-16 sm:group-hover:w-24 transition-all duration-300"></div>
+                      
+                      {/* Description */}
+                      <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6">
+                        {milestone.description}
+                      </p>
+                      
+                      {/* Action */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center text-gray-900 font-semibold hover:text-gray-700 transition-colors cursor-pointer group text-sm sm:text-base">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <div className="text-gray-400 text-xs sm:text-sm">
+                          {idx + 1} of {milestones.length}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Desktop (>= 1024px) - Two Column */}
+                  <div className="hidden lg:block">
+                    <div className={`
+                      w-full lg:w-1/2 xl:w-5/12
+                      ${isLeft 
+                        ? 'lg:mr-auto lg:pr-8 xl:pr-12 2xl:pr-16' 
+                        : 'lg:ml-auto lg:pl-8 xl:pl-12 2xl:pl-16'
+                      }
+                    `}>
+                      
+                      {/* Year badge */}
+                      <div className={`mb-6 xl:mb-8 ${isLeft ? 'lg:text-right' : 'lg:text-left'}`}>
+                        <span className="inline-block bg-gray-900 text-white px-6 xl:px-8 py-3 xl:py-4 rounded-xl xl:rounded-2xl text-lg xl:text-xl font-bold">
+                          {milestone.year}
+                        </span>
+                      </div>
+
+                      {/* Card */}
+                      <div className="w-full bg-white rounded-2xl xl:rounded-3xl p-8 xl:p-10 2xl:p-12 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                        
+                        {/* Card header */}
+                        <div className="flex items-start justify-between mb-6 xl:mb-8">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 xl:gap-4 mb-4 xl:mb-6">
+                              <div className="bg-gray-100 px-3 xl:px-4 py-1 xl:py-2 rounded-full text-gray-700 font-semibold text-sm xl:text-base">
+                                {milestone.stats}
+                              </div>
+                            </div>
+                            <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-bold text-gray-900 mb-4 xl:mb-6 leading-tight">
+                              {milestone.title}
+                            </h3>
+                          </div>
+                          <div className="bg-gray-50 p-3 xl:p-4 rounded-xl xl:rounded-2xl group-hover:bg-gray-100 transition-colors ml-4 xl:ml-6">
+                            <IconComponent className="w-6 h-6 xl:w-7 xl:h-7 2xl:w-8 2xl:h-8 text-gray-600" />
+                          </div>
+                        </div>
+                        
+                        {/* Accent line */}
+                        <div className="w-16 xl:w-20 h-1 bg-gray-900 rounded-full mb-6 xl:mb-8 group-hover:w-24 xl:group-hover:w-32 transition-all duration-300"></div>
+                        
+                        {/* Description */}
+                        <p className="text-gray-600 text-lg xl:text-xl 2xl:text-2xl leading-relaxed mb-6 xl:mb-8">
+                          {milestone.description}
+                        </p>
+                        
+                        {/* Action */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center text-gray-900 font-semibold hover:text-gray-700 transition-colors cursor-pointer group text-lg xl:text-xl">
+                            <span>Learn More</span>
+                            <ArrowRight className="w-4 h-4 xl:w-5 xl:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                          <div className="text-gray-400 text-sm xl:text-base">
+                            {idx + 1} of {milestones.length}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA - Fully Responsive */}
+        <div className="text-center mt-12 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-32">
+          <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto bg-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 text-white">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 lg:mb-8">
+              Ready to Write the Next Chapter?
+            </h2>
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8 lg:mb-10 max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl mx-auto">
+              Join thousands of companies who trust us to power their growth
+            </p>
+            <button className="group inline-flex items-center gap-2 sm:gap-3 lg:gap-4 bg-white text-gray-900 font-bold py-3 sm:py-4 lg:py-5 px-6 sm:px-8 lg:px-12 rounded-xl sm:rounded-2xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base md:text-lg lg:text-xl">
+              <Rocket className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 group-hover:rotate-12 transition-transform duration-300" />
+              <span>Start Your Journey</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TimeLine;
+
+
+
+
+// time line backup code ended 

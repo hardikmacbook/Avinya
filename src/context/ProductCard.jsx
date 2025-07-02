@@ -10,8 +10,8 @@ const ProductCard = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch("https://dummyjson.com/produs?limit=100")
-    //  fetch("https://dummyjson.com/products?limit=100")
+    // fetch("https://dummyjson.com/produs?limit=100")
+     fetch("https://dummyjson.com/products?limit=100")
       .then(response => response.json())
       .then(data => {
         setData(data.products);

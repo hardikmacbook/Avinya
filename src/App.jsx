@@ -25,8 +25,8 @@ function App() {
             <Route path="/cart" element={<Cart/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
-          <Footer/>
         </BrowserRouter>
+          <Footer/>
       </CartProvider>
     </>
   )

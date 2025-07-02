@@ -24,7 +24,6 @@ function App() {
             <Route path="/cart" element={<Cart/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
-          
         </BrowserRouter>
       </CartProvider>
     </>

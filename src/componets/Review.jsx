@@ -68,69 +68,74 @@ const Reviews = () => {
     const handleScroll = () => {
       if (!containerRef.current) return;
 
+      const rect = containerRef.current.getBoundingClientRect();
+      const containerTop = rect.top + window.scrollY;
+      const containerHeight = rect.height;
       const scrollY = window.scrollY;
-      const containerTop = containerRef.current.offsetTop;
-      const containerHeight = containerRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
-      const reviewHeight = containerHeight / reviews.length;
 
-      // Calculate which review should be active based on scroll position
-      const scrollProgress = Math.max(0, scrollY - containerTop + windowHeight * 0.5);
-      const newActiveIndex = Math.min(
-        reviews.length - 1,
-        Math.max(0, Math.floor(scrollProgress / reviewHeight))
-      );
-      setActiveIndex(newActiveIndex);
+      // Check if we're in the scrollable area
+      const containerStart = containerTop;
+      const containerEnd = containerTop + containerHeight;
+      const viewportCenter = scrollY + windowHeight / 2;
 
-      // Apply pin effects to each review
-      reviewsRef.current.forEach((review, index) => {
-        if (!review) return;
-
-        const reviewStart = containerTop + (index * reviewHeight);
-        const reviewEnd = reviewStart + reviewHeight;
-        const reviewCenter = reviewStart + reviewHeight / 2;
+      if (viewportCenter >= containerStart && viewportCenter <= containerEnd) {
+        // Calculate progress through the container
+        const progressThroughContainer = (viewportCenter - containerStart) / containerHeight;
+        const newActiveIndex = Math.min(
+          reviews.length - 1,
+          Math.max(0, Math.floor(progressThroughContainer * reviews.length))
+        );
         
-        // Calculate how close we are to this review's center
-        const distanceFromCenter = Math.abs(scrollY + windowHeight / 2 - reviewCenter);
-        const maxDistance = reviewHeight;
-        const proximityRatio = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+        setActiveIndex(newActiveIndex);
 
-        // Determine review state based on scroll position
-        if (index === newActiveIndex) {
-          // Currently active review - pin in center with full visibility
-          review.style.transform = `translateY(0) scale(1) rotateX(0deg) rotateY(0deg)`;
-          review.style.opacity = '1';
-          review.style.zIndex = '30';
-          review.style.filter = 'blur(0px) brightness(1) saturate(1.1)';
-          review.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)';
-        } else if (index < newActiveIndex) {
-          // Reviews that have been scrolled past - move up and stack
-          const pastOffset = (newActiveIndex - index) * 20;
-          review.style.transform = `translateY(-${100 + pastOffset}px) scale(${0.8 - (newActiveIndex - index) * 0.05}) rotateX(15deg)`;
-          review.style.opacity = `${Math.max(0.2, 0.7 - (newActiveIndex - index) * 0.15)}`;
-          review.style.zIndex = `${20 - (newActiveIndex - index)}`;
-          review.style.filter = `blur(${(newActiveIndex - index) * 1.5}px) brightness(0.6) saturate(0.8)`;
-          review.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
-        } else {
-          // Upcoming reviews - stay below and preview
-          const upcomingOffset = (index - newActiveIndex) * 30;
-          const upcomingScale = Math.max(0.85, 1 - (index - newActiveIndex) * 0.05);
-          review.style.transform = `translateY(${60 + upcomingOffset}px) scale(${upcomingScale}) rotateX(-8deg)`;
-          review.style.opacity = `${Math.max(0.4, 0.8 - (index - newActiveIndex) * 0.1)}`;
-          review.style.zIndex = `${25 - (index - newActiveIndex)}`;
-          review.style.filter = `blur(${(index - newActiveIndex) * 0.8}px) brightness(0.85) saturate(0.9)`;
-          review.style.boxShadow = '0 15px 30px -8px rgba(0, 0, 0, 0.4)';
-        }
+        // Apply pin effects to each review
+        reviewsRef.current.forEach((review, index) => {
+          if (!review) return;
+          
+          // Determine review state based on scroll position
+          if (index === newActiveIndex) {
+            // Currently active review - pin in center with full visibility
+            review.style.transform = `translateY(0) scale(1) rotateX(0deg) rotateY(0deg)`;
+            review.style.opacity = '1';
+            review.style.zIndex = '30';
+            review.style.filter = 'blur(0px) brightness(1) saturate(1.1)';
+            review.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)';
+          } else if (index < newActiveIndex) {
+            // Reviews that have been scrolled past - move up and stack
+            const pastOffset = (newActiveIndex - index) * 20;
+            review.style.transform = `translateY(-${100 + pastOffset}px) scale(${0.8 - (newActiveIndex - index) * 0.05}) rotateX(15deg)`;
+            review.style.opacity = `${Math.max(0.2, 0.7 - (newActiveIndex - index) * 0.15)}`;
+            review.style.zIndex = `${20 - (newActiveIndex - index)}`;
+            review.style.filter = `blur(${(newActiveIndex - index) * 1.5}px) brightness(0.6) saturate(0.8)`;
+            review.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
+          } else {
+            // Upcoming reviews - stay below and preview
+            const upcomingOffset = (index - newActiveIndex) * 30;
+            const upcomingScale = Math.max(0.85, 1 - (index - newActiveIndex) * 0.05);
+            review.style.transform = `translateY(${60 + upcomingOffset}px) scale(${upcomingScale}) rotateX(-8deg)`;
+            review.style.opacity = `${Math.max(0.4, 0.8 - (index - newActiveIndex) * 0.1)}`;
+            review.style.zIndex = `${25 - (index - newActiveIndex)}`;
+            review.style.filter = `blur(${(index - newActiveIndex) * 0.8}px) brightness(0.85) saturate(0.9)`;
+            review.style.boxShadow = '0 15px 30px -8px rgba(0, 0, 0, 0.4)';
+          }
 
-        // Apply smooth transitions for all transforms
-        review.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
-      });
+          // Apply smooth transitions for all transforms
+          review.style.transition = 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)';
+        });
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Use both scroll and resize events for better detection
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     handleScroll(); // Initial call
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [reviews.length]);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [activeIndex]);
 
   return (
     <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-black relative">
@@ -141,10 +146,10 @@ const Reviews = () => {
         <div className="absolute bottom-0 right-1/3 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
       </div>
 
-      {/* Header Section - Reduced spacing */}
-      <div className="relative z-10 pt-12 pb-8 px-4">
+      {/* Header Section - Much more compact */}
+      <div className="relative z-10 pt-8 pb-4 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 mb-6 border border-white/20">
+          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 mb-4 border border-white/20">
             <Award className="w-5 h-5 text-yellow-400" />
             <span className="text-white font-medium">Industry Leaders Trust Us</span>
             <div className="flex -space-x-2">
@@ -154,31 +159,31 @@ const Reviews = () => {
             </div>
           </div>
 
-          <h1 className="text-6xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none">
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter leading-none">
             SUCCESS
             <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
               STORIES
             </span>
           </h1>
           
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-base text-gray-300 max-w-2xl mx-auto leading-relaxed mb-6">
             Real transformations from industry leaders who achieved extraordinary results. 
             <span className="text-cyan-400 font-semibold"> Over $50M in value created.</span>
           </p>
 
           {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-6 max-w-xl mx-auto">
             <div className="text-center">
-              <div className="text-2xl font-bold text-cyan-400 mb-1">500+</div>
-              <div className="text-gray-400 text-sm">Enterprise Clients</div>
+              <div className="text-xl font-bold text-cyan-400 mb-1">500+</div>
+              <div className="text-gray-400 text-xs">Enterprise Clients</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">40%</div>
-              <div className="text-gray-400 text-sm">Average ROI Increase</div>
+              <div className="text-xl font-bold text-green-400 mb-1">40%</div>
+              <div className="text-gray-400 text-xs">Average ROI Increase</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-400 mb-1">99.9%</div>
-              <div className="text-gray-400 text-sm">Uptime SLA</div>
+              <div className="text-xl font-bold text-purple-400 mb-1">99.9%</div>
+              <div className="text-gray-400 text-xs">Uptime SLA</div>
             </div>
           </div>
         </div>
@@ -202,11 +207,11 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* Reviews Container - Reduced height multiplier */}
+      {/* Reviews Container - Much more compact */}
       <div 
         ref={containerRef}
         className="relative"
-        style={{ height: `${reviews.length * 80}vh` }}
+        style={{ height: `${reviews.length * 40}vh` }}
       >
         <div className="sticky top-0 h-screen flex items-center justify-center px-4">
           <div className="relative w-full max-w-5xl">
@@ -305,17 +310,17 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* CTA Section - Reduced spacing */}
-      <div className="relative z-10 py-16 px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl p-8 border border-white/20">
-            <h2 className="text-4xl font-bold text-white mb-4">
+      {/* CTA Section - Much more compact */}
+      <div className="relative z-10 py-8 px-4 text-center">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl p-6 border border-white/20">
+            <h2 className="text-3xl font-bold text-white mb-3">
               Ready to Write Your Success Story?
             </h2>
-            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-base text-gray-300 mb-6 max-w-xl mx-auto">
               Join these industry leaders and transform your business with proven results
             </p>
-            <button className="group bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105">
+            <button className="group bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-full font-bold text-base hover:shadow-2xl hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105">
               Start Your Transformation
               <span className="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>
             </button>

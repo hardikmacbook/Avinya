@@ -1,315 +1,316 @@
-import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Eye, Zap, Smartphone, Rocket } from 'lucide-react';
-import HeroVideo from '../assets/images/hero-video.mp4'
-
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2 } from 'lucide-react';
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [firstImageLoaded, setFirstImageLoaded] = useState(false);
-  const intervalRef = useRef(null);
-  const imageCache = useRef(new Map());
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+  const videoRef = useRef(null);
 
-  // Add video as the first slide
-  const slides = useMemo(() => [
+  // Mixed media data - images and videos
+  const mediaItems = [
     {
-      id: 'video',
-      type: 'video',
-      video: HeroVideo, // Replace with your video URL
+      id: 1,
+      type: 'image',
+      title: "Neural Network Architecture",
+      description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
+      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=80",
+      category: "AI Technology",
+      duration: "5 min read"
     },
     {
       id: 2,
-      title: "Welcome to Innovation",
-      subtitle: "Experience the Future",
-      description: "Experience the future of web design with our cutting-edge solutions. Built for performance, designed for beauty.",
-      image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=75",
-      icon: <Zap className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "Get Started",
-      path: "/shop"
+      type: 'video',
+      title: "Machine Learning in Action",
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      thumbnail: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&h=1080&fit=crop&q=80",
+      category: "Deep Learning"
     },
     {
       id: 3,
-      title: "Lightning Fast Performance",
-      subtitle: "Optimized for Speed",
-      description: "Optimized for speed and efficiency. Our slider loads in milliseconds and delivers exceptional user experience.",
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=75",
-      icon: <Rocket className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "Learn More",
-      path: "/shop"
+      type: 'image',
+      title: "Quantum Computing Revolution",
+      description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
+      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=80",
+      category: "Quantum AI",
+      duration: "8 min read"
     },
     {
       id: 4,
-      title: "Beautiful Design",
-      subtitle: "Modern & Elegant",
-      description: "Modern aesthetics, smooth animations, and premium effects create an engaging visual experience.",
-      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=75",
-      icon: <Eye className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "Explore",
-      path: "/about"
+      type: 'video',
+      title: "Future of AI",
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop&q=80",
+      category: "Innovation"
     },
     {
       id: 5,
-      title: "Mobile Optimized",
-      subtitle: "Responsive Design",
-      description: "Responsive design ensures perfect display on all devices, from desktop to mobile phones.",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=75",
-      icon: <Smartphone className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg" />,
-      buttonText: "View Demo",
-      path: "/contact"
+      type: 'image',
+      title: "Data Visualization Mastery",
+      description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
+      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=80",
+      category: "Data Science",
+      duration: "6 min read"
+    },
+    {
+      id: 6,
+      type: 'video',
+      title: "Robotics & AI",
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
+      category: "Robotics"
     }
-  ], []);
+  ];
 
-  // Aggressive image preloading strategy
+  const currentItem = mediaItems[currentSlide];
+  const isVideo = currentItem.type === 'video';
+
+  // Auto-slide functionality
   useEffect(() => {
-    const preloadFirstImage = () => {
-      // For video, consider it always loaded
-      if (slides[0].type === 'video') {
-        setFirstImageLoaded(true);
-        imageCache.current.set(0, true);
-      } else {
-        const firstImg = new Image();
-        firstImg.onload = () => {
-          setFirstImageLoaded(true);
-          imageCache.current.set(0, firstImg);
-        };
-        firstImg.src = slides[0].image;
+    if (isAutoPlay && !isPlaying) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % mediaItems.length);
+      }, isVideo ? 8000 : 6000);
+      return () => clearInterval(interval);
+    }
+  }, [isAutoPlay, isPlaying, mediaItems.length, isVideo]);
+
+  // Reset video when slide changes
+  useEffect(() => {
+    if (videoRef.current && isVideo) {
+      videoRef.current.currentTime = 0;
+      if (isPlaying) {
+        videoRef.current.play();
       }
-      // Preload next images immediately but with lower priority
-      setTimeout(() => {
-        slides.slice(1).forEach((slide, index) => {
-          if (slide.type === 'video') {
-            imageCache.current.set(index + 1, true);
-          } else {
-            const img = new Image();
-            img.onload = () => {
-              imageCache.current.set(index + 1, img);
-            };
-            img.src = slide.image;
-          }
-        });
-      }, 100);
-    };
-    preloadFirstImage();
-  }, [slides]);
+    }
+  }, [currentSlide, isVideo]);
 
-  // Ultra-fast navigation
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % mediaItems.length);
+    setIsPlaying(false);
+  };
 
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  }, [slides.length]);
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
+    setIsPlaying(false);
+  };
 
-  const goToSlide = useCallback((index) => {
-    if (index === currentSlide) return;
+  const goToSlide = (index) => {
     setCurrentSlide(index);
-  }, [currentSlide]);
+    setIsPlaying(false);
+  };
 
-  const toggleAutoplay = useCallback(() => {
-    setIsPlaying(prev => !prev);
-  }, []);
-
-  // Optimized auto-play
-  // useEffect(() => {
-  //   if (isPlaying && firstImageLoaded) {
-  //     intervalRef.current = setInterval(nextSlide, 4000);
-  //   }
-  //   return () => {
-  //     if (intervalRef.current) {
-  //       clearInterval(intervalRef.current);
-  //     }
-  //   };
-  // }, [nextSlide, isPlaying, firstImageLoaded]);
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyPress = (e) => {
-      switch(e.key) {
-        case 'ArrowLeft':
-          prevSlide();
-          break;
-        case 'ArrowRight':
-          nextSlide();
-          break;
-        case ' ':
-          e.preventDefault();
-          toggleAutoplay();
-          break;
+  const togglePlay = () => {
+    if (isVideo && videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
       }
-    };
+      setIsPlaying(!isPlaying);
+    }
+  };
 
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [nextSlide, prevSlide, toggleAutoplay]);
-
-  // Show placeholder until first image loads
-  if (!firstImageLoaded) {
-    return (
-      <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-        <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[580px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl">
-          <div className="absolute inset-0 bg-black/40"></div>
-          <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div className="text-center text-white max-w-4xl mx-auto">
-              <div className="flex flex-col items-center">
-                <Zap className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-white drop-shadow-lg animate-pulse" />
-                <div className="mb-3 sm:mb-4">
-                  <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium border border-white/30">
-                    Experience the Future
-                  </span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-                  Welcome to Innovation
-                </h2>
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-white/90 max-w-2xl leading-relaxed px-4">
-                  Experience the future of web design with our cutting-edge solutions. Built for performance, designed for beauty.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-      <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[580px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl">
-        
-        {/* Single optimized slide container */}
-        <div className="relative w-full h-full">
-          {/* Background Media with instant switching */}
-          <div className="absolute inset-0">
-            {slides[currentSlide].type === 'video' ? (
-              <video
-                src={slides[currentSlide].video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-                style={{objectFit:'cover'}}
-              />
-            ) : (
-              <img
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                className="w-full h-full object-cover transition-opacity duration-200"
-                style={{
-                  opacity: imageCache.current.has(currentSlide) ? 1 : 0.8,
-                  transform: 'translateZ(0)' // Hardware acceleration
-                }}
-              />
-            )}
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
-          </div>
+    <>
+      <div className="relative w-full h-[50vh] sm:h-[700px] overflow-hidden bg-black">
+      {/* Main Media Container */}
+      <div className="relative w-full h-[700px]">
+        {/* Media Display */}
+        <div className="absolute inset-0">
+          {isVideo ? (
+            <video
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover"
+              poster={currentItem.thumbnail}
+              muted={isMuted}
+              loop
+              playsInline
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            >
+              <source src={currentItem.url} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={currentItem.url}
+              alt={currentItem.title}
+              className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
+            />
+          )}
           
-          {/* Content */}
-          <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div className="text-center text-white max-w-4xl mx-auto">
-              <div className="flex flex-col items-center">
-                {slides[currentSlide].type !== 'video' && (
+          {/* Gradient Overlay for Images */}
+          {!isVideo && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+          )}
+        </div>
+
+        {/* Text Overlay for Images Only */}
+        {!isVideo && (
+          <div className="absolute inset-0 flex items-end justify-start p-6 sm:p-6 lg:p-12">
+            <div className="max-w-3xl space-y-3 sm:space-y-6 animate-fade-in pb-20 sm:pb-80 lg:pb-10 sm:p-10 pl-10 sm:pl-15">
+              {/* Category Badge */}
+              <div className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+                <span className="text-white text-xs sm:text-sm font-medium">
+                  {currentItem.category}
+                </span>
+                {currentItem.duration && (
                   <>
-                    <div className="mb-4 sm:mb-6 transition-all duration-200">
-                      {slides[currentSlide].icon}
-                    </div>
-                    <div className="mb-3 sm:mb-4 transition-all duration-200">
-                      <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium border border-white/30">
-                        {slides[currentSlide].subtitle}
-                      </span>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight transition-all duration-200">
-                      {slides[currentSlide].title}
-                    </h2>
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-white/90 max-w-2xl leading-relaxed px-4 transition-all duration-200">
-                      {slides[currentSlide].description}
-                    </p>
-                    <button className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm sm:text-base lg:text-lg border-2 border-white/30 hover:bg-white/30 hover:border-white/50 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
-                      <span className="relative z-10">{slides[currentSlide].buttonText}</span>
-                    </button>
+                    <div className="w-1 h-1 bg-white/60 rounded-full mx-2 sm:mx-3"></div>
+                    <span className="text-white/80 text-xs sm:text-sm">{currentItem.duration}</span>
                   </>
                 )}
               </div>
+              
+              {/* Title */}
+              <h1 className="text-2xl sm:text-4xl lg:text-7xl font-bold text-white leading-tight">
+                {currentItem.title}
+              </h1>
+              
+              {/* Description */}
+              <p className="text-white/90 text-sm sm:text-lg lg:text-xl leading-relaxed max-w-2xl">
+                {currentItem.description}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-2 sm:gap-4 pt-2 sm:pt-4">
+                <button className="group relative inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-2 sm:py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-sm sm:text-base font-semibold transition-all duration-300 hover:bg-white/20 hover:scale-105 active:scale-95 shadow-2xl">
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Read Article
+                </button>
+                
+                <button className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white/80 font-medium transition-all duration-300 hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95 shadow-xl">
+                  <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+                
+                <button className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white/80 font-medium transition-all duration-300 hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95 shadow-xl">
+                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              </div>
             </div>
           </div>
+        )}
+
+        {/* Video Controls Overlay */}
+        {isVideo && (
+          <div 
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
+              showControls ? 'bg-black/20' : 'bg-transparent'
+            }`}
+            onMouseEnter={() => setShowControls(true)}
+            onMouseLeave={() => setShowControls(false)}
+          >
+            <div className={`transition-all duration-300 ${showControls ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+              <button
+                onClick={togglePlay}
+                className="p-4 sm:p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
+              >
+                {isPlaying ? <Pause className="w-8 h-8 sm:w-12 sm:h-12" /> : <Play className="w-8 h-8 sm:w-12 sm:h-12 ml-1" />}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Top Controls Bar */}
+        <div className="absolute top-3 sm:top-6 left-3 sm:left-6 right-3 sm:right-6 flex items-center justify-between">
+          {/* Category Badge */}
+          <div className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
+            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-2 sm:mr-3"></div>
+            <span className="text-white text-xs sm:text-sm font-medium">
+              {currentItem.category}
+            </span>
+          </div>
+            
+          {/* Video Controls */}
+          {isVideo && (
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={toggleMute}
+                className="p-2 sm:p-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-xl"
+              >
+                {isMuted ? <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" /> : <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />}
+              </button>
+              
+              <button className="p-2 sm:p-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-xl">
+                <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Navigation Buttons */}
+        {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 group z-20"
-          aria-label="Previous slide"
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
         >
-          <div className="relative p-2 sm:p-3 lg:p-4 bg-white/15 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/25 hover:border-white/40 transition-all duration-200 transform hover:scale-110 shadow-lg">
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </div>
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
-
+        
         <button
           onClick={nextSlide}
-          className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 group z-20"
-          aria-label="Next slide"
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
         >
-          <div className="relative p-2 sm:p-3 lg:p-4 bg-white/15 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/25 hover:border-white/40 transition-all duration-200 transform hover:scale-110 shadow-lg">
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </div>
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`relative transition-all duration-200 ${
-                index === currentSlide 
-                  ? 'w-8 sm:w-10 lg:w-12 h-2 sm:h-3' 
-                  : 'w-2 sm:w-3 h-2 sm:h-3 hover:w-3 sm:hover:w-4'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            >
-              <div className={`w-full h-full rounded-full transition-all duration-200 ${
-                index === currentSlide
-                  ? 'bg-[#d2af6f] shadow-lg'
-                  : 'bg-[#8b2727] hover:bg-[#d2af6f]'
-              }`}></div>
-            </button>
-          ))}
-        </div>
-
-        {/* Controls */}
-        <div className="absolute top-3 sm:top-4 lg:top-6 right-3 sm:right-4 lg:right-6 flex items-center space-x-2 sm:space-x-3 z-20">
-          {/* Slide Counter */}
-          <div className="px-2 py-1 sm:px-3 sm:py-2 lg:px-4 lg:py-2 bg-white/15 backdrop-blur-md rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm">
-            {currentSlide + 1} / {slides.length}
+        {/* Bottom Controls */}
+        <div className="absolute bottom-3 sm:bottom-6 left-3 sm:left-6 right-3 sm:right-6 flex items-center justify-between">
+          {/* Slide Indicators */}
+          <div className="flex items-center gap-1 sm:gap-2">
+            {mediaItems.map((item, index) => (
+              <button
+                key={item.id}
+                onClick={() => goToSlide(index)}
+                className={`relative overflow-hidden rounded-full transition-all duration-500 ${
+                  index === currentSlide
+                    ? 'w-12 sm:w-16 h-2 sm:h-3 bg-white shadow-lg shadow-white/50'
+                    : 'w-2 sm:w-3 h-2 sm:h-3 bg-white/40 hover:bg-white/60'
+                }`}
+              >
+                {index === currentSlide && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                )}
+                {/* Media Type Indicator */}
+                <div className="absolute top-0 right-0 w-1 h-1 rounded-full bg-white/60"></div>
+              </button>
+            ))}
           </div>
-          {/* Play/Pause Button */}
-          <button
-            onClick={toggleAutoplay}
-            className="p-2 sm:p-3 bg-white/15 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/25 hover:border-white/40 transition-all duration-200 transform hover:scale-110"
-            aria-label={isPlaying ? 'Pause autoplay' : 'Start autoplay'}
-          >
-            {isPlaying ? (
-              <Pause className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            ) : (
-              <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            )}
-          </button>
-        </div>
 
-        {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-[#d2af6f] z-20">
-          <div
-            className="h-full bg-[#8b2727] transition-all duration-200"
-            style={{
-              width: `${((currentSlide + 1) / slides.length) * 100}%`,
-            }}
-          ></div>
+          {/* Right Controls */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Slide Counter */}
+            <div className="px-2 sm:px-4 py-1 sm:py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full shadow-xl">
+              <span className="text-white text-xs sm:text-sm font-medium">
+                {String(currentSlide + 1).padStart(2, '0')} / {String(mediaItems.length).padStart(2, '0')}
+              </span>
+            </div>
+            
+            {/* Auto-play Toggle */}
+            <button
+              onClick={() => setIsAutoPlay(!isAutoPlay)}
+              className={`px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-xl shadow-xl ${
+                isAutoPlay
+                  ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
+                  : 'bg-white/10 text-white/80 border border-white/20 hover:bg-white/20'
+              }`}
+            >
+              AUTO {isAutoPlay ? 'ON' : 'OFF'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  );
+    </>
+);
 };
 
 export default BeautifulSlider;

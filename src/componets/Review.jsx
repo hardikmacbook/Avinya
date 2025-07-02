@@ -199,24 +199,6 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* Scroll Progress Indicator */}
-      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 z-30">
-        <div className="flex flex-col gap-3">
-          {reviews.map((_, index) => (
-            <div
-              key={index}
-              className={`w-2 h-8 rounded-full transition-all duration-500 ${
-                index === activeIndex 
-                  ? 'bg-cyan-400 h-12 shadow-lg shadow-cyan-400/50' 
-                  : index < activeIndex 
-                    ? 'bg-green-400/60' 
-                    : 'bg-white/20'
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-
       {/* Reviews Container - Reduced top margin */}
       <div 
         ref={containerRef}

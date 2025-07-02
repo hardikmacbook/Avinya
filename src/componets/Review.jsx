@@ -1,164 +1,129 @@
-import React, { useEffect, useRef } from 'react';
-import { Star, User } from 'lucide-react';
+import React from 'react';
+import { Star } from 'lucide-react';
 
-const Reviews = () => {
-  const containerRef = useRef(null);
-  const reviewsRef = useRef([]);
-
-  const reviews = [
+const Review = () => {
+  const testimonials = [
     {
       id: 1,
       name: "Sarah Johnson",
+      role: "Marketing Director",
+      company: "TechCorp",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      text: "Absolutely incredible experience! The attention to detail and customer service exceeded all my expectations.",
-      avatar: "SJ",
-      date: "2 weeks ago"
+      text: "This platform has completely transformed how we approach our marketing campaigns. The results speak for themselves - we've seen a 300% increase in engagement!"
     },
     {
       id: 2,
-      name: "Michael Chen", 
+      name: "Michael Chen",
+      role: "CEO",
+      company: "StartupX",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      text: "Outstanding quality and fast delivery. The team was responsive and professional throughout the entire process.",
-      avatar: "MC",
-      date: "1 month ago"
+      text: "Outstanding service and support. The team went above and beyond to ensure our project was delivered on time and exceeded our expectations."
     },
     {
       id: 3,
-      name: "Emma Rodriguez",
-      rating: 4,
-      text: "Great value for money! The product quality is excellent and the user experience is smooth.",
-      avatar: "ER", 
-      date: "3 weeks ago"
+      name: "Emily Rodriguez",
+      role: "Product Manager",
+      company: "InnovateLab",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      rating: 5,
+      text: "I've worked with many vendors, but none have been as professional and results-driven as this team. Highly recommended for anyone serious about growth."
     },
     {
       id: 4,
       name: "David Thompson",
-      rating: 5,
-      text: "Exceptional service from start to finish. The team went above and beyond to ensure everything was perfect.",
-      avatar: "DT",
-      date: "1 week ago"
+      role: "Operations Lead",
+      company: "GlobalTech",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      rating: 4,
+      text: "The implementation was smooth and the ongoing support has been excellent. Our team productivity has improved significantly since we started using their solution."
     }
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-
-      const scrollY = window.scrollY;
-      const containerTop = containerRef.current.offsetTop;
-      const containerHeight = containerRef.current.offsetHeight;
-      const reviewHeight = containerHeight / reviews.length;
-
-      reviewsRef.current.forEach((review, index) => {
-        if (!review) return;
-
-        const reviewStart = containerTop + (index * reviewHeight);
-        const reviewEnd = reviewStart + reviewHeight;
-        const progress = Math.max(0, Math.min(1, (scrollY - reviewStart + window.innerHeight/2) / reviewHeight));
-
-        if (scrollY >= reviewStart - window.innerHeight/2 && scrollY <= reviewEnd + window.innerHeight/2) {
-          // Active review - pin it
-          review.style.transform = `translateY(0) scale(1)`;
-          review.style.opacity = '1';
-          review.style.zIndex = '10';
-        } else if (scrollY > reviewEnd + window.innerHeight/2) {
-          // Passed review - move up
-          review.style.transform = `translateY(-100px) scale(0.9)`;
-          review.style.opacity = '0.6';
-          review.style.zIndex = '1';
-        } else {
-          // Upcoming review - stay below
-          review.style.transform = `translateY(50px) scale(0.95)`;
-          review.style.opacity = '0.8';
-          review.style.zIndex = '5';
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const renderStars = (rating) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <Star
+        key={index}
+        className={`w-5 h-5 ${
+          index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+        }`}
+      />
+    ));
+  };
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <div className="pt-40 text-center">
-        <h1 className="text-5xl font-bold text-[#8b2727] mb-4">Customer Reviews</h1>
-        <p className="text-[#8b2727] text-xl">What our customers say about us</p>
-      </div>
+    <div className="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            What Our Clients Say
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Don't just take our word for it. Here's what our amazing clients have to say about their experience working with us.
+          </p>
+        </div>
 
-      {/* Reviews Container */}
-      <div 
-        ref={containerRef}
-        className="relative"
-        style={{ height: `${reviews.length * 100}vh` }}
-      >
-        <div className="sticky top-10 h-screen flex items-center justify-center px-4">
-          {reviews.map((review, index) => (
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          {testimonials.map((testimonial) => (
             <div
-              key={review.id}
-              ref={el => reviewsRef.current[index] = el}
-              className="absolute w-full max-w-2xl transition-all duration-500 ease-out"
+              key={testimonial.id}
+              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
             >
-              <div className="bg-white/70 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-gray-100">
-                {/* Header */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                    {review.avatar}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800">{review.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex gap-1">
-                        {Array.from({ length: 5 }, (_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm text-gray-500">{review.date}</span>
-                    </div>
-                  </div>
-                </div>
+              {/* Quote Icon */}
+              <div className="mb-6">
+                <svg
+                  className="w-8 h-8 text-blue-500"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
 
-                {/* Review Text */}
-                <blockquote className="text-lg text-gray-700 leading-relaxed mb-6 italic">
-                  "{review.text}"
-                </blockquote>
+              {/* Rating */}
+              <div className="flex mb-4">
+                {renderStars(testimonial.rating)}
+              </div>
 
-                {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                  <div className="flex items-center gap-2 text-gray-500">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Verified Customer</span>
-                  </div>
-                  <div className="text-sm text-gray-400">
-                    Review {index + 1} of {reviews.length}
-                  </div>
+              {/* Testimonial Text */}
+              <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
+                "{testimonial.text}"
+              </p>
+
+              {/* Client Info */}
+              <div className="flex items-center">
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-blue-100"
+                />
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-lg">
+                    {testimonial.name}
+                  </h4>
+                  <p className="text-gray-600">
+                    {testimonial.role} at {testimonial.company}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Footer */}
-      <div className="relative z-10 px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl p-12 border border-white/20">
-            <h2 className="text-5xl font-bold text-white mb-6">
-              Ready to Write Your Success Story?
-            </h2>
-            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              Join these industry leaders and transform your business with proven results
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Ready to Join Our Success Stories?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Experience the difference that our dedicated team and proven solutions can make for your business.
             </p>
-            <button className="group bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105">
-              Start Your Transformation
-              <span className="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 transform hover:scale-105">
+              Get Started Today
             </button>
           </div>
         </div>
@@ -167,4 +132,4 @@ const Reviews = () => {
   );
 };
 
-export default Reviews;
+export default Review;

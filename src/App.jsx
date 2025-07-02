@@ -7,6 +7,7 @@ import Cart from "./pages/Cart"
 import Navbar from "./componets/Navbar"
 import ProductDetails from "./pages/ProductDetail"
 import Shop from "./pages/Shop"
+import Footer from "./componets/Footer"
 import { CartProvider } from "./context/CartContext"
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/cart" element={<Cart/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
+          <Footer/>
         </BrowserRouter>
       </CartProvider>
     </>

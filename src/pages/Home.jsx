@@ -2,8 +2,7 @@ import React from 'react'
 import Carousel from '../componets/Carousel'
 import ProductCard from '../context/ProductCard'
 import OurCoreValue from '../componets/OurCoreValue'
-import Reviews from '../componets/Review'
-
+import Review from '../componets/Review'
 const Home = () => {
   return (
    <>
@@ -11,7 +10,7 @@ const Home = () => {
    <Carousel/>
    <ProductCard/>
    <OurCoreValue/>
-   <Reviews/>
+   <Review/>
    </div>
    </>
   )

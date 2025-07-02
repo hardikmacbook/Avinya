@@ -89,39 +89,49 @@ const Reviews = () => {
         
         setActiveIndex(newActiveIndex);
 
-        // Apply pin effects to each review
+        // Apply smooth bottom-to-top transition effects
         reviewsRef.current.forEach((review, index) => {
           if (!review) return;
           
-          // Determine review state based on scroll position
+          // Calculate smooth transition progress
+          const distanceFromActive = Math.abs(index - newActiveIndex);
+          const transitionProgress = Math.max(0, 1 - distanceFromActive * 0.3);
+          
           if (index === newActiveIndex) {
-            // Currently active review - pin in center with full visibility
-            review.style.transform = `translateY(0) scale(1) rotateX(0deg) rotateY(0deg)`;
+            // Currently active review - fully visible at center
+            review.style.transform = `translateY(0px) scale(1)`;
             review.style.opacity = '1';
             review.style.zIndex = '30';
             review.style.filter = 'blur(0px) brightness(1) saturate(1.1)';
             review.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)';
           } else if (index < newActiveIndex) {
-            // Reviews that have been scrolled past - move up and stack
-            const pastOffset = (newActiveIndex - index) * 20;
-            review.style.transform = `translateY(-${100 + pastOffset}px) scale(${0.8 - (newActiveIndex - index) * 0.05}) rotateX(15deg)`;
-            review.style.opacity = `${Math.max(0.2, 0.7 - (newActiveIndex - index) * 0.15)}`;
-            review.style.zIndex = `${20 - (newActiveIndex - index)}`;
-            review.style.filter = `blur(${(newActiveIndex - index) * 1.5}px) brightness(0.6) saturate(0.8)`;
-            review.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
+            // Reviews that have been scrolled past - move up with decreasing opacity
+            const pastDistance = newActiveIndex - index;
+            const upwardOffset = pastDistance * 80; // Move further up
+            const scaleReduction = Math.max(0.7, 1 - pastDistance * 0.08);
+            const opacityReduction = Math.max(0.1, 1 - pastDistance * 0.25);
+            
+            review.style.transform = `translateY(-${upwardOffset}px) scale(${scaleReduction})`;
+            review.style.opacity = `${opacityReduction}`;
+            review.style.zIndex = `${20 - pastDistance}`;
+            review.style.filter = `blur(${pastDistance * 2}px) brightness(${0.8 - pastDistance * 0.1}) saturate(0.7)`;
+            review.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.2)';
           } else {
-            // Upcoming reviews - stay below and preview
-            const upcomingOffset = (index - newActiveIndex) * 30;
-            const upcomingScale = Math.max(0.85, 1 - (index - newActiveIndex) * 0.05);
-            review.style.transform = `translateY(${60 + upcomingOffset}px) scale(${upcomingScale}) rotateX(-8deg)`;
-            review.style.opacity = `${Math.max(0.4, 0.8 - (index - newActiveIndex) * 0.1)}`;
-            review.style.zIndex = `${25 - (index - newActiveIndex)}`;
-            review.style.filter = `blur(${(index - newActiveIndex) * 0.8}px) brightness(0.85) saturate(0.9)`;
-            review.style.boxShadow = '0 15px 30px -8px rgba(0, 0, 0, 0.4)';
+            // Upcoming reviews - start from bottom with low opacity, move up gradually
+            const futureDistance = index - newActiveIndex;
+            const bottomOffset = futureDistance * 120; // Start further down
+            const scaleReduction = Math.max(0.75, 1 - futureDistance * 0.06);
+            const opacityReduction = Math.max(0.2, 1 - futureDistance * 0.2);
+            
+            review.style.transform = `translateY(${bottomOffset}px) scale(${scaleReduction})`;
+            review.style.opacity = `${opacityReduction}`;
+            review.style.zIndex = `${25 - futureDistance}`;
+            review.style.filter = `blur(${futureDistance * 1.5}px) brightness(${0.9 - futureDistance * 0.05}) saturate(0.8)`;
+            review.style.boxShadow = '0 15px 30px -8px rgba(0, 0, 0, 0.3)';
           }
 
-          // Apply smooth transitions for all transforms
-          review.style.transition = 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)';
+          // Apply smooth easing transition
+          review.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         });
       }
     };
@@ -146,10 +156,10 @@ const Reviews = () => {
         <div className="absolute bottom-0 right-1/3 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
       </div>
 
-      {/* Header Section - Much more compact */}
-      <div className="relative z-10 pt-8 pb-4 px-4">
+      {/* Header Section - Reduced padding */}
+      <div className="relative z-10 pt-6 pb-2 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 mb-4 border border-white/20">
+          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 mb-3 border border-white/20">
             <Award className="w-5 h-5 text-yellow-400" />
             <span className="text-white font-medium">Industry Leaders Trust Us</span>
             <div className="flex -space-x-2">
@@ -159,14 +169,14 @@ const Reviews = () => {
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter leading-none">
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter leading-none">
             SUCCESS
             <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
               STORIES
             </span>
           </h1>
           
-          <p className="text-base text-gray-300 max-w-2xl mx-auto leading-relaxed mb-6">
+          <p className="text-base text-gray-300 max-w-2xl mx-auto leading-relaxed mb-4">
             Real transformations from industry leaders who achieved extraordinary results. 
             <span className="text-cyan-400 font-semibold"> Over $50M in value created.</span>
           </p>
@@ -207,10 +217,10 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* Reviews Container - Much more compact */}
+      {/* Reviews Container - Reduced top margin */}
       <div 
         ref={containerRef}
-        className="relative"
+        className="relative mt-4"
         style={{ height: `${reviews.length * 40}vh` }}
       >
         <div className="sticky top-0 h-screen flex items-center justify-center px-4">
@@ -227,7 +237,7 @@ const Reviews = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-cyan-500/10"></div>
                   
                   <div className="relative z-10 p-8">
-                    {/* Header - Reduced spacing */}
+                    {/* Header */}
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-4">
                         <div className="relative">
@@ -261,7 +271,7 @@ const Reviews = () => {
                       </div>
                     </div>
 
-                    {/* Quote - Reduced spacing */}
+                    {/* Quote */}
                     <div className="relative mb-6">
                       <Quote className="absolute -top-2 -left-2 w-10 h-10 text-cyan-400/30" />
                       <blockquote className="text-xl text-white leading-relaxed font-light pl-6">
@@ -269,7 +279,7 @@ const Reviews = () => {
                       </blockquote>
                     </div>
 
-                    {/* Metrics - Reduced spacing */}
+                    {/* Metrics */}
                     <div className="grid grid-cols-3 gap-4">
                       <div className="text-center p-3 bg-white/5 rounded-2xl border border-white/10">
                         <div className="flex items-center justify-center gap-2 mb-1">
@@ -310,7 +320,7 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* CTA Section - Much more compact */}
+      {/* CTA Section */}
       <div className="relative z-10 py-8 px-4 text-center">
         <div className="max-w-3xl mx-auto">
           <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl p-6 border border-white/20">

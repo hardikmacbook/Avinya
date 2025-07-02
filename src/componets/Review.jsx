@@ -1,170 +1,236 @@
-import React, { useEffect, useRef } from 'react';
-import { Star, User } from 'lucide-react';
 
-const Reviews = () => {
-  const containerRef = useRef(null);
-  const reviewsRef = useRef([]);
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Sarah Johnson",
-      rating: 5,
-      text: "Absolutely incredible experience! The attention to detail and customer service exceeded all my expectations.",
-      avatar: "SJ",
-      date: "2 weeks ago"
-    },
-    {
-      id: 2,
-      name: "Michael Chen", 
-      rating: 5,
-      text: "Outstanding quality and fast delivery. The team was responsive and professional throughout the entire process.",
-      avatar: "MC",
-      date: "1 month ago"
-    },
-    {
-      id: 3,
-      name: "Emma Rodriguez",
-      rating: 4,
-      text: "Great value for money! The product quality is excellent and the user experience is smooth.",
-      avatar: "ER", 
-      date: "3 weeks ago"
-    },
-    {
-      id: 4,
-      name: "David Thompson",
-      rating: 5,
-      text: "Exceptional service from start to finish. The team went above and beyond to ensure everything was perfect.",
-      avatar: "DT",
-      date: "1 week ago"
-    }
-  ];
+import { useEffect, useRef } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { Star, Quote } from "lucide-react"
+
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Sarah Johnson",
+    role: "CEO at TechCorp",
+    company: "TechCorp",
+    image: "/placeholder.svg?height=80&width=80",
+    rating: 5,
+    text: "This product has completely transformed how we handle our business operations. The team's dedication to excellence is evident in every feature.",
+    gradient: "from-purple-500 to-pink-500",
+  },
+  {
+    id: 2,
+    name: "Michael Chen",
+    role: "Product Manager",
+    company: "InnovateLab",
+    image: "/placeholder.svg?height=80&width=80",
+    rating: 5,
+    text: "Outstanding service and incredible results. Our productivity has increased by 300% since implementing this solution. Highly recommended!",
+    gradient: "from-blue-500 to-cyan-500",
+  },
+  {
+    id: 3,
+    name: "Emily Rodriguez",
+    role: "Marketing Director",
+    company: "GrowthCo",
+    image: "/placeholder.svg?height=80&width=80",
+    rating: 5,
+    text: "The attention to detail and customer support is unmatched. This platform has become an essential part of our daily workflow.",
+    gradient: "from-green-500 to-emerald-500",
+  },
+  {
+    id: 4,
+    name: "David Thompson",
+    role: "Founder",
+    company: "StartupXYZ",
+    image: "/placeholder.svg?height=80&width=80",
+    rating: 5,
+    text: "Game-changing technology that scales with your business. The ROI we've seen is incredible, and the team is always there to help.",
+    gradient: "from-orange-500 to-red-500",
+  },
+  {
+    id: 5,
+    name: "Lisa Wang",
+    role: "CTO",
+    company: "FutureTech",
+    image: "/placeholder.svg?height=80&width=80",
+    rating: 5,
+    text: "Seamless integration and powerful features. This solution has streamlined our processes and improved our team's efficiency dramatically.",
+    gradient: "from-indigo-500 to-purple-500",
+  },
+  {
+    id: 6,
+    name: "James Miller",
+    role: "Operations Manager",
+    company: "ScaleCorp",
+    image: "/placeholder.svg?height=80&width=80",
+    rating: 5,
+    text: "Exceptional quality and reliability. The platform has exceeded our expectations and continues to deliver outstanding results every day.",
+    gradient: "from-teal-500 to-blue-500",
+  },
+]
+
+export default function Review() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
+    const container = containerRef.current
+    const scrollContainer = scrollContainerRef.current
 
-      const scrollY = window.scrollY;
-      const containerTop = containerRef.current.offsetTop;
-      const containerHeight = containerRef.current.offsetHeight;
-      const reviewHeight = containerHeight / reviews.length;
+    if (!container || !scrollContainer) return
 
-      reviewsRef.current.forEach((review, index) => {
-        if (!review) return;
+    // Calculate total scroll width
+    const totalWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth
 
-        const reviewStart = containerTop + (index * reviewHeight);
-        const reviewEnd = reviewStart + reviewHeight;
-        const progress = Math.max(0, Math.min(1, (scrollY - reviewStart + window.innerHeight/2) / reviewHeight));
+    // Create horizontal scroll animation
+    const scrollTween = gsap.to(scrollContainer, {
+      x: -totalWidth,
+      ease: "none",
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: () => `+=${totalWidth + window.innerHeight}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    })
 
-        if (scrollY >= reviewStart - window.innerHeight/2 && scrollY <= reviewEnd + window.innerHeight/2) {
-          // Active review - pin it
-          review.style.transform = `translateY(0) scale(1)`;
-          review.style.opacity = '1';
-          review.style.zIndex = '10';
-        } else if (scrollY > reviewEnd + window.innerHeight/2) {
-          // Passed review - move up
-          review.style.transform = `translateY(-100px) scale(0.9)`;
-          review.style.opacity = '0.6';
-          review.style.zIndex = '1';
-        } else {
-          // Upcoming review - stay below
-          review.style.transform = `translateY(50px) scale(0.95)`;
-          review.style.opacity = '0.8';
-          review.style.zIndex = '5';
-        }
-      });
-    };
+    // Animate testimonial cards on scroll
+    gsap.utils.toArray(".testimonial-card").forEach((card: any, index) => {
+      gsap.fromTo(
+        card,
+        {
+          opacity: 0,
+          y: 100,
+          scale: 0.8,
+          rotationY: -15,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotationY: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "left 80%",
+            end: "left 20%",
+            scrub: 1,
+            containerAnimation: scrollTween,
+          },
+        },
+      )
+    })
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
+  }, [])
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <div className="pt-20 text-center">
-        <h1 className="text-5xl font-bold text-[#8b2727] mb-4">Customer Reviews</h1>
-        <p className="text-[#8b2727] text-xl">What our customers say about us</p>
+    <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+      {/* Header Section */}
+      <div className="pt-20 pb-10 text-center">
+        <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+          What Our Clients Say
+        </h2>
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto px-4">
+          Discover why thousands of businesses trust us to deliver exceptional results
+        </p>
       </div>
 
-      {/* Reviews Container */}
-      <div 
-        ref={containerRef}
-        className="relative"
-        style={{ height: `${reviews.length * 100}vh` }}
-      >
-        <div className="sticky top-10 h-screen flex items-center justify-center px-4">
-          {reviews.map((review, index) => (
+      {/* Testimonials Container */}
+      <div ref={containerRef} className="relative h-screen overflow-hidden">
+        <div
+          ref={scrollContainerRef}
+          className="flex items-center h-full gap-8 px-8"
+          style={{ width: `${testimonials.length * 400 + 200}px` }}
+        >
+          {testimonials.map((testimonial, index) => (
             <div
-              key={review.id}
-              ref={el => reviewsRef.current[index] = el}
-              className="absolute w-full max-w-2xl transition-all duration-500 ease-out"
+              key={testimonial.id}
+              className="testimonial-card flex-shrink-0 w-96 h-[500px] relative group cursor-pointer"
             >
-              <div className="bg-white/70 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-gray-100">
-                {/* Header */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                    {review.avatar}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800">{review.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex gap-1">
-                        {Array.from({ length: 5 }, (_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm text-gray-500">{review.date}</span>
-                    </div>
-                  </div>
+              {/* Background Gradient */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}
+              />
+
+              {/* Glass Effect Card */}
+              <div className="relative h-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl group-hover:shadow-purple-500/25 transition-all duration-500 group-hover:scale-105">
+                {/* Quote Icon */}
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                  <Quote className="w-6 h-6 text-white" />
                 </div>
 
-                {/* Review Text */}
-                <blockquote className="text-lg text-gray-700 leading-relaxed mb-6 italic">
-                  "{review.text}"
+                {/* Rating Stars */}
+                <div className="flex gap-1 mb-6">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+
+                {/* Testimonial Text */}
+                <blockquote className="text-white text-lg leading-relaxed mb-8 font-medium">
+                  "{testimonial.text}"
                 </blockquote>
 
-                {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                  <div className="flex items-center gap-2 text-gray-500">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Verified Customer</span>
+                {/* Author Info */}
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className="relative">
+                    <img
+                      src={testimonial.image || "/placeholder.svg"}
+                      alt={testimonial.name}
+                      className="w-16 h-16 rounded-full object-cover border-2 border-white/30"
+                    />
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} rounded-full opacity-20`}
+                    />
                   </div>
-                  <div className="text-sm text-gray-400">
-                    Review {index + 1} of {reviews.length}
+                  <div>
+                    <h4 className="text-white font-bold text-lg">{testimonial.name}</h4>
+                    <p className="text-gray-300 text-sm">{testimonial.role}</p>
+                    <p className="text-gray-400 text-xs">{testimonial.company}</p>
                   </div>
                 </div>
+
+                {/* Decorative Elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-xl" />
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-lg" />
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Footer */}
-      <div className="relative z-10 px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl p-12 border border-white/20">
-            <h2 className="text-5xl font-bold text-white mb-6">
-              Ready to Write Your Success Story?
-            </h2>
-            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              Join these industry leaders and transform your business with proven results
-            </p>
-            <button className="group bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105">
-              Start Your Transformation
-              <span className="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>
-            </button>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 text-sm font-medium">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-1 bg-white/20 rounded-full overflow-hidden">
+              <div className="w-2 h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse" />
+            </div>
+            <span>Scroll to explore</span>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
 
-export default Reviews;
+      {/* Bottom Section */}
+      <div className="py-20 text-center">
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-3xl font-bold text-white mb-6">Ready to Join Our Success Stories?</h3>
+          <p className="text-gray-300 text-lg mb-8">Experience the difference that exceptional service makes</p>
+          <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105">
+            Get Started Today
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}

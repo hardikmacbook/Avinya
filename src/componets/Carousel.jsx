@@ -259,11 +259,11 @@ const BeautifulSlider = () => {
                 className={`relative overflow-hidden rounded-full transition-all duration-500 ${
                   index === currentSlide
                     ? 'w-12 sm:w-16 h-2 sm:h-3 bg-white shadow-lg shadow-white/50'
-                    : 'w-2 sm:w-3 h-2 sm:h-3 bg-white/40 hover:bg-white/60'
+                    : 'w-2 sm:w-3 h-2 sm:h-3 bg-white/40 hover:bg-[#d2af6f]'
                 }`}
               >
                 {index === currentSlide && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                  <div className="absolute inset-0 bg-[#8b2727] rounded-full"></div>
                 )}
                 {/* Media Type Indicator */}
                 <div className="absolute top-0 right-0 w-1 h-1 rounded-full bg-white/60"></div>
@@ -285,8 +285,8 @@ const BeautifulSlider = () => {
               onClick={() => setIsAutoPlay(!isAutoPlay)}
               className={`px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-xl shadow-xl ${
                 isAutoPlay
-                  ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
-                  : 'bg-white/10 text-white/80 border border-white/20 hover:bg-white/20'
+                  ? 'bg-[#8b2727] text-white border border-[#8b2727]'
+                  : 'bg-[#d2af6f] text-black border border-[#d2af6f]'
               }`}
             >
               AUTO {isAutoPlay ? 'ON' : 'OFF'}

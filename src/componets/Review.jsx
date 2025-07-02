@@ -83,7 +83,7 @@ const Reviews = () => {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="pt-20 text-center">
+      <div className="pt-40 text-center">
         <h1 className="text-5xl font-bold text-[#8b2727] mb-4">Customer Reviews</h1>
         <p className="text-[#8b2727] text-xl">What our customers say about us</p>
       </div>

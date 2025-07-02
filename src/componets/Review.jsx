@@ -50,6 +50,17 @@ const Reviews = () => {
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
       metrics: { improvement: "125%", revenue: "$12M", timeframe: "12 Months" },
       tags: ["Startup to IPO", "Growth"]
+    },
+    {
+      id: 5,
+      name: "Lisa Wang",
+      position: "Chief Innovation Officer, FutureTech",
+      company: "NASDAQ Listed",
+      rating: 5,
+      text: "Revolutionary platform that redefined our innovation pipeline. The AI-driven insights and seamless integration delivered unprecedented results across our entire organization.",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      metrics: { improvement: "200%", revenue: "$8.7M", timeframe: "4 Months" },
+      tags: ["Innovation", "AI-Powered"]
     }
   ];
 
@@ -63,46 +74,56 @@ const Reviews = () => {
       const windowHeight = window.innerHeight;
       const reviewHeight = containerHeight / reviews.length;
 
-      // Calculate which review should be active
-      const progress = Math.max(0, scrollY - containerTop + windowHeight / 2);
+      // Calculate which review should be active based on scroll position
+      const scrollProgress = Math.max(0, scrollY - containerTop + windowHeight * 0.5);
       const newActiveIndex = Math.min(
         reviews.length - 1,
-        Math.floor(progress / reviewHeight)
+        Math.max(0, Math.floor(scrollProgress / reviewHeight))
       );
       setActiveIndex(newActiveIndex);
 
+      // Apply pin effects to each review
       reviewsRef.current.forEach((review, index) => {
         if (!review) return;
 
         const reviewStart = containerTop + (index * reviewHeight);
         const reviewEnd = reviewStart + reviewHeight;
-        const reviewProgress = Math.max(0, Math.min(1, 
-          (scrollY - reviewStart + windowHeight * 0.7) / reviewHeight
-        ));
+        const reviewCenter = reviewStart + reviewHeight / 2;
+        
+        // Calculate how close we are to this review's center
+        const distanceFromCenter = Math.abs(scrollY + windowHeight / 2 - reviewCenter);
+        const maxDistance = reviewHeight;
+        const proximityRatio = Math.max(0, 1 - (distanceFromCenter / maxDistance));
 
+        // Determine review state based on scroll position
         if (index === newActiveIndex) {
-          // Active review - fully visible and centered
-          review.style.transform = `translateY(0) scale(1) rotateX(0deg)`;
+          // Currently active review - pin in center with full visibility
+          review.style.transform = `translateY(0) scale(1) rotateX(0deg) rotateY(0deg)`;
           review.style.opacity = '1';
-          review.style.zIndex = '20';
-          review.style.filter = 'blur(0px) brightness(1)';
+          review.style.zIndex = '30';
+          review.style.filter = 'blur(0px) brightness(1) saturate(1.1)';
+          review.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)';
         } else if (index < newActiveIndex) {
-          // Passed reviews - move up and fade
-          review.style.transform = `translateY(-120px) scale(0.85) rotateX(15deg)`;
-          review.style.opacity = '0.3';
-          review.style.zIndex = '5';
-          review.style.filter = 'blur(2px) brightness(0.7)';
+          // Reviews that have been scrolled past - move up and stack
+          const pastOffset = (newActiveIndex - index) * 20;
+          review.style.transform = `translateY(-${100 + pastOffset}px) scale(${0.8 - (newActiveIndex - index) * 0.05}) rotateX(15deg)`;
+          review.style.opacity = `${Math.max(0.2, 0.7 - (newActiveIndex - index) * 0.15)}`;
+          review.style.zIndex = `${20 - (newActiveIndex - index)}`;
+          review.style.filter = `blur(${(newActiveIndex - index) * 1.5}px) brightness(0.6) saturate(0.8)`;
+          review.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
         } else {
-          // Upcoming reviews - stay below and slightly visible
-          const upcomingOffset = (index - newActiveIndex) * 40;
-          review.style.transform = `translateY(${80 + upcomingOffset}px) scale(0.9) rotateX(-10deg)`;
-          review.style.opacity = '0.6';
-          review.style.zIndex = `${15 - (index - newActiveIndex)}`;
-          review.style.filter = 'blur(1px) brightness(0.8)';
+          // Upcoming reviews - stay below and preview
+          const upcomingOffset = (index - newActiveIndex) * 30;
+          const upcomingScale = Math.max(0.85, 1 - (index - newActiveIndex) * 0.05);
+          review.style.transform = `translateY(${60 + upcomingOffset}px) scale(${upcomingScale}) rotateX(-8deg)`;
+          review.style.opacity = `${Math.max(0.4, 0.8 - (index - newActiveIndex) * 0.1)}`;
+          review.style.zIndex = `${25 - (index - newActiveIndex)}`;
+          review.style.filter = `blur(${(index - newActiveIndex) * 0.8}px) brightness(0.85) saturate(0.9)`;
+          review.style.boxShadow = '0 15px 30px -8px rgba(0, 0, 0, 0.4)';
         }
 
-        // Smooth transitions
-        review.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        // Apply smooth transitions for all transforms
+        review.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
       });
     };
 
@@ -194,9 +215,9 @@ const Reviews = () => {
                 key={review.id}
                 ref={el => reviewsRef.current[index] = el}
                 className="absolute inset-0 w-full"
-                style={{ perspective: '1000px' }}
+                style={{ perspective: '1200px' }}
               >
-                <div className="bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+                <div className="bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden transform-gpu">
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-cyan-500/10"></div>
                   
@@ -268,6 +289,13 @@ const Reviews = () => {
                         </div>
                         <div className="text-gray-300 font-medium">Time to Value</div>
                       </div>
+                    </div>
+
+                    {/* Review Counter */}
+                    <div className="absolute bottom-6 right-6 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+                      <span className="text-white text-sm font-medium">
+                        {index + 1} / {reviews.length}
+                      </span>
                     </div>
                   </div>
                 </div>

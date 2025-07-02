@@ -157,7 +157,7 @@ const BeautifulSlider = () => {
         {/* Text Overlay for Images Only */}
         {!isVideo && (
           <div className="absolute inset-0 flex items-end justify-start p-6 sm:p-6 lg:p-12">
-            <div className="max-w-3xl space-y-3 sm:space-y-6 animate-fade-in pb-20 sm:pb-80 lg:pb-10 sm:p-10 pl-10 sm:pl-15">
+            <div className="max-w-3xl space-y-3 sm:space-y-6 animate-fade-in pb-80 sm:pb-80 lg:pb-10 sm:p-10 pl-10 sm:pl-15">
               {/* Category Badge */}
               <div className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
                 <span className="text-white text-xs sm:text-sm font-medium">
@@ -250,14 +250,14 @@ const BeautifulSlider = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
+          className="absolute left-3 sm:left-6 top-70 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
         
         <button
           onClick={nextSlide}
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
+          className="absolute right-3 sm:right-6 top-70 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>

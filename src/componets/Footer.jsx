@@ -1,63 +1,95 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube, Send } from 'lucide-react';
+import { ChevronRight, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 
-export default function CleanFooter() {
+export default function Footer() {
   const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isHovered, setIsHovered] = useState(null);
 
-  const handleSubscribe = () => {
-    if (email) {
-      setIsSubscribed(true);
-      setEmail('');
-      setTimeout(() => setIsSubscribed(false), 3000);
-    }
+  const navLinks = [
+    { name: 'Home', href: '#' },
+    { name: 'About', href: '#' },
+    { name: 'Services', href: '#' },
+    { name: 'Portfolio', href: '#' },
+    { name: 'Contact', href: '#' },
+  ];
+
+  const services = [
+    { name: 'Web Development', href: '#' },
+    { name: 'Mobile Apps', href: '#' },
+    { name: 'UI/UX Design', href: '#' },
+    { name: 'Digital Marketing', href: '#' },
+    { name: 'SEO Services', href: '#' },
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Newsletter signup:', email);
+    setEmail('');
   };
 
   return (
-    <footer className="bg-gray-50 text-gray-800 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-16">
+    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      {/* Main Footer Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
-          {/* Logo & Slogan Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                <span className="text-white text-2xl font-bold">B</span>
+          {/* Logo & Company Info */}
+          <div className="space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold text-xl">
+                L
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-black">BrandLogo</h3>
-                <p className="text-sm text-gray-600">Innovation Unleashed</p>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  LogoName
+                </h3>
+                <p className="text-sm text-gray-400 italic">Innovation Beyond Limits</p>
               </div>
             </div>
-            <p className="text-gray-600 leading-relaxed mb-8">
-              Transforming ideas into digital experiences that inspire and engage. We craft the future, one pixel at a time.
+            <p className="text-gray-300 leading-relaxed max-w-sm">
+              Crafting digital experiences that inspire, engage, and transform businesses worldwide with cutting-edge technology and creative excellence.
             </p>
-            
-            {/* Social Media Icons */}
             <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
-                <a
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
+                <div
                   key={index}
-                  href="#"
-                  className="w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+                  className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg"
                 >
-                  <Icon className="w-5 h-5" />
-                </a>
+                  <Icon size={18} />
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-xl font-semibold mb-6 text-black">Quick Links</h4>
-            <ul className="space-y-4">
-              {['Home', 'About Us', 'Services', 'Portfolio', 'Blog', 'Contact'].map((link) => (
-                <li key={link}>
-                  <a 
-                    href="#" 
-                    className="text-gray-600 hover:text-black hover:translate-x-2 transition-all duration-300 inline-block"
+          {/* Navigation Links */}
+          <div className="space-y-6">
+            <h4 className="text-xl font-semibold text-white">Quick Links</h4>
+            <ul className="space-y-3">
+              {navLinks.map((link, index) => (
+                <li key={index}>
+                  <a
+                    href={link.href}
+                    className="group flex items-center text-gray-300 hover:text-white transition-all duration-300 cursor-pointer"
+                    onMouseEnter={() => setIsHovered(`nav-${index}`)}
+                    onMouseLeave={() => setIsHovered(null)}
                   >
-                    {link}
+                    <ChevronRight 
+                      size={16} 
+                      className={`mr-2 transition-transform duration-300 ${
+                        isHovered === `nav-${index}` ? 'translate-x-2 text-blue-400' : ''
+                      }`}
+                    />
+                    <span className={`transition-transform duration-300 ${
+                      isHovered === `nav-${index}` ? 'translate-x-2' : ''
+                    }`}>
+                      {link.name}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -65,104 +97,32 @@ export default function CleanFooter() {
           </div>
 
           {/* Services */}
-          <div>
-            <h4 className="text-xl font-semibold mb-6 text-black">Services</h4>
-            <ul className="space-y-4">
-              {['Web Development', 'Mobile Apps', 'UI/UX Design', 'Branding', 'Digital Marketing', 'Consulting'].map((service) => (
-                <li key={service}>
-                  <a 
-                    href="#" 
-                    className="text-gray-600 hover:text-black hover:translate-x-2 transition-all duration-300 inline-block"
+          <div className="space-y-6">
+            <h4 className="text-xl font-semibold text-white">Services</h4>
+            <ul className="space-y-3">
+              {services.map((service, index) => (
+                <li key={index}>
+                  <a
+                    href={service.href}
+                    className="group flex items-center text-gray-300 hover:text-white transition-all duration-300 cursor-pointer"
+                    onMouseEnter={() => setIsHovered(`service-${index}`)}
+                    onMouseLeave={() => setIsHovered(null)}
                   >
-                    {service}
+                    <ChevronRight 
+                      size={16} 
+                      className={`mr-2 transition-transform duration-300 ${
+                        isHovered === `service-${index}` ? 'translate-x-2 text-purple-400' : ''
+                      }`}
+                    />
+                    <span className={`transition-transform duration-300 ${
+                      isHovered === `service-${index}` ? 'translate-x-2' : ''
+                    }`}>
+                      {service.name}
+                    </span>
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h4 className="text-xl font-semibold mb-6 text-black">Stay Connected</h4>
-            <p className="text-gray-600 mb-6">
-              Subscribe to our newsletter for the latest updates and exclusive offers.
-            </p>
-            
-            <div className="space-y-4">
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all duration-300"
-                />
-                <Mail className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
-              </div>
-              
-              <button
-                onClick={handleSubscribe}
-                disabled={isSubscribed}
-                className="w-full bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-              >
-                {isSubscribed ? (
-                  <span>Subscribed!</span>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    <span>Subscribe Now</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Contact Info */}
-            <div className="mt-8 space-y-4">
-              <div className="flex items-center space-x-3 text-gray-600">
-                <Phone className="w-5 h-5 text-black" />
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-600">
-                <Mail className="w-5 h-5 text-black" />
-                <span>hello@brandlogo.com</span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-600">
-                <MapPin className="w-5 h-5 text-black" />
-                <span>New York, NY 10001</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-500 text-sm">
-              © 2025 BrandLogo. All rights reserved.
-            </div>
-            <div className="flex space-x-8 text-sm">
-              <a 
-                href="#" 
-                className="text-gray-500 hover:text-black hover:translate-x-1 transition-all duration-300 inline-block"
-              >
-                Privacy Policy
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-500 hover:text-black hover:translate-x-1 transition-all duration-300 inline-block"
-              >
-                Terms of Service
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-500 hover:text-black hover:translate-x-1 transition-all duration-300 inline-block"
-              >
-                Cookie Policy
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
+          {/* Newsletter & Contact */}

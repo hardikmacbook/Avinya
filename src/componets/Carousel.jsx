@@ -158,18 +158,7 @@ const BeautifulSlider = () => {
         {!isVideo && (
           <div className="absolute inset-0 flex items-end justify-start p-6 sm:p-6 lg:p-12">
             <div className="max-w-3xl space-y-3 sm:space-y-6 animate-fade-in pb-100 sm:pb-80 lg:pb-10 sm:p-10 pl-10 sm:pl-15">
-              {/* Category Badge */}
-              <div className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
-                <span className="text-white text-xs sm:text-sm font-medium">
-                  {currentItem.category}
-                </span>
-                {currentItem.duration && (
-                  <>
-                    <div className="w-1 h-1 bg-white/60 rounded-full mx-2 sm:mx-3"></div>
-                    <span className="text-white/80 text-xs sm:text-sm">{currentItem.duration}</span>
-                  </>
-                )}
-              </div>
+              
               
               {/* Title */}
               <h1 className="text-2xl sm:text-4xl lg:text-7xl font-bold text-white leading-tight">

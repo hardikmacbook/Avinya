@@ -18,7 +18,6 @@ const BeautifulSlider = () => {
       description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
       url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=80",
       category: "AI Technology",
-      duration: "5 min read"
     },
     {
       id: 2,
@@ -34,8 +33,7 @@ const BeautifulSlider = () => {
       title: "Quantum Computing Revolution",
       description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
       url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=80",
-      category: "Quantum AI",
-      duration: "8 min read"
+      category: "Deep Learning"
     },
     {
       id: 4,
@@ -52,7 +50,6 @@ const BeautifulSlider = () => {
       description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
       url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=80",
       category: "Data Science",
-      duration: "6 min read"
     },
     {
       id: 6,
@@ -157,7 +154,7 @@ const BeautifulSlider = () => {
         {/* Text Overlay for Images Only */}
         {!isVideo && (
           <div className="absolute inset-0 flex items-end justify-start p-6 sm:p-6 lg:p-12">
-            <div className="max-w-3xl space-y-3 sm:space-y-6 animate-fade-in pb-100 sm:pb-80 lg:pb-10 sm:p-10 pl-10 sm:pl-15">
+            <div className="max-w-3xl space-y-3 sm:space-y-6 animate-fade-in pb-100 sm:pb-80 lg:pb-30 sm:p-10 pl-10 sm:pl-15">
               
               
               {/* Title */}

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { ChevronRight, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 
-export default function Footer() {
+function Footer() {
   const [email, setEmail] = useState('');
-  const [isHovered, setIsHovered] = useState(null);
 
   const navLinks = [
     { name: 'Home', href: '#' },
@@ -28,28 +27,20 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
+    <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
           {/* Logo & Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold text-xl">
+              <div className="w-12 h-12 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">
                 L
               </div>
               <div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  LogoName
-                </h3>
-                <p className="text-sm text-gray-400 italic">Innovation Beyond Limits</p>
+                <h3 className="text-2xl font-bold text-white">LogoName</h3>
+                <p className="text-sm text-gray-400">Innovation Beyond Limits</p>
               </div>
             </div>
             <p className="text-gray-300 leading-relaxed max-w-sm">
@@ -59,7 +50,7 @@ export default function Footer() {
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
                 <div
                   key={index}
-                  className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                  className="w-10 h-10 bg-gray-800 hover:bg-white hover:text-black rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300"
                 >
                   <Icon size={18} />
                 </div>
@@ -75,21 +66,9 @@ export default function Footer() {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="group flex items-center text-gray-300 hover:text-white transition-all duration-300 cursor-pointer"
-                    onMouseEnter={() => setIsHovered(`nav-${index}`)}
-                    onMouseLeave={() => setIsHovered(null)}
+                    className="text-gray-300 hover:text-white transition-all duration-300 cursor-pointer inline-block hover:translate-x-2 hover:underline"
                   >
-                    <ChevronRight 
-                      size={16} 
-                      className={`mr-2 transition-transform duration-300 ${
-                        isHovered === `nav-${index}` ? 'translate-x-2 text-blue-400' : ''
-                      }`}
-                    />
-                    <span className={`transition-transform duration-300 ${
-                      isHovered === `nav-${index}` ? 'translate-x-2' : ''
-                    }`}>
-                      {link.name}
-                    </span>
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -104,21 +83,9 @@ export default function Footer() {
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="group flex items-center text-gray-300 hover:text-white transition-all duration-300 cursor-pointer"
-                    onMouseEnter={() => setIsHovered(`service-${index}`)}
-                    onMouseLeave={() => setIsHovered(null)}
+                    className="text-gray-300 hover:text-white transition-all duration-300 cursor-pointer inline-block hover:translate-x-2 hover:underline"
                   >
-                    <ChevronRight 
-                      size={16} 
-                      className={`mr-2 transition-transform duration-300 ${
-                        isHovered === `service-${index}` ? 'translate-x-2 text-purple-400' : ''
-                      }`}
-                    />
-                    <span className={`transition-transform duration-300 ${
-                      isHovered === `service-${index}` ? 'translate-x-2' : ''
-                    }`}>
-                      {service.name}
-                    </span>
+                    {service.name}
                   </a>
                 </li>
               ))}
@@ -126,3 +93,67 @@ export default function Footer() {
           </div>
 
           {/* Newsletter & Contact */}
+          <div className="space-y-6">
+            <h4 className="text-xl font-semibold text-white">Stay Connected</h4>
+            
+            {/* Newsletter */}
+            <div className="space-y-4">
+              <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-white focus:outline-none transition-colors duration-300 text-white placeholder-gray-400"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-white text-black hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2"
+                >
+                  <span>Subscribe</span>
+                  <ArrowRight size={16} />
+                </button>
+              </form>
+            </div>
+
+            {/* Contact Info */}
+            <div className="space-y-3 pt-4 border-t border-gray-700">
+              <div className="flex items-center space-x-3 text-gray-300">
+                <Mail size={16} />
+                <span className="text-sm">hello@company.com</span>
+              </div>
+              <div className="flex items-center space-x-3 text-gray-300">
+                <Phone size={16} />
+                <span className="text-sm">+1 (555) 123-4567</span>
+              </div>
+              <div className="flex items-center space-x-3 text-gray-300">
+                <MapPin size={16} />
+                <span className="text-sm">New York, NY</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="mt-12 pt-8 border-t border-gray-700">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="text-gray-400 text-sm">
+              © 2025 LogoName. All rights reserved.
+            </div>
+            <div className="flex space-x-6 text-sm">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 hover:underline inline-block">Privacy Policy</a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 hover:underline inline-block">Terms of Service</a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 hover:underline inline-block">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default Footer;

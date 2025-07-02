@@ -83,7 +83,7 @@ const Navbar = () => {
                         className={({ isActive }) =>
                           `${
                             isActive
-                              ? "border-b-3 border-[#d2af6f] transition-all text-red-900"
+                              ? "border-b-3 border-[#d2af6f] transition-all text-[#8b2727]"
                               : ""
                           } text-black cursor-pointer hover:text-[#8b2727] transition-all duration-300 transform hover:scale-105`
                         }

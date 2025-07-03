@@ -5,13 +5,12 @@ import { useCart } from "./CartContext";
 const ProductCard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false); // added
+  const [error, setError] = useState(false);
 
   const { addToCart } = useCart();
 
   useEffect(() => {
-    // fetch("https://dummyjson.com/produs?limit=100")
-     fetch("https://dummyjson.com/products?limit=100")
+    fetch("https://dummyjson.com/products?limit=100")
       .then(response => response.json())
       .then(data => {
         setData(data.products);
@@ -19,7 +18,7 @@ const ProductCard = () => {
       })
       .catch(error => {
         console.error('Error fetching products:', error);
-        setError(true); // added
+        setError(true);
         setLoading(false);
       });
   }, []);
@@ -60,22 +59,22 @@ const ProductCard = () => {
               {data.slice(0,8).map((product) => (
                 <div 
                   key={product.id}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#d2af6f]/20 hover:border-[#8b2727]/50 p-6"
+                  className="bg-white rounded-2xl shadow-lg border border-[#d2af6f]/20 hover:border-[#8b2727] transition-colors duration-200 p-6 h-full flex flex-col"
                 >
                   <Link 
                     to={`/shop/${createSlug(product.title)}`}
                     className="w-full h-48 mb-4 bg-gradient-to-br from-[#f8f3e9] to-[#f0e6d2] rounded-xl flex items-center justify-center overflow-hidden"
                   >
                     <img
-                      className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                      className="max-w-full max-h-full object-contain"
                       src={product.images[0]}
                       alt={product.title}
                     />
                   </Link>
                   
-                  <div>
+                  <div className="flex flex-col flex-grow">
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-lg font-semibold text-gray-800 group-hover:text-[#8b2727] transition-colors leading-tight">
+                      <h3 className="text-lg font-semibold text-gray-800 leading-tight">
                         {product.title.length > 25 ? product.title.slice(0, 25) + "..." : product.title}
                       </h3>
                       <div className="flex items-center bg-[#f8f3e9] px-2 py-1 rounded-full">
@@ -99,7 +98,7 @@ const ProductCard = () => {
                   
                     <button 
                       onClick={(e) => handleAddToCart(e, product)}
-                      className="w-full bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg cursor-pointer"
+                      className="w-full bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium py-3 px-4 rounded-xl flex items-center justify-center gap-2 cursor-pointer mt-auto"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />

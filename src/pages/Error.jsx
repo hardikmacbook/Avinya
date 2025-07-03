@@ -204,10 +204,10 @@ const Error = () => {
           </form>
         </div>
         <div id="navigation">
-          <a className="navigation" href="">Home</a>
-          <a className="navigation" href="">About Us</a>
-          <a className="navigation" href="">Site Map</a>
-          <a className="navigation" href="">Contact</a>
+          <a className="navigation" href="/">Home</a>
+          <a className="navigation" href="/about">About</a>
+          <a className="navigation" href="/shop">Shop</a>
+          <a className="navigation" href="/contact">Contact</a>
         </div>
       </div>
     </div>

@@ -15,11 +15,11 @@ function Footer() {
   ];
 
   const services = [
-    { name: 'Web Development', href: '#' },
-    { name: 'Mobile Apps', href: '#' },
-    { name: 'UI/UX Design', href: '#' },
-    { name: 'Digital Marketing', href: '#' },
-    { name: 'SEO Services', href: '#' },
+    { name: 'Demo', href: '#' },
+    { name: 'Demo', href: '#' },
+    { name: 'Demo', href: '#' },
+    { name: 'Demo', href: '#' },
+    { name: 'Demo', href: '#' },
   ];
 
   const handleSubmit = (e) => {

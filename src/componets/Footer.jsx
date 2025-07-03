@@ -50,7 +50,7 @@ function Footer() {
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
                 <div
                   key={index}
-                  className="w-10 h-10 bg-gray-800 hover:bg-white hover:text-black rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-125 hover:-translate-y-1"
+                  className="w-10 h-10 bg-gray-800 hover:bg-white hover:text-black rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-125 hover:rotate-12"
                 >
                   <Icon size={18} />
                 </div>
@@ -66,7 +66,7 @@ function Footer() {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-all duration-300 cursor-pointer inline-block hover:translate-x-3 relative group"
+                    className="text-gray-300 hover:text-white transition-all duration-300 cursor-pointer inline-block hover:translate-x-4 relative group"
                   >
                     <span className="relative z-10">{link.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -84,7 +84,7 @@ function Footer() {
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-gray-300 hover:text-white transition-all duration-300 cursor-pointer inline-block hover:translate-x-3 relative group"
+                    className="text-gray-300 hover:text-white transition-all duration-300 cursor-pointer inline-block hover:translate-x-4 relative group"
                   >
                     <span className="relative z-10">{service.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -108,31 +108,31 @@ function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-white focus:outline-none transition-all duration-300 text-white placeholder-gray-400 focus:scale-105 focus:shadow-lg"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-white focus:outline-none transition-all duration-300 text-white placeholder-gray-400 focus:scale-105"
                   />
                 </div>
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-white text-black hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105 hover:shadow-lg group"
+                  className="w-full bg-white text-black hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105 group"
                 >
                   <span>Subscribe</span>
-                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-2" />
                 </button>
               </div>
             </div>
 
             {/* Contact Info */}
             <div className="space-y-3 pt-4 border-t border-gray-700">
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-all duration-300 cursor-pointer transform hover:translate-x-2 group">
+              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-all duration-300 cursor-pointer transform hover:translate-x-3 group">
                 <Mail size={16} className="transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm">hello@company.com</span>
               </div>
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-all duration-300 cursor-pointer transform hover:translate-x-2 group">
+              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-all duration-300 cursor-pointer transform hover:translate-x-3 group">
                 <Phone size={16} className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                 <span className="text-sm">+1 (555) 123-4567</span>
               </div>
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-all duration-300 cursor-pointer transform hover:translate-x-2 group">
-                <MapPin size={16} className="transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1" />
+              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-all duration-300 cursor-pointer transform hover:translate-x-3 group">
+                <MapPin size={16} className="transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm">New York, NY</span>
               </div>
             </div>
@@ -146,15 +146,15 @@ function Footer() {
               © 2025 LogoName. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 relative group">
+              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-2 relative group">
                 <span className="relative z-10">Privacy Policy</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 relative group">
+              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-2 relative group">
                 <span className="relative z-10">Terms of Service</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 relative group">
+              <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-2 relative group">
                 <span className="relative z-10">Cookie Policy</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>

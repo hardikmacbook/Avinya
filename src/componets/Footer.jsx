@@ -30,8 +30,7 @@ function Footer() {
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          
+        <div className="grid grid-cols-4 gap-12">
           {/* Logo & Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
@@ -97,7 +96,7 @@ function Footer() {
           {/* Newsletter & Contact */}
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-white">Stay Connected</h4>
-            
+
             {/* Newsletter */}
             <div className="space-y-4">
               <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>

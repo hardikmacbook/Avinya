@@ -60,7 +60,8 @@ const Error = () => {
   }, []);
 
   return (
-    <div id="wrap">
+    <>
+      <div id="wrap">
       <style>{`
         @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300);
 
@@ -210,6 +211,7 @@ const Error = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,35 +1,44 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Home from "./pages/Home"
-import About from "./pages/About"
-import Contact from "./pages/Contact"
-import Error from "./pages/Error"
-import Cart from "./pages/Cart"
-import Navbar from "./componets/Navbar"
-import ProductDetails from "./pages/ProductDetail"
-import Shop from "./pages/Shop"
-// import Footer from "./componets/Footer"
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom"
+import Home from "../src/pages/Home"
+import About from "../src/pages/About"
+import Contact from "../src/pages/Contact"
+import Error from "../src/pages/Error"
+import Cart from "../src/pages/Cart"
+import Navbar from "../src/componets/Navbar"
+import ProductDetails from "../src/pages/ProductDetail"
+import Shop from "../src/pages/Shop"
+import Footer from "../src/componets/Footer"
 import { CartProvider } from "./context/CartContext"
 
 function App() {
   return (
-    <>
-      <CartProvider>
-        <BrowserRouter>
-          <Navbar/>
-          <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/about" element={<About/>}/>
-            <Route path="/shop" element={<Shop/>}/>
-            <Route path="/shop/:title" element={<ProductDetails/>}/>
-            <Route path="/contact" element={<Contact/>}/>
-            <Route path="/cart" element={<Cart/>}/>
-            <Route path="*" element={<Error/>}/>
-          </Routes>
-        </BrowserRouter>
-          {/* <Footer/> */}
-      </CartProvider>
-    </>
+    <CartProvider>
+      <BrowserRouter>
+        <MainLayout />
+      </BrowserRouter>
+    </CartProvider>
   )
 }
 
-export default App
+function MainLayout() {
+  const location = useLocation();
+
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/shop/:title" element={<ProductDetails />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      {/* Footer will be hidden on Home page */}
+      {location.pathname !== "/" && <Footer />}
+    </>
+  );
+}
+
+export default App;

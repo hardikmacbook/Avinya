@@ -3,6 +3,7 @@ import Carousel from '../componets/Carousel'
 import ProductCard from '../context/ProductCard'
 import OurCoreValue from '../componets/OurCoreValue'
 import Review from '../componets/Review'
+import Footer from '../componets/Footer'
 const Home = () => {
   return (
    <>
@@ -11,6 +12,7 @@ const Home = () => {
    <ProductCard/>
    <OurCoreValue/>
    <Review/>
+   <Footer/>
    </div>
    </>
   )

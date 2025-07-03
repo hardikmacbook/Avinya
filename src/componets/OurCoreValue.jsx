@@ -76,9 +76,9 @@ const FlipCards = () => {
             <div
               key={card.id}
               className="group perspective-1000 w-80 h-56"
-              style={{ perspective: '1000px' }}
+              style={{ perspective: '1500px' }}
             >
-              <div className="relative w-full h-full transition-transform duration-700 ease-in-out transform-style-preserve-3d group-hover:rotate-y-180 shadow-2xl">
+              <div className="relative w-full h-full transform-style-preserve-3d group-hover:rotate-y-180 shadow-2xl">
                 {/* Front Side */}
                 <div 
                   className="absolute inset-0 w-full h-full rounded-2xl flex flex-col items-center justify-center text-white p-8 backface-hidden border-2"
@@ -189,7 +189,7 @@ const FlipCards = () => {
       
       <style jsx>{`
         .perspective-1000 {
-          perspective: 1000px;
+          perspective: 1500px;
         }
         
         .transform-style-preserve-3d {

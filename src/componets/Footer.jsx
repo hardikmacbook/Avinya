@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
+import { Link } from "react-router-dom";
+import AvinyaLogo from "../assets/images/logo.png";
 
 function Footer() {
   const [email, setEmail] = useState('');
@@ -35,13 +37,15 @@ function Footer() {
           {/* Logo & Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">
-                L
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white">LogoName</h3>
-                <p className="text-sm text-gray-400">Innovation Beyond Limits</p>
-              </div>
+               <Link to={"/"}>
+                <img
+                  className="w-[80px] sm:w-[100px] lg:w-[120px] h-[40px] sm:h-[50px] lg:h-[60px] object-contain transition-all duration-300"
+                  src={AvinyaLogo}
+                  alt="avinya logo"
+                  width="120"
+                  height="60"
+                />
+              </Link>
             </div>
             <p className="text-gray-300 leading-relaxed max-w-sm">
               Crafting digital experiences that inspire, engage, and transform businesses worldwide with cutting-edge technology and creative excellence.

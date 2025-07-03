@@ -76,9 +76,9 @@ const FlipCards = () => {
             <div
               key={card.id}
               className="group perspective-1000 w-80 h-56"
-              style={{ perspective: '1500px' }}
+              style={{ perspective: '2000px' }}
             >
-              <div className="relative w-full h-full transform-style-preserve-3d group-hover:rotate-y-180 shadow-2xl">
+              <div className="relative w-full h-full transition-transform duration-1000 ease-in-out transform-style-preserve-3d group-hover:rotate-y-180 shadow-2xl">
                 {/* Front Side */}
                 <div 
                   className="absolute inset-0 w-full h-full rounded-2xl flex flex-col items-center justify-center text-white p-8 backface-hidden border-2"
@@ -114,11 +114,13 @@ const FlipCards = () => {
                     {card.frontTitle}
                   </h3>
                   
-                  {/* 3D highlight effect */}
+                  
+                  {/* Additional depth layer */}
                   <div 
-                    className="absolute top-4 left-4 right-4 h-8 rounded-xl opacity-30"
+                    className="absolute inset-2 rounded-xl opacity-20"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 100%)'
+                      background: 'linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
+                      transform: 'translateZ(2px)'
                     }}
                   ></div>
                 </div>
@@ -164,11 +166,21 @@ const FlipCards = () => {
                     </p>
                   </div>
                   
-                  {/* 3D highlight effect */}
+                  {/* Enhanced 3D highlight effect */}
                   <div 
-                    className="absolute top-4 left-4 right-4 h-6 rounded-xl opacity-20"
+                    className="absolute top-4 left-4 right-4 h-8 rounded-xl opacity-30"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(210, 175, 111, 0.2) 0%, transparent 100%)'
+                      background: 'linear-gradient(135deg, rgba(210, 175, 111, 0.3) 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
+                      transform: 'translateZ(5px)'
+                    }}
+                  ></div>
+                  
+                  {/* Additional depth layer */}
+                  <div 
+                    className="absolute inset-2 rounded-xl opacity-15"
+                    style={{
+                      background: 'linear-gradient(45deg, transparent 0%, rgba(210, 175, 111, 0.1) 50%, transparent 100%)',
+                      transform: 'translateZ(2px)'
                     }}
                   ></div>
                   
@@ -189,7 +201,7 @@ const FlipCards = () => {
       
       <style jsx>{`
         .perspective-1000 {
-          perspective: 1500px;
+          perspective: 2000px;
         }
         
         .transform-style-preserve-3d {

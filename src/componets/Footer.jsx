@@ -30,9 +30,10 @@ function Footer() {
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-4 gap-12">
+        <div className="flex gap-12 overflow-x-auto">
+          
           {/* Logo & Company Info */}
-          <div className="space-y-6">
+          <div className="min-w-[250px] space-y-6">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl transform transition-all duration-300 hover:rotate-12 hover:scale-110">
                 L
@@ -58,7 +59,7 @@ function Footer() {
           </div>
 
           {/* Navigation Links */}
-          <div className="space-y-6">
+          <div className="min-w-[250px] space-y-6">
             <h4 className="text-xl font-semibold text-white">Quick Links</h4>
             <ul className="space-y-3">
               {navLinks.map((link, index) => (
@@ -76,7 +77,7 @@ function Footer() {
           </div>
 
           {/* Services */}
-          <div className="space-y-6">
+          <div className="min-w-[250px] space-y-6">
             <h4 className="text-xl font-semibold text-white">Services</h4>
             <ul className="space-y-3">
               {services.map((service, index) => (
@@ -94,9 +95,9 @@ function Footer() {
           </div>
 
           {/* Newsletter & Contact */}
-          <div className="space-y-6">
+          <div className="min-w-[250px] space-y-6">
             <h4 className="text-xl font-semibold text-white">Stay Connected</h4>
-
+            
             {/* Newsletter */}
             <div className="space-y-4">
               <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>

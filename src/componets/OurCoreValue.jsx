@@ -75,10 +75,10 @@ const FlipCards = () => {
           {cardData.map((card) => (
             <div
               key={card.id}
-              className="group perspective-1000 w-80 h-56 transform transition-all duration-300 hover:scale-105 hover:-translate-y-2"
+              className="group perspective-1000 w-80 h-56"
               style={{ perspective: '1000px' }}
             >
-              <div className="relative w-full h-full transition-transform duration-700 ease-in-out transform-style-preserve-3d group-hover:rotate-y-180 shadow-2xl hover:shadow-3xl">
+              <div className="relative w-full h-full transition-transform duration-700 ease-in-out transform-style-preserve-3d group-hover:rotate-y-180 shadow-2xl">
                 {/* Front Side */}
                 <div 
                   className="absolute inset-0 w-full h-full rounded-2xl flex flex-col items-center justify-center text-white p-8 backface-hidden border-2"
@@ -98,7 +98,7 @@ const FlipCards = () => {
                 >
                   <div className="relative">
                     <div 
-                      className="text-6xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                      className="text-6xl mb-4"
                       style={{
                         filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3))',
                         textShadow: '0 4px 8px rgba(0,0,0,0.5)'
@@ -208,23 +208,6 @@ const FlipCards = () => {
         
         .group:hover .group-hover\\:rotate-y-180 {
           transform: rotateY(180deg);
-        }
-        
-        .shadow-3xl {
-          box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.4);
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-5px); }
-        }
-        
-        .group:nth-child(odd) {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .group:nth-child(even) {
-          animation: float 6s ease-in-out infinite reverse;
         }
       `}</style>
     </div>

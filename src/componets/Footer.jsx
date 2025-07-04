@@ -1,31 +1,40 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  ArrowRight,
+} from "lucide-react";
 import AvinyaLogo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 function Footer() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Shop', href: '/shop' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Blog', href: '/blog' },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Shop", href: "/shop" },
+    { name: "Contact", href: "/contact" },
+    { name: "Blog", href: "/blog" },
   ];
 
   const services = [
-    { name: 'Demo', href: '#' },
-    { name: 'Demo', href: '#' },
-    { name: 'Demo', href: '#' },
-    { name: 'Demo', href: '#' },
-    { name: 'Demo', href: '#' },
+    { name: "Demo", href: "#" },
+    { name: "Demo", href: "#" },
+    { name: "Demo", href: "#" },
+    { name: "Demo", href: "#" },
+    { name: "Demo", href: "#" },
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Newsletter signup:', email);
-    setEmail('');
+    console.log("Newsletter signup:", email);
+    setEmail("");
   };
 
   return (
@@ -33,22 +42,21 @@ function Footer() {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          
           {/* Logo & Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-               <Link to={"/"}>
+              <Link to="/">
                 <img
-                  className="w-[80px] sm:w-[100px] lg:w-[120px] h-[40px] sm:h-[50px] lg:h-[60px] object-contain transition-all duration-300"
+                  className="w-auto h-[80px] sm:h-[100px] lg:h-[100px] object-contain transition-all duration-300"
                   src={AvinyaLogo}
                   alt="avinya logo"
-                  width="120"
-                  height="60"
                 />
               </Link>
             </div>
             <p className="text-gray-300 leading-relaxed max-w-sm">
-              Crafting digital experiences that inspire, engage, and transform businesses worldwide with cutting-edge technology and creative excellence.
+              Crafting digital experiences that inspire, engage, and transform
+              businesses worldwide with cutting-edge technology and creative
+              excellence.
             </p>
             <div className="flex space-x-4">
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
@@ -99,10 +107,12 @@ function Footer() {
           {/* Newsletter & Contact */}
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-white">Stay Connected</h4>
-            
+
             {/* Newsletter */}
             <div className="space-y-4">
-              <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>
+              <p className="text-gray-300 text-sm">
+                Subscribe to our newsletter for updates
+              </p>
               <div className="space-y-3">
                 <div className="relative">
                   <input
@@ -148,9 +158,24 @@ function Footer() {
               © 2025 LogoName. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Cookie Policy</a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors duration-300"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors duration-300"
+              >
+                Terms of Service
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors duration-300"
+              >
+                Cookie Policy
+              </a>
             </div>
           </div>
         </div>

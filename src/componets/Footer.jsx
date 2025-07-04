@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 import { Link } from "react-router-dom";
-import AvinyaLogo from "../assets/images/logo.jpg";
+import AvinyaLogo from "../assets/images/logo.png";
 
 function Footer() {
   const [email, setEmail] = useState('');

@@ -8,7 +8,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import AvinyaLogo from "../assets/images/logo.jpg";
+import AvinyaLogo from "../assets/images/logo.png";
 import SetAddress from "./SetAddress";
 import { useCart } from "../context/CartContext";
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2 } from 'lucide-react';
+import HeroVideo from "../assets/images/hero-video.mp4"
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,7 +24,7 @@ const BeautifulSlider = () => {
       id: 2,
       type: 'video',
       title: "Machine Learning in Action",
-      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      url: HeroVideo,
       thumbnail: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&h=1080&fit=crop&q=80",
       category: "Deep Learning"
     },

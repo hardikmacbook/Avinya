@@ -25,7 +25,6 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Machine Learning in Action",
       url: HeroVideo,
-      thumbnail: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&h=1080&fit=crop&q=80",
       category: "Deep Learning"
     },
     {

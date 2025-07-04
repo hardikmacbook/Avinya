@@ -8,9 +8,9 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import AvinyaLogo from "../assets/images/logo.png";
 import SetAddress from "./SetAddress";
 import { useCart } from "../context/CartContext";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,15 +56,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between py-3">
             {/* Logo and Address section */}
             <div className="flex items-center gap-4 lg:gap-20">
-              <Link to={"/"} onClick={closeMenu}>
-                <img
-                  className="w-[80px] sm:w-[100px] lg:w-[120px] h-[40px] sm:h-[50px] lg:h-[60px] object-contain transition-all duration-300"
-                  src={AvinyaLogo}
-                  alt="avinya logo"
-                  width="120"
-                  height="60"
-                />
-              </Link>
+              <Logo/>
 
               {/* Address section - hidden on mobile */}
               <div className="hidden lg:block relative z-[102]">

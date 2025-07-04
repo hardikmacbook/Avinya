@@ -8,7 +8,6 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import SetAddress from "./SetAddress";
 import { useCart } from "../context/CartContext";
 import Logo from "./Logo";
 
@@ -57,11 +56,6 @@ const Navbar = () => {
             {/* Logo and Address section */}
             <div className="flex items-center gap-4 lg:gap-20">
               <Logo/>
-
-              {/* Address section - hidden on mobile */}
-              <div className="hidden lg:block relative z-[102]">
-                <SetAddress />
-              </div>
             </div>
 
             {/* Desktop Menu */}
@@ -173,16 +167,6 @@ const Navbar = () => {
                 : "max-h-0 opacity-0 transform -translate-y-4"
             }`}
           >
-            {/* Address section for mobile */}
-            <div
-              className={`py-3 border-t border-gray-200 relative z-[102] transition-all duration-300 delay-100 ${
-                isMenuOpen
-                  ? "transform translate-x-0 opacity-100"
-                  : "transform -translate-x-4 opacity-0"
-              }`}
-            >
-              <SetAddress />
-            </div>
 
             {/* Navigation Links */}
             <nav className="pt-2">

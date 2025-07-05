@@ -119,7 +119,7 @@ const BeautifulSlider = () => {
 
   return (
     <>
-      <div className="relative w-full h-[50vh] sm:h-[700px] overflow-hidden bg-black">
+      <div className="relative w-full h-full sm:h-[700px] overflow-hidden bg-black">
       {/* Main Media Container */}
       <div className="relative w-full h-[700px]">
         {/* Media Display */}

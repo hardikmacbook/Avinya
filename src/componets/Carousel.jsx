@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2, Eye, Clock, MoreHorizontal, MessageCircle, Instagram, Link, Copy, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2, Eye, Clock, MoreHorizontal, MessageCircle, Instagram, Copy, X, RotateCcw } from 'lucide-react';
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -165,6 +165,13 @@ const BeautifulSlider = () => {
     }
   };
 
+  const toggleAutoPlay = () => {
+    setIsAutoPlay(!isAutoPlay);
+    if (!isAutoPlay) {
+      setProgress(0);
+    }
+  };
+
   const toggleShareMenu = () => {
     setShowShareMenu(!showShareMenu);
   };
@@ -176,7 +183,6 @@ const BeautifulSlider = () => {
   };
 
   const shareToInstagram = () => {
-    // Instagram doesn't support direct URL sharing, so we'll just open Instagram
     window.open('https://www.instagram.com/', '_blank');
   };
 
@@ -187,7 +193,6 @@ const BeautifulSlider = () => {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = currentUrl;
       document.body.appendChild(textArea);
@@ -200,13 +205,19 @@ const BeautifulSlider = () => {
     }
   };
 
+  const resetSlider = () => {
+    setCurrentSlide(0);
+    setIsPlaying(false);
+    setProgress(0);
+    setShowShareMenu(false);
+  };
+
   return (
-    <>
-      <div className={`
+    <div className={`
       relative w-full transition-all duration-700 ease-out
       ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
     `}>
-      {/* Main Container - No Border Radius */}
+      {/* Main Container */}
       <div 
         ref={containerRef}
         className="
@@ -217,12 +228,14 @@ const BeautifulSlider = () => {
           shadow-2xl
         "
       >
-        {/* Progress Bar */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-black/30 z-30">
+        {/* Enhanced Progress Bar */}
+        <div className="absolute top-0 left-0 right-0 h-2 bg-black z-30">
           <div 
-            className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-100 ease-linear"
+            className="h-full bg-[#8b2727] transition-all duration-100 ease-linear relative"
             style={{ width: `${progress}%` }}
-          />
+          >
+            <div className="absolute right-0 top-0 w-2 h-full bg-[#d2af6f] rounded-full"></div>
+          </div>
         </div>
 
         {/* Media Display */}
@@ -253,62 +266,72 @@ const BeautifulSlider = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-20"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-20"></div>
 
-        {/* Top Bar - Only for Images */}
-        {!isVideo && (
-          <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-4 sm:p-6 z-40">
+        {/* Enhanced Top Bar */}
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-2 sm:p-4 md:p-6 z-40">
+          {/* Left Side */}
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
             {/* Category Badge */}
-            <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/20">
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-              <span className="text-white text-xs sm:text-sm font-medium">{currentItem.category}</span>
+            <div className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/20">
+              <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-pulse ${
+                isVideo ? 'bg-[#8b2727]' : 'bg-[#d2af6f]'
+              }`}></div>
+              <span className="text-white text-xs sm:text-sm font-medium truncate max-w-[80px] sm:max-w-none">{currentItem.category}</span>
             </div>
 
-            {/* Right Controls */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Views */}
-              <div className="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-xl border border-white/20">
-                <Eye className="w-4 h-4 text-white/80" />
-                <span className="text-white text-sm font-medium">{currentItem.views}</span>
-              </div>
-
-              {/* More Options */}
-              <button className="p-2 sm:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-200">
-                <MoreHorizontal className="w-4 h-4" />
-              </button>
+            {/* Auto Play Status */}
+            <div className={`px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+              isAutoPlay 
+                ? 'bg-[#d2af6f]/20 text-[#d2af6f] border border-[#d2af6f]/30' 
+                : 'bg-[#8b2727]/20 text-[#8b2727] border border-[#8b2727]/30'
+            }`}>
+              {isAutoPlay ? 'AUTO' : 'MANUAL'}
             </div>
           </div>
-        )}
 
-        {/* Video Controls - Only for Videos */}
-        {isVideo && (
-          <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-40">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={toggleMute}
-                className="p-2 sm:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-200"
-              >
-                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-              
-              <button className="hidden sm:block p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-200">
-                <Maximize2 className="w-4 h-4" />
-              </button>
+          {/* Right Side */}
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
+            {/* Views Counter */}
+            <div className="hidden md:flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/40 backdrop-blur-xl border border-white/20">
+              <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-white/80" />
+              <span className="text-white text-xs sm:text-sm font-medium">{currentItem.views}</span>
             </div>
+
+            {/* Video Controls */}
+            {isVideo && (
+              <>
+                <button
+                  onClick={toggleMute}
+                  className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200"
+                >
+                  {isMuted ? <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" /> : <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />}
+                </button>
+                
+                <button className="hidden sm:block p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200">
+                  <Maximize2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                </button>
+              </>
+            )}
+
+            {/* More Options */}
+            <button className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200">
+              <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
+            </button>
           </div>
-        )}
+        </div>
 
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 hover:scale-110 transition-all duration-200 z-40"
+          className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-200 z-40"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
         </button>
         
         <button
           onClick={nextSlide}
-          className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 hover:scale-110 transition-all duration-200 z-40"
+          className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-200 z-40"
         >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
         </button>
 
         {/* Video Play Button */}
@@ -321,8 +344,8 @@ const BeautifulSlider = () => {
             <button
               onClick={togglePlay}
               className={`
-                p-4 sm:p-6 lg:p-8 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white 
-                hover:bg-white/20 hover:scale-110 transition-all duration-300 shadow-2xl
+                p-3 sm:p-4 md:p-6 lg:p-8 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white 
+                hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-300 shadow-2xl
                 ${showControls ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
               `}
             >
@@ -337,58 +360,36 @@ const BeautifulSlider = () => {
 
         {/* Bottom Content - Only for Images */}
         {!isVideo && (
-          <div className="absolute bottom-0 left-0 right-0 z-30">
-            {/* Content Info with Left Margin and Padding */}
-            <div className="ml-4 sm:ml-6 lg:ml-8 pl-4 sm:pl-6 lg:pl-8 pr-4 sm:pr-6 pb-4 sm:pb-6">
+          <div className="absolute bottom-40 left-10 right-0 z-30">
+            <div className="ml-2 sm:ml-4 md:ml-6 lg:ml-8 pl-2 sm:pl-4 md:pl-6 lg:pl-8 pr-2 sm:pr-4 md:pr-6 pb-4 sm:pb-6">
               <div className="max-w-4xl">
-                {/* Duration/Type Badge */}
-                <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                  <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/20 backdrop-blur-xl">
-                    <Clock className="w-3 h-3 text-white/80" />
-                    <span className="text-white text-xs font-medium">{currentItem.duration}</span>
-                  </div>
-                  <div className="px-2 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                    ARTICLE
-                  </div>
-                </div>
-
                 {/* Title */}
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">
                   {currentItem.title}
                 </h1>
 
                 {/* Description */}
                 {currentItem.description && (
-                  <p className="text-white/90 text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 max-w-3xl leading-relaxed">
+                  <p className="text-white/90 text-sm sm:text-base lg:text-lg mb-3 sm:mb-4 md:mb-6 max-w-3xl leading-relaxed">
                     {currentItem.description}
                   </p>
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                  <button className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-black rounded-full font-semibold hover:bg-white/90 transition-all duration-200 hover:scale-105">
-                    <Play className="w-4 h-4" />
-                    <span className="text-sm sm:text-base">Read</span>
-                  </button>
-                  
-                  <button className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-200">
-                    <Heart className="w-4 h-4" />
-                    <span className="hidden sm:inline text-sm">Save</span>
-                  </button>
-                  
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6">
                   {/* Share Button with Menu */}
                   <div className="relative">
                     <button 
                       onClick={toggleShareMenu}
-                      className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-200"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-[#d2af6f]/20 hover:border-[#d2af6f]/40 transition-all duration-200"
                     >
-                      <Share2 className="w-4 h-4" />
+                      <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span className="hidden sm:inline text-sm">Share</span>
                     </button>
 
                     {/* Share Menu */}
                     {showShareMenu && (
-                      <div className="absolute bottom-full left-0 mb-2 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg p-3 min-w-[200px] shadow-2xl">
+                      <div className="absolute bottom-full left-0 mb-2 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg p-3 min-w-[180px] sm:min-w-[200px] shadow-2xl">
                         <div className="flex items-center justify-between mb-3">
                           <span className="text-white text-sm font-medium">Share this article</span>
                           <button 
@@ -402,7 +403,7 @@ const BeautifulSlider = () => {
                         <div className="space-y-2">
                           <button
                             onClick={shareToWhatsApp}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
                           >
                             <MessageCircle className="w-4 h-4 text-green-400" />
                             <span className="text-sm">WhatsApp</span>
@@ -410,7 +411,7 @@ const BeautifulSlider = () => {
                           
                           <button
                             onClick={shareToInstagram}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
                           >
                             <Instagram className="w-4 h-4 text-pink-400" />
                             <span className="text-sm">Instagram</span>
@@ -418,9 +419,9 @@ const BeautifulSlider = () => {
                           
                           <button
                             onClick={copyLink}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
                           >
-                            <Link className="w-4 h-4 text-blue-400" />
+                            <Copy className="w-4 h-4 text-blue-400" />
                             <span className="text-sm">{copySuccess ? 'Copied!' : 'Copy Link'}</span>
                           </button>
                         </div>
@@ -433,10 +434,11 @@ const BeautifulSlider = () => {
           </div>
         )}
 
-          {/* Bottom Controls */}
-          <div className="flex items-center justify-between px-4 sm:px-6 pb-4 sm:pb-6">
-            {/* Slide Indicators */}
-            <div className="flex items-center gap-1 sm:gap-2">
+        {/* Enhanced Bottom Controls */}
+        <div className="absolute bottom-0 left-0 right-0 z-30">
+          <div className="flex items-center justify-between px-2 sm:px-4 md:px-6 pb-2 sm:pb-4 md:pb-6">
+            {/* Left Side - Slide Indicators */}
+            <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2">
               {mediaItems.map((item, index) => (
                 <button
                   key={item.id}
@@ -444,45 +446,62 @@ const BeautifulSlider = () => {
                   className={`
                     relative overflow-hidden rounded-full transition-all duration-300 group
                     ${index === currentSlide
-                      ? 'w-8 sm:w-12 h-2 sm:h-2.5 bg-white shadow-lg'
-                      : 'w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white/40 hover:bg-white/60'
+                      ? 'w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-gradient-to-r from-[#8b2727] to-[#d2af6f] shadow-lg'
+                      : 'w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/40 hover:bg-white/60'
                     }
                   `}
                 >
-                  <div className={`absolute top-0 right-0 w-1 h-1 rounded-full ${
-                    item.type === 'video' ? 'bg-red-400' : 'bg-blue-400'
+                  <div className={`absolute top-0 right-0 w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full ${
+                    item.type === 'video' ? 'bg-[#8b2727]' : 'bg-[#d2af6f]'
                   }`}></div>
                 </button>
               ))}
             </div>
 
-            {/* Right Controls */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Counter */}
-              <div className="px-3 py-1.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full">
+            {/* Right Side - Enhanced Controls */}
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
+              {/* Enhanced Pagination Counter */}
+              <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full">
                 <span className="text-white text-xs sm:text-sm font-mono">
-                  {String(currentSlide + 1).padStart(2, '0')}/{String(mediaItems.length).padStart(2, '0')}
+                  {String(currentSlide + 1).padStart(2, '0')} of {String(mediaItems.length).padStart(2, '0')}
+                </span>
+                <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-white/60 rounded-full"></div>
+                <span className="text-white/60 text-xs hidden sm:inline">
+                  {isVideo ? 'VIDEO' : 'ARTICLE'}
                 </span>
               </div>
-              
-              {/* Auto-play Toggle */}
+
+              {/* Reset Button */}
               <button
-                onClick={() => setIsAutoPlay(!isAutoPlay)}
+                onClick={resetSlider}
+                className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 transition-all duration-200 hover:scale-105"
+                title="Reset to first slide"
+              >
+                <RotateCcw className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" />
+              </button>
+              
+              {/* Enhanced Auto-play Toggle */}
+              <button
+                onClick={toggleAutoPlay}
                 className={`
-                  px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200
+                  flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 hover:scale-105
                   ${isAutoPlay
-                    ? 'bg-white text-black shadow-lg'
+                    ? 'bg-gradient-to-r from-[#8b2727] to-[#d2af6f] text-white shadow-lg shadow-[#8b2727]/25'
                     : 'bg-white/20 text-white border border-white/30 hover:bg-white/30'
                   }
                 `}
               >
-                AUTO {isAutoPlay ? 'ON' : 'OFF'}
+                <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
+                  isAutoPlay ? 'bg-white animate-pulse' : 'bg-white/60'
+                }`}></div>
+                <span className="hidden sm:inline">AUTO {isAutoPlay ? 'ON' : 'OFF'}</span>
+                <span className="sm:hidden">{isAutoPlay ? 'ON' : 'OFF'}</span>
               </button>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

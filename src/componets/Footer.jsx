@@ -78,7 +78,7 @@ function Footer() {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer"
+                    className="text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer"
                   >
                     {link.name}
                   </a>
@@ -120,12 +120,12 @@ function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-white focus:outline-none transition-colors duration-300 text-white placeholder-gray-400"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-[#d2af6f] focus:outline-none transition-colors duration-300 text-white placeholder-gray-400"
                   />
                 </div>
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-white text-black hover:text-white hover:bg-[#8b2727] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center space-x-2 cursor-pointer"
+                  className="w-full bg-white text-black hover:text-[#d2af6f] hover:bg-[#8b2727] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   <span>Subscribe</span>
                   <ArrowRight size={16} />

@@ -201,7 +201,8 @@ const BeautifulSlider = () => {
   };
 
   return (
-    <div className={`
+    <>
+      <div className={`
       relative w-full transition-all duration-700 ease-out
       ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
     `}>
@@ -334,13 +335,13 @@ const BeautifulSlider = () => {
           </div>
         )}
 
-        {/* Bottom Content */}
-        <div className="absolute bottom-0 left-0 right-0 z-30">
-          {/* Content Info with Left Margin and Padding */}
-          <div className="ml-4 sm:ml-6 lg:ml-8 pl-4 sm:pl-6 lg:pl-8 pr-4 sm:pr-6 pb-4 sm:pb-6">
-            <div className="max-w-4xl">
-              {/* Duration/Type Badge - Only for Images */}
-              {!isVideo && (
+        {/* Bottom Content - Only for Images */}
+        {!isVideo && (
+          <div className="absolute bottom-0 left-0 right-0 z-30">
+            {/* Content Info with Left Margin and Padding */}
+            <div className="ml-4 sm:ml-6 lg:ml-8 pl-4 sm:pl-6 lg:pl-8 pr-4 sm:pr-6 pb-4 sm:pb-6">
+              <div className="max-w-4xl">
+                {/* Duration/Type Badge */}
                 <div className="flex items-center gap-2 mb-3 sm:mb-4">
                   <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/20 backdrop-blur-xl">
                     <Clock className="w-3 h-3 text-white/80" />
@@ -350,86 +351,87 @@ const BeautifulSlider = () => {
                     ARTICLE
                   </div>
                 </div>
-              )}
 
-              {/* Title */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">
-                {currentItem.title}
-              </h1>
+                {/* Title */}
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">
+                  {currentItem.title}
+                </h1>
 
-              {/* Description - Only for Images */}
-              {!isVideo && currentItem.description && (
-                <p className="text-white/90 text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 max-w-3xl leading-relaxed">
-                  {currentItem.description}
-                </p>
-              )}
+                {/* Description */}
+                {currentItem.description && (
+                  <p className="text-white/90 text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 max-w-3xl leading-relaxed">
+                    {currentItem.description}
+                  </p>
+                )}
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <button className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-black rounded-full font-semibold hover:bg-white/90 transition-all duration-200 hover:scale-105">
-                  <Play className="w-4 h-4" />
-                  <span className="text-sm sm:text-base">{isVideo ? 'Watch' : 'Read'}</span>
-                </button>
-                
-                <button className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-200">
-                  <Heart className="w-4 h-4" />
-                  <span className="hidden sm:inline text-sm">Save</span>
-                </button>
-                
-                {/* Share Button with Menu */}
-                <div className="relative">
-                  <button 
-                    onClick={toggleShareMenu}
-                    className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-200"
-                  >
-                    <Share2 className="w-4 h-4" />
-                    <span className="hidden sm:inline text-sm">Share</span>
+                {/* Action Buttons */}
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                  <button className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-black rounded-full font-semibold hover:bg-white/90 transition-all duration-200 hover:scale-105">
+                    <Play className="w-4 h-4" />
+                    <span className="text-sm sm:text-base">Read</span>
                   </button>
+                  
+                  <button className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-200">
+                    <Heart className="w-4 h-4" />
+                    <span className="hidden sm:inline text-sm">Save</span>
+                  </button>
+                  
+                  {/* Share Button with Menu */}
+                  <div className="relative">
+                    <button 
+                      onClick={toggleShareMenu}
+                      className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-200"
+                    >
+                      <Share2 className="w-4 h-4" />
+                      <span className="hidden sm:inline text-sm">Share</span>
+                    </button>
 
-                  {/* Share Menu */}
-                  {showShareMenu && (
-                    <div className="absolute bottom-full left-0 mb-2 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg p-3 min-w-[200px] shadow-2xl">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-white text-sm font-medium">Share this {isVideo ? 'video' : 'article'}</span>
-                        <button 
-                          onClick={() => setShowShareMenu(false)}
-                          className="text-white/60 hover:text-white transition-colors"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <button
-                          onClick={shareToWhatsApp}
-                          className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
-                        >
-                          <MessageCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-sm">WhatsApp</span>
-                        </button>
+                    {/* Share Menu */}
+                    {showShareMenu && (
+                      <div className="absolute bottom-full left-0 mb-2 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg p-3 min-w-[200px] shadow-2xl">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-white text-sm font-medium">Share this article</span>
+                          <button 
+                            onClick={() => setShowShareMenu(false)}
+                            className="text-white/60 hover:text-white transition-colors"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
                         
-                        <button
-                          onClick={shareToInstagram}
-                          className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
-                        >
-                          <Instagram className="w-4 h-4 text-pink-400" />
-                          <span className="text-sm">Instagram</span>
-                        </button>
-                        
-                        <button
-                          onClick={copyLink}
-                          className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
-                        >
-                          <Link className="w-4 h-4 text-blue-400" />
-                          <span className="text-sm">{copySuccess ? 'Copied!' : 'Copy Link'}</span>
-                        </button>
+                        <div className="space-y-2">
+                          <button
+                            onClick={shareToWhatsApp}
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+                          >
+                            <MessageCircle className="w-4 h-4 text-green-400" />
+                            <span className="text-sm">WhatsApp</span>
+                          </button>
+                          
+                          <button
+                            onClick={shareToInstagram}
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+                          >
+                            <Instagram className="w-4 h-4 text-pink-400" />
+                            <span className="text-sm">Instagram</span>
+                          </button>
+                          
+                          <button
+                            onClick={copyLink}
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+                          >
+                            <Link className="w-4 h-4 text-blue-400" />
+                            <span className="text-sm">{copySuccess ? 'Copied!' : 'Copy Link'}</span>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        )}
 
           {/* Bottom Controls */}
           <div className="flex items-center justify-between px-4 sm:px-6 pb-4 sm:pb-6">
@@ -480,7 +482,7 @@ const BeautifulSlider = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

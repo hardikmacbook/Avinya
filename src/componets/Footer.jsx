@@ -160,19 +160,19 @@ function Footer() {
             <div className="flex space-x-6 text-sm">
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                className="text-gray-400 hover:text-[#d2af6f] transition-colors duration-300"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                className="text-gray-400 hover:text-[#d2af6f] transition-colors duration-300"
               >
                 Terms of Service
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                className="text-gray-400 hover:text-[#d2af6f] transition-colors duration-300"
               >
                 Cookie Policy
               </a>

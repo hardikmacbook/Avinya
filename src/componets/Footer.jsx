@@ -137,15 +137,15 @@ function Footer() {
             <div className="space-y-3 pt-4 border-t border-gray-700">
               <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
                 <Mail size={16} />
-                <span className="text-sm">avinyaelectricals@gmail.com </span>
+                <Link target="_blank" to="mailto:avinyaelectricals@gmail.com" className="text-sm">avinyaelectricals@gmail.com</Link>
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
                 <Phone size={16} />
-                <span className="text-sm">+91 87993 60195</span>
+                <Link to="tel:+918799360195" target="_blank" className="text-sm">+91 87993 60195</Link>
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
                 <MapPin size={16} />
-                <span className="text-sm">Vapi, Gujarat</span>
+                <Link target="_blank" to="https://maps.app.goo.gl/BefToyT4nEjuPh2x8" className="text-sm">Vapi, Gujarat</Link>
               </div>
             </div>
           </div>

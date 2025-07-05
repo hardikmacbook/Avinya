@@ -62,7 +62,7 @@ function Footer() {
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
                 <div
                   key={index}
-                  className="w-10 h-10 bg-gray-800 hover:bg-white hover:text-black rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300"
+                  className="w-10 h-10 bg-gray-800 hover:bg-[#8b2727] hover:text-[#d2af6f] rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300"
                 >
                   <Icon size={18} />
                 </div>
@@ -95,7 +95,7 @@ function Footer() {
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer"
+                    className="text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer"
                   >
                     {service.name}
                   </a>
@@ -125,7 +125,7 @@ function Footer() {
                 </div>
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-white text-black hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center space-x-2"
+                  className="w-full bg-white text-black hover:text-white hover:bg-[#8b2727] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   <span>Subscribe</span>
                   <ArrowRight size={16} />

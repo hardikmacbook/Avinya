@@ -236,14 +236,14 @@ const BeautifulSlider = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-3 sm:left-6 top-70 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
+          className="absolute left-3 sm:left-6 top-90 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
         
         <button
           onClick={nextSlide}
-          className="absolute right-3 sm:right-6 top-70 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
+          className="absolute right-3 sm:right-6 top-90 -translate-y-1/2 p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95 shadow-2xl"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>

@@ -161,7 +161,7 @@ const FlipCards = () => {
                     </h3>
                     
                     <p className="text-center leading-relaxed mb-4"
-                       style={{ color: '#555' }}>
+                       style={{ color: '#000' }}>
                       {card.backContent}
                     </p>
                   </div>

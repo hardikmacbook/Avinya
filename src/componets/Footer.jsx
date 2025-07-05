@@ -135,17 +135,17 @@ function Footer() {
 
             {/* Contact Info */}
             <div className="space-y-3 pt-4 border-t border-gray-700">
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer">
+              <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
                 <Mail size={16} />
-                <span className="text-sm">hello@company.com</span>
+                <span className="text-sm">avinyaelectricals@gmail.com </span>
               </div>
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer">
+              <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
                 <Phone size={16} />
-                <span className="text-sm">+1 (555) 123-4567</span>
+                <span className="text-sm">+91 87993 60195</span>
               </div>
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer">
+              <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
                 <MapPin size={16} />
-                <span className="text-sm">New York, NY</span>
+                <span className="text-sm">Vapi, Gujarat</span>
               </div>
             </div>
           </div>

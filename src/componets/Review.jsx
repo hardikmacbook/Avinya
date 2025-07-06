@@ -4,88 +4,88 @@ const Review = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Rahul Patel (રાહુલ પટેલ)",
-      role: "Factory Supervisor",
-      location: "Vapi GIDC",
-      rating: 5,
-      review: "Avinya Electricals has been our trusted partner for all industrial electrical needs. Their Vapi office is very supportive. Their product quality is top-notch, and rates are fair too. Highly recommended!",
-      avatar: "RP",
-      gradient: "from-blue-600 to-indigo-600"
-    },
-    {
-      id: 2,
-      name: "Mehul Shah (મેહુલ શાહ)",
-      role: "Workshop Owner",
-      location: "Silvassa",
-      rating: 5,
-      review: "I've been dealing with Avinya Electricals Silvassa branch for many years. They always provide the right products on time and guide technically whenever needed. Highly recommended supplier in Silvassa region.",
-      avatar: "MS",
-      gradient: "from-emerald-600 to-teal-600"
-    },
-    {
-      id: 3,
-      name: "Kiran Desai (કિરણ દેસાઈ)",
-      role: "Maintenance Engineer",
-      location: "Vapi",
-      rating: 4,
-      review: "Good service from Avinya Electricals, Vapi branch. Product range is wide, but sometimes a few items are out of stock, causing minor delays. Overall, a reliable supplier for industries.",
-      avatar: "KD",
-      gradient: "from-amber-600 to-orange-600"
-    },
-    {
-      id: 4,
-      name: "Nilesh Joshi (નિલેશ જોશી)",
-      role: "Production Manager",
-      location: "Silvassa",
-      rating: 4,
-      review: "We regularly purchase from Avinya Electricals Silvassa. They are dependable and deliveries are generally on time. However, their billing process can be a bit slow sometimes.",
-      avatar: "NJ",
-      gradient: "from-purple-600 to-violet-600"
-    },
-    {
-      id: 5,
-      name: "Hardik Trivedi (હાર્દિક ત્રિવેદી)",
-      role: "Purchase Officer",
-      location: "Vapi",
-      rating: 3,
-      review: "Avinya Electricals from Vapi office has good products, but their customer support during emergencies can be slow. Response time needs improvement.",
-      avatar: "HT",
-      gradient: "from-slate-600 to-gray-600"
-    },
-    {
-      id: 6,
-      name: "Jignesh Chauhan (જિગ્નેશ ચૌહાણ)",
-      role: "Plant Incharge",
-      location: "Silvassa",
-      rating: 2,
-      review: "My experience with Avinya Electricals Silvassa was average. Delivery was delayed and communication was poor. Had to follow up multiple times for updates.",
-      avatar: "JC",
-      gradient: "from-red-600 to-rose-600"
-    },
-    {
-      id: 7,
-      name: "Dipak Parmar (દિપક પરમાર)",
-      role: "Electrical Contractor",
-      location: "Vapi",
-      rating: 3,
-      review: "Avinya Electricals Vapi provides reasonable products, but staff handling needs improvement. Good for regular items, but not very strong for technical queries.",
-      avatar: "DP",
-      gradient: "from-cyan-600 to-blue-600"
-    },
-    {
-      id: 8,
-      name: "Vishal Bhatt (વિશાલ ભટ્ટ)",
-      role: "Industrial Project Consultant",
-      location: "Silvassa",
-      rating: 5,
-      review: "Excellent service by Avinya Electricals Silvassa. We recently ordered large industrial panels, and everything from quotation to delivery was handled smoothly. Very professional and trustworthy.",
-      avatar: "VB",
-      gradient: "from-green-600 to-emerald-600"
-    }
-  ];
+  const testimonials =[
+  {
+    "id": 1,
+    "name": "Rahul Patel (રાહુલ પટેલ)",
+    "role": "Factory Supervisor",
+    "location": "Silvassa",
+    "rating": 5,
+    "review": "We have been working with Avinya Electricals for many years, and they always maintain excellent quality and professionalism. Their wide range of industrial electrical products and prompt service makes them a highly reliable partner for our company’s ongoing operations.",
+    "avatar": "RP",
+    "gradient": "from-orange-500 to-yellow-500"
+  },
+  {
+    "id": 2,
+    "name": "Mehul Shah (મેહુલ શાહ)",
+    "role": "Workshop Owner",
+    "location": "Silvassa",
+    "rating": 5,
+    "review": "My experience with Avinya Electricals has been consistently positive. Their commitment to providing genuine and high-quality industrial products along with helpful technical advice makes them one of the best suppliers I have worked with in this sector.",
+    "avatar": "MS",
+    "gradient": "from-teal-500 to-cyan-500"
+  },
+  {
+    "id": 3,
+    "name": "Kiran Desai (કિરણ દેસાઈ)",
+    "role": "Maintenance Engineer",
+    "location": "Silvassa",
+    "rating": 4,
+    "review": "Avinya Electricals has always been a dependable source for industrial supplies. While their service is generally excellent, there have been a few cases where product availability caused delays. Overall, they remain one of our top suppliers for quality electrical components.",
+    "avatar": "KD",
+    "gradient": "from-emerald-500 to-green-600"
+  },
+  {
+    "id": 4,
+    "name": "Nilesh Joshi (નિલેશ જોશી)",
+    "role": "Production Manager",
+    "location": "Silvassa",
+    "rating": 4,
+    "review": "We frequently purchase from Avinya Electricals and appreciate their professionalism and product variety. While the ordering process is usually smooth, there have been occasional delays in billing and documentation, which could be improved.",
+    "avatar": "NJ",
+    "gradient": "from-purple-600 to-violet-600"
+  },
+  {
+    "id": 5,
+    "name": "Hardik Trivedi (હાર્દિક ત્રિવેદી)",
+    "role": "Purchase Officer",
+    "location": "Silvassa",
+    "rating": 3,
+    "review": "Avinya Electricals offers decent products at reasonable prices. However, they need to improve their responsiveness during urgent orders as sometimes it takes longer than expected to get updates or confirmations.",
+    "avatar": "HT",
+    "gradient": "from-rose-500 to-pink-500"
+  },
+  {
+    "id": 6,
+    "name": "Jignesh Chauhan (જિગ્નેશ ચૌહાણ)",
+    "role": "Plant Incharge",
+    "location": "Silvassa",
+    "rating": 2,
+    "review": "Our experience with Avinya Electricals has been somewhat disappointing. There were significant delays in delivering the required products, and the communication throughout the process was not satisfactory. They need to improve their delivery timelines and customer support.",
+    "avatar": "JC",
+    "gradient": "from-red-500 to-orange-500"
+  },
+  {
+    "id": 7,
+    "name": "Dipak Parmar (દિપક પરમાર)",
+    "role": "Electrical Contractor",
+    "location": "Silvassa",
+    "rating": 3,
+    "review": "Avinya Electricals provides good industrial supplies, and their pricing is fair. However, their technical support could use improvement, as there have been instances where they were unable to assist with specialized product queries.",
+    "avatar": "DP",
+    "gradient": "from-blue-500 to-sky-500"
+  },
+  {
+    "id": 8,
+    "name": "Vishal Bhatt (વિશાલ ભટ્ટ)",
+    "role": "Industrial Project Consultant",
+    "location": "Silvassa",
+    "rating": 5,
+    "review": "Avinya Electricals stands out as one of the most professional and trustworthy suppliers we have worked with. Their process from inquiry to delivery is smooth and efficient, and their commitment to customer satisfaction makes them our preferred choice for industrial electrical products.",
+    "avatar": "VB",
+    "gradient": "from-indigo-500 to-blue-600"
+  }
+];
 
   const totalSlides = testimonials.length;
 
@@ -134,7 +134,7 @@ const Review = () => {
   );
 
   const LocationBadge = ({ location }) => (
-    <div className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+    <div className="inline-flex items-center gap-1 px-4 py-1.5 bg-[#8b2727] text-white rounded-full text-sm font-medium">
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -148,9 +148,9 @@ const Review = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full mb-6">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-blue-700">Customer Reviews</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#8b2727] rounded-full mb-6">
+            <div className="w-2 h-2 bg-[#d2af6f] rounded-full animate-pulse"></div>
+            <span className="text-sm font-medium text-[#fff]">Customer Reviews</span>
           </div>
           
           <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -167,7 +167,7 @@ const Review = () => {
             {/* Progress Bar */}
             <div className="h-1 bg-gray-200">
               <div 
-                className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300"
+                className="h-full bg-[#8b2727] transition-all duration-300"
                 style={{ width: `${((currentSlide + 1) / totalSlides) * 100}%` }}
               />
             </div>
@@ -178,7 +178,7 @@ const Review = () => {
                 className="flex h-full transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
-                {testimonials.map((testimonial, index) => (
+                {testimonials.map((testimonial) => (
                   <div
                     key={testimonial.id}
                     className="min-w-full px-8 py-8 flex items-center"
@@ -244,7 +244,7 @@ const Review = () => {
                         onClick={() => goToSlide(index)}
                         className={`w-2 h-2 rounded-full transition-all duration-300 ${
                           index === currentSlide 
-                            ? 'bg-blue-500 w-6' 
+                            ? 'bg-[#8b2727] w-6' 
                             : 'bg-gray-300 hover:bg-gray-400'
                         }`}
                       />
@@ -261,8 +261,8 @@ const Review = () => {
                     onClick={() => setIsAutoPlaying(!isAutoPlaying)}
                     className={`p-2 rounded-full transition-colors ${
                       isAutoPlaying 
-                        ? 'bg-green-100 text-green-600' 
-                        : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                        ? 'bg-[#d2af6f] text-black' 
+                        : 'bg-[#8b2727] text-white hover:bg-[#d2af6f]'
                     }`}
                   >
                     {isAutoPlaying ? (

@@ -23,8 +23,6 @@ const BeautifulSlider = () => {
       description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
       url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=80",
       category: "AI Technology",
-      duration: "3 min read",
-      views: "12.5K"
     },
     {
       id: 2,
@@ -33,8 +31,6 @@ const BeautifulSlider = () => {
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
       category: "Deep Learning",
-      duration: "2:15",
-      views: "8.2K"
     },
     {
       id: 3,
@@ -43,8 +39,6 @@ const BeautifulSlider = () => {
       description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
       url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=80",
       category: "Quantum Tech",
-      duration: "5 min read",
-      views: "15.8K"
     },
     {
       id: 4,
@@ -53,8 +47,6 @@ const BeautifulSlider = () => {
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
       thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop&q=80",
       category: "Innovation",
-      duration: "4:30",
-      views: "22.1K"
     },
     {
       id: 5,
@@ -63,8 +55,6 @@ const BeautifulSlider = () => {
       description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
       url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=80",
       category: "Data Science",
-      duration: "4 min read",
-      views: "9.7K"
     },
     {
       id: 6,
@@ -73,8 +63,6 @@ const BeautifulSlider = () => {
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
       thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
       category: "Robotics",
-      duration: "3:45",
-      views: "18.3K"
     }
   ];
 
@@ -270,19 +258,13 @@ const BeautifulSlider = () => {
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-2 sm:p-4 md:p-6 z-40">
           {/* Left Side */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
-            {/* Category Badge */}
-            <div className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/20">
-              <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-pulse ${
-                isVideo ? 'bg-[#8b2727]' : 'bg-[#d2af6f]'
-              }`}></div>
-              <span className="text-white text-xs sm:text-sm font-medium truncate max-w-[80px] sm:max-w-none">{currentItem.category}</span>
-            </div>
+            
 
             {/* Auto Play Status */}
-            <div className={`px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+            <div className={`my-2 px-1.5 py-0.5 sm:px-4 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 ${
               isAutoPlay 
-                ? 'bg-[#d2af6f]/20 text-[#d2af6f] border border-[#d2af6f]/30' 
-                : 'bg-[#8b2727]/20 text-[#8b2727] border border-[#8b2727]/30'
+                ? 'bg-[#d2af6f] text-black border border-[#d2af6f]/30' 
+                : 'bg-[#8b2727] text-white border border-[#8b2727]/30'
             }`}>
               {isAutoPlay ? 'AUTO' : 'MANUAL'}
             </div>
@@ -290,11 +272,6 @@ const BeautifulSlider = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
-            {/* Views Counter */}
-            <div className="hidden md:flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/40 backdrop-blur-xl border border-white/20">
-              <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-white/80" />
-              <span className="text-white text-xs sm:text-sm font-medium">{currentItem.views}</span>
-            </div>
 
             {/* Video Controls */}
             {isVideo && (
@@ -305,17 +282,8 @@ const BeautifulSlider = () => {
                 >
                   {isMuted ? <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" /> : <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />}
                 </button>
-                
-                <button className="hidden sm:block p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200">
-                  <Maximize2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                </button>
               </>
-            )}
-
-            {/* More Options */}
-            <button className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200">
-              <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
-            </button>
+            )} 
           </div>
         </div>
 
@@ -446,14 +414,12 @@ const BeautifulSlider = () => {
                   className={`
                     relative overflow-hidden rounded-full transition-all duration-300 group
                     ${index === currentSlide
-                      ? 'w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-gradient-to-r from-[#8b2727] to-[#d2af6f] shadow-lg'
-                      : 'w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/40 hover:bg-white/60'
+                      ? 'w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-[#8b2727] shadow-lg'
+                      : 'w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/60 hover:bg-white/60'
                     }
                   `}
                 >
-                  <div className={`absolute top-0 right-0 w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full ${
-                    item.type === 'video' ? 'bg-[#8b2727]' : 'bg-[#d2af6f]'
-                  }`}></div>
+                  
                 </button>
               ))}
             </div>
@@ -466,7 +432,7 @@ const BeautifulSlider = () => {
                   {String(currentSlide + 1).padStart(2, '0')} of {String(mediaItems.length).padStart(2, '0')}
                 </span>
                 <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-white/60 rounded-full"></div>
-                <span className="text-white/60 text-xs hidden sm:inline">
+                <span className="text-white/80 text-xs hidden sm:inline">
                   {isVideo ? 'VIDEO' : 'ARTICLE'}
                 </span>
               </div>
@@ -484,10 +450,10 @@ const BeautifulSlider = () => {
               <button
                 onClick={toggleAutoPlay}
                 className={`
-                  flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 hover:scale-105
+                  flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200
                   ${isAutoPlay
-                    ? 'bg-gradient-to-r from-[#8b2727] to-[#d2af6f] text-white shadow-lg shadow-[#8b2727]/25'
-                    : 'bg-white/20 text-white border border-white/30 hover:bg-white/30'
+                    ? 'bg-[#8b2727] text-white shadow-lg shadow-[#8b2727]/25'
+                    : 'bg-[#d2af6f] text-black hover:bg-[#8b2727] hover:text-white'
                   }
                 `}
               >

@@ -19,7 +19,7 @@ export default function Contact() {
       name: "Vapi Office",
       phone: "+91 87993 60195",
       email: "avinyaelectricals@gmail.com",
-      address: "C-113, 1st Floor, City Center, Silvassa - Vapi Rd, Bhadakmora, Phase 1, GIDC, Vapi, Gujarat 396195",
+      address: "C-106, 1st Floor, City Center, Silvassa - Vapi Rd, Bhadakmora, Phase 1, GIDC, Vapi, Gujarat 396195",
       mapUrl: "https://maps.app.goo.gl/MDosEmQbCgSExxmQA",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3740.583480187053!2d72.92287887534829!3d20.358818681128056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0cf76e189a241%3A0xa033c44944bd0706!2sAvinya%20Electricals!5e0!3m2!1sen!2sin!4v1751862032833!5m2!1sen!2sin",
       hours: "Mon - Sat: 9 AM to 6:30 PM"

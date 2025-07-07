@@ -1,82 +1,15 @@
 @import "tailwindcss";
-
-
 :root{
   --color-primary : #000;
   -color-secondary:#8b2727;
   --color-accent: #d2af6f;
 }
-
-
 ::selection{
   background-color: #d2af6f;
   color: black;
 }
-
-
-
 /* clerk user button styling */
-
 .cl-avatarBox{
     width: 2.5rem;
     height: 2.5rem;
-}
-
-
-/* Add these imports to your main CSS file */
-@import 'swiper/css';
-@import 'swiper/css/effect-coverflow'; /* Example effect style */
-/* Add other effect styles if needed */
-
-
-
-.swiper-pagination{
-  display: none;
-}
-
-
-/* Custom styles for the Swiper container */
-
-/* Add after your existing styles */
-
-/* Full-width and full-height carousel container */
-.carousel-container {
-  position: relative;
-  width: 100vw;
-  /* height: 100vh; */
-  overflow: hidden;
-}
-
-/* Update Swiper slide custom styles */
-.swiper-slide-custom {
-  width: 100%;
-  transition: all 0.5s ease;
-  overflow: hidden;
-}
-
-
-/* Make sure the Swiper container takes full width and height */
-.mySwiper {
-  width: 100%;
-  height: 80vh;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-/* Responsive text adjustments */
-@media (max-width: 768px) {
-  .swiper-slide-custom {
-    height: 100vh;
-  }
-  
-  .carousel-container .swiper-button-next,
-  .carousel-container .swiper-button-prev {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .carousel-container .swiper-button-next:after,
-  .carousel-container .swiper-button-prev:after {
-    font-size: 16px;
-  }
 }

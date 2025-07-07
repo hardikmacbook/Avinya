@@ -28,7 +28,7 @@ export default function Contact() {
       name: "Surat Office",
       phone: "+91 80005 29452",
       email: "sales.avinyaelectricals@gmail.com",
-      address: "1ST FLLOR, HOU SOC 118, behind Ved Road, Avdhut Nagar, Chikuvadi, Raman Nagar, Katargam, Surat, Gujarat 395004",
+      address: "1st Floor,118, Avdhut Nagar, Chikuvadi, Raman Nagar, Katargam, Surat, Gujarat 395004",
       mapUrl: "https://maps.app.goo.gl/wNUcrz5rTTNaf8YYA",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.285405345006!2d72.8225313757201!3d21.220528180477167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x41fe46592ed7b741%3A0x7e424164b3d18ec1!2sAVINYA%20ELECTRICALS%20-%20SURAT!5e0!3m2!1sen!2sin!4v1751866128614!5m2!1sen!2sin",
       hours: "Mon - Sat: 9 AM to 6:30 PM"

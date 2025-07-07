@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2, Eye, Clock, MoreHorizontal, MessageCircle, Instagram, Copy, X, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Share2, MessageCircle, Instagram, Copy, X, RotateCcw } from 'lucide-react';
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -11,17 +11,21 @@ const BeautifulSlider = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState({});
+  const [videoLoaded, setVideoLoaded] = useState({});
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const containerRef = useRef(null);
 
+  // Optimized media items with better image sizes and formats
   const mediaItems = [
     {
       id: 1,
       type: 'image',
       title: "Neural Network Architecture",
       description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
-      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=80",
+      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop&q=75&auto=format",
+      urlHD: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=85&auto=format",
       category: "AI Technology",
     },
     {
@@ -29,7 +33,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Machine Learning in Action",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=75&auto=format",
       category: "Deep Learning",
     },
     {
@@ -37,7 +41,8 @@ const BeautifulSlider = () => {
       type: 'image',
       title: "Quantum Computing Revolution",
       description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
-      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=80",
+      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop&q=75&auto=format",
+      urlHD: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=85&auto=format",
       category: "Quantum Tech",
     },
     {
@@ -45,7 +50,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Future of AI",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop&q=75&auto=format",
       category: "Innovation",
     },
     {
@@ -53,7 +58,8 @@ const BeautifulSlider = () => {
       type: 'image',
       title: "Data Visualization Mastery",
       description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
-      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=80",
+      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=75&auto=format",
+      urlHD: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=85&auto=format",
       category: "Data Science",
     },
     {
@@ -61,7 +67,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Robotics & AI",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=75&auto=format",
       category: "Robotics",
     }
   ];
@@ -69,19 +75,46 @@ const BeautifulSlider = () => {
   const currentItem = mediaItems[currentSlide];
   const isVideo = currentItem.type === 'video';
 
-  useEffect(() => {
-    setIsLoaded(true);
+  // Preload images for better performance
+  const preloadImage = useCallback((src, id) => {
+    const img = new Image();
+    img.onload = () => {
+      setImageLoaded(prev => ({ ...prev, [id]: true }));
+    };
+    img.onerror = () => {
+      setImageLoaded(prev => ({ ...prev, [id]: false }));
+    };
+    img.src = src;
   }, []);
 
-  // Progress and auto-slide
+  // Preload next and previous images
+  useEffect(() => {
+    const nextIndex = (currentSlide + 1) % mediaItems.length;
+    const prevIndex = (currentSlide - 1 + mediaItems.length) % mediaItems.length;
+    
+    [currentSlide, nextIndex, prevIndex].forEach(index => {
+      const item = mediaItems[index];
+      if (item.type === 'image' && !imageLoaded[item.id]) {
+        preloadImage(item.url, item.id);
+      }
+    });
+  }, [currentSlide, mediaItems, imageLoaded, preloadImage]);
+
+  useEffect(() => {
+    // Set initial load state after a brief delay to ensure smooth animation
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Progress and auto-slide with RAF optimization
   useEffect(() => {
     if (isAutoPlay && !isPlaying && isLoaded) {
       const duration = isVideo ? 8000 : 6000;
-      const startTime = Date.now();
+      const startTime = performance.now();
       
-      const updateProgress = () => {
-        const elapsed = Date.now() - startTime;
-        const newProgress = (elapsed / duration) * 100;
+      const updateProgress = (timestamp) => {
+        const elapsed = timestamp - startTime;
+        const newProgress = Math.min((elapsed / duration) * 100, 100);
         
         if (newProgress >= 100) {
           setProgress(0);
@@ -104,77 +137,78 @@ const BeautifulSlider = () => {
     }
   }, [isAutoPlay, isPlaying, currentSlide, mediaItems.length, isVideo, isLoaded]);
 
-  // Video handling
+  // Video handling with better performance
   useEffect(() => {
     if (videoRef.current && isVideo) {
       videoRef.current.currentTime = 0;
+      videoRef.current.load(); // Ensure video is properly loaded
       if (isPlaying) {
-        videoRef.current.play();
+        videoRef.current.play().catch(console.error);
       }
     }
   }, [currentSlide, isVideo]);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % mediaItems.length);
     setIsPlaying(false);
     setProgress(0);
     setShowShareMenu(false);
-  };
+  }, [mediaItems.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
     setIsPlaying(false);
     setProgress(0);
     setShowShareMenu(false);
-  };
+  }, [mediaItems.length]);
 
-  const goToSlide = (index) => {
+  const goToSlide = useCallback((index) => {
     setCurrentSlide(index);
     setIsPlaying(false);
     setProgress(0);
     setShowShareMenu(false);
-  };
+  }, []);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     if (isVideo && videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(console.error);
       }
       setIsPlaying(!isPlaying);
     }
-  };
+  }, [isVideo, isPlaying]);
 
-  const toggleMute = () => {
+  const toggleMute = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
-  };
+  }, [isMuted]);
 
-  const toggleAutoPlay = () => {
+  const toggleAutoPlay = useCallback(() => {
     setIsAutoPlay(!isAutoPlay);
     if (!isAutoPlay) {
       setProgress(0);
     }
-  };
+  }, [isAutoPlay]);
 
-  const toggleShareMenu = () => {
+  const toggleShareMenu = useCallback(() => {
     setShowShareMenu(!showShareMenu);
-  };
+  }, [showShareMenu]);
 
-  const shareToWhatsApp = () => {
+  const shareToWhatsApp = useCallback(() => {
     const text = `Check out this ${isVideo ? 'video' : 'article'}: ${currentItem.title}`;
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
-  };
+  }, [isVideo, currentItem.title]);
 
-  const shareToInstagram = () => {
+  const shareToInstagram = useCallback(() => {
     window.open('https://www.instagram.com/', '_blank');
-  };
+  }, []);
 
-  const copyLink = async () => {
+  const copyLink = useCallback(async () => {
     const currentUrl = window.location.href;
     try {
       await navigator.clipboard.writeText(currentUrl);
@@ -191,13 +225,52 @@ const BeautifulSlider = () => {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     }
-  };
+  }, []);
 
-  const resetSlider = () => {
+  const resetSlider = useCallback(() => {
     setCurrentSlide(0);
     setIsPlaying(false);
     setProgress(0);
     setShowShareMenu(false);
+  }, []);
+
+  // Optimized image component
+  const OptimizedImage = ({ item, className }) => {
+    const [currentSrc, setCurrentSrc] = useState(item.url);
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+    useEffect(() => {
+      // Load low-res first, then high-res
+      const lowResImg = new Image();
+      lowResImg.onload = () => {
+        setIsImageLoaded(true);
+        if (item.urlHD) {
+          const highResImg = new Image();
+          highResImg.onload = () => {
+            setCurrentSrc(item.urlHD);
+          };
+          highResImg.src = item.urlHD;
+        }
+      };
+      lowResImg.src = item.url;
+    }, [item.url, item.urlHD]);
+
+    return (
+      <div className={`relative ${className}`}>
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse" />
+        )}
+        <img
+          src={currentSrc}
+          alt={item.title}
+          className={`w-full h-full object-cover transition-all duration-700 ${
+            isImageLoaded ? 'opacity-100' : 'opacity-0'
+          } hover:scale-105`}
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    );
   };
 
   return (
@@ -219,10 +292,10 @@ const BeautifulSlider = () => {
         {/* Enhanced Progress Bar */}
         <div className="absolute top-0 left-0 right-0 h-2 bg-black z-30">
           <div 
-            className="h-full bg-[#8b2727] transition-all duration-100 ease-linear relative"
+            className="h-full bg-gradient-to-r from-red-600 to-red-500 transition-all duration-100 ease-linear relative"
             style={{ width: `${progress}%` }}
           >
-            <div className="absolute right-0 top-0 w-2 h-full bg-[#d2af6f] rounded-full"></div>
+            <div className="absolute right-0 top-0 w-2 h-full bg-yellow-400 rounded-full shadow-lg"></div>
           </div>
         </div>
 
@@ -236,21 +309,22 @@ const BeautifulSlider = () => {
               muted={isMuted}
               loop
               playsInline
+              preload="metadata"
+              onLoadedData={() => setVideoLoaded(prev => ({ ...prev, [currentItem.id]: true }))}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             >
               <source src={currentItem.url} type="video/mp4" />
             </video>
           ) : (
-            <img
-              src={currentItem.url}
-              alt={currentItem.title}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+            <OptimizedImage 
+              item={currentItem} 
+              className="w-full h-full"
             />
           )}
         </div>
 
-        {/* Gradient Overlays */}
+        {/* Optimized Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-20"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-20"></div>
 
@@ -258,13 +332,11 @@ const BeautifulSlider = () => {
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-2 sm:p-4 md:p-6 z-40">
           {/* Left Side */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
-            
-
             {/* Auto Play Status */}
-            <div className={`my-2 px-1.5 py-0.5 sm:px-4 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+            <div className={`my-2 px-1.5 py-0.5 sm:px-4 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 backdrop-blur-sm ${
               isAutoPlay 
-                ? 'bg-[#d2af6f] text-black border border-[#d2af6f]/30' 
-                : 'bg-[#8b2727] text-white border border-[#8b2727]/30'
+                ? 'bg-yellow-400/90 text-black border border-yellow-400/50' 
+                : 'bg-red-600/90 text-white border border-red-600/50'
             }`}>
               {isAutoPlay ? 'AUTO' : 'MANUAL'}
             </div>
@@ -272,17 +344,14 @@ const BeautifulSlider = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
-
             {/* Video Controls */}
             {isVideo && (
-              <>
-                <button
-                  onClick={toggleMute}
-                  className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200"
-                >
-                  {isMuted ? <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" /> : <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />}
-                </button>
-              </>
+              <button
+                onClick={toggleMute}
+                className="p-1.5 sm:p-2 md:p-2.5 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-red-600/60 transition-all duration-200"
+              >
+                {isMuted ? <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" /> : <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />}
+              </button>
             )} 
           </div>
         </div>
@@ -290,14 +359,14 @@ const BeautifulSlider = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-200 z-40"
+          className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-red-600/60 hover:border-red-600/40 hover:scale-110 transition-all duration-200 z-40"
         >
           <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
         </button>
         
         <button
           onClick={nextSlide}
-          className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-200 z-40"
+          className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-red-600/60 hover:border-red-600/40 hover:scale-110 transition-all duration-200 z-40"
         >
           <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
         </button>
@@ -312,8 +381,8 @@ const BeautifulSlider = () => {
             <button
               onClick={togglePlay}
               className={`
-                p-3 sm:p-4 md:p-6 lg:p-8 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white 
-                hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-300 shadow-2xl
+                p-3 sm:p-4 md:p-6 lg:p-8 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full text-white 
+                hover:bg-red-600/60 hover:border-red-600/40 hover:scale-110 transition-all duration-300 shadow-2xl
                 ${showControls ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
               `}
             >
@@ -349,7 +418,7 @@ const BeautifulSlider = () => {
                   <div className="relative">
                     <button 
                       onClick={toggleShareMenu}
-                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-[#d2af6f]/20 hover:border-[#d2af6f]/40 transition-all duration-200"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-yellow-400/20 hover:border-yellow-400/40 transition-all duration-200"
                     >
                       <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span className="hidden sm:inline text-sm">Share</span>
@@ -371,7 +440,7 @@ const BeautifulSlider = () => {
                         <div className="space-y-2">
                           <button
                             onClick={shareToWhatsApp}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-yellow-400/20 rounded-lg transition-colors"
                           >
                             <MessageCircle className="w-4 h-4 text-green-400" />
                             <span className="text-sm">WhatsApp</span>
@@ -379,7 +448,7 @@ const BeautifulSlider = () => {
                           
                           <button
                             onClick={shareToInstagram}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-yellow-400/20 rounded-lg transition-colors"
                           >
                             <Instagram className="w-4 h-4 text-pink-400" />
                             <span className="text-sm">Instagram</span>
@@ -387,7 +456,7 @@ const BeautifulSlider = () => {
                           
                           <button
                             onClick={copyLink}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-yellow-400/20 rounded-lg transition-colors"
                           >
                             <Copy className="w-4 h-4 text-blue-400" />
                             <span className="text-sm">{copySuccess ? 'Copied!' : 'Copy Link'}</span>
@@ -414,8 +483,8 @@ const BeautifulSlider = () => {
                   className={`
                     relative overflow-hidden rounded-full transition-all duration-300 group
                     ${index === currentSlide
-                      ? 'w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-[#8b2727] shadow-lg'
-                      : 'w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/60 hover:bg-white/60'
+                      ? 'w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-gradient-to-r from-red-600 to-red-500 shadow-lg'
+                      : 'w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/60 hover:bg-white/80'
                     }
                   `}
                 >
@@ -427,7 +496,7 @@ const BeautifulSlider = () => {
             {/* Right Side - Enhanced Controls */}
             <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
               {/* Enhanced Pagination Counter */}
-              <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full">
+              <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full">
                 <span className="text-white text-xs sm:text-sm font-mono">
                   {String(currentSlide + 1).padStart(2, '0')} of {String(mediaItems.length).padStart(2, '0')}
                 </span>
@@ -440,7 +509,7 @@ const BeautifulSlider = () => {
               {/* Reset Button */}
               <button
                 onClick={resetSlider}
-                className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 transition-all duration-200 hover:scale-105"
+                className="p-1.5 sm:p-2 md:p-2.5 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-red-600/60 hover:border-red-600/40 transition-all duration-200 hover:scale-105"
                 title="Reset to first slide"
               >
                 <RotateCcw className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" />
@@ -450,10 +519,10 @@ const BeautifulSlider = () => {
               <button
                 onClick={toggleAutoPlay}
                 className={`
-                  flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200
+                  flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 backdrop-blur-sm
                   ${isAutoPlay
-                    ? 'bg-[#8b2727] text-white shadow-lg shadow-[#8b2727]/25'
-                    : 'bg-[#d2af6f] text-black hover:bg-[#8b2727] hover:text-white'
+                    ? 'bg-red-600/90 text-white shadow-lg shadow-red-600/25'
+                    : 'bg-yellow-400/90 text-black hover:bg-red-600/90 hover:text-white'
                   }
                 `}
               >

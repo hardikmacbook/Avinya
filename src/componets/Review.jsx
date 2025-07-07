@@ -11,7 +11,7 @@ const Review = () => {
     "role": "Industrial Project Consultant",
     "location": "Vapi",
     "rating": 5,
-    "review": "Avinya Electricals stands out as one of the most professional and trustworthy suppliers we have worked with. Their process from inquiry to delivery is smooth and efficient, and their commitment to customer satisfaction makes them our preferred choice for industrial electrical products.",
+    "review": "As a consultant, I work with many vendors, but Avinya Electricals stands out for their technical clarity and professional approach. Their efficient handling from inquiry to delivery adds real value to my projects",
     "avatar": "VB",
     "gradient": "from-indigo-500 to-blue-600"
   },
@@ -21,7 +21,7 @@ const Review = () => {
     "role": "Workshop Owner",
     "location": "Surat",
     "rating": 5,
-    "review": "My experience with Avinya Electricals has been consistently positive. Their commitment to providing genuine and high-quality industrial products along with helpful technical advice makes them one of the best suppliers I have worked with in this sector.",
+    "review": "Running a workshop means I need quick access to reliable products. Avinya Electricals delivers just that—genuine items, fair prices, and a team that’s always ready with technical suggestions",
     "avatar": "MS",
     "gradient": "from-teal-500 to-cyan-500"
   },
@@ -31,7 +31,7 @@ const Review = () => {
     "role": "Maintenance Engineer",
     "location": "Pune",
     "rating": 4,
-    "review": "Avinya Electricals has always been a dependable source for industrial supplies. While their service is generally excellent, there have been a few cases where product availability caused delays. Overall, they remain one of our top suppliers for quality electrical components.",
+    "review": "Avinya Electricals is usually my first call when I need quality components. While there have been a few stock delays, their support and product quality remain consistently reliable for maintenance needs",
     "avatar": "KD",
     "gradient": "from-emerald-500 to-green-600"
   },
@@ -41,7 +41,7 @@ const Review = () => {
     "role": "Production Manager",
     "location": "Bengaluru",
     "rating": 4,
-    "review": "We frequently purchase from Avinya Electricals and appreciate their professionalism and product variety. While the ordering process is usually smooth, there have been occasional delays in billing and documentation, which could be improved.",
+    "review": "We regularly source from Avinya due to their professionalism and quality products. Occasionally, documentation or billing takes longer than expected, but overall they’re a solid and trusted vendor",
     "avatar": "NJ",
     "gradient": "from-purple-600 to-violet-600"
   },
@@ -50,8 +50,8 @@ const Review = () => {
     "name": "Hardik Trivedi",
     "role": "Purchase Officer",
     "location": "Ahmedabad",
-    "rating": 3,
-    "review": "Avinya Electricals offers decent products at reasonable prices. However, they need to improve their responsiveness during urgent orders as sometimes it takes longer than expected to get updates or confirmations.",
+    "rating": 5,
+    "review": "From a procurement perspective, Avinya Electricals offers a competitive product range and fair pricing. Most orders are processed smoothly, but during high-demand periods, updates can be slower than expected. Still, they’re a reliable vendor for our recurring needs",
     "avatar": "HT",
     "gradient": "from-rose-500 to-pink-500"
   },
@@ -60,8 +60,8 @@ const Review = () => {
     "name": "Jignesh Chauhan",
     "role": "Plant Incharge",
     "location": "Anklesvar",
-    "rating": 2,
-    "review": "Our experience with Avinya Electricals has been somewhat disappointing. There were significant delays in delivering the required products, and the communication throughout the process was not satisfactory. They need to improve their delivery timelines and customer support.",
+    "rating": 5,
+    "review": "Managing a plant requires timely deliveries and consistent communication. Avinya Electricals provides good-quality industrial products, but there have been instances where delivery timelines slipped. With improved coordination, they can become a top-tier supplier for plant operations",
     "avatar": "JC",
     "gradient": "from-red-500 to-orange-500"
   },
@@ -70,8 +70,8 @@ const Review = () => {
     "name": "Dipak Parmar",
     "role": "Electrical Contractor",
     "location": "Silvassa",
-    "rating": 3,
-    "review": "Avinya Electricals provides good industrial supplies, and their pricing is fair. However, their technical support could use improvement, as there have been instances where they were unable to assist with specialized product queries.",
+    "rating": 4,
+    "review": "Avinya Electricals is a dependable source for industrial materials. Their pricing is fair, and most products are readily available. For specialized jobs, I’d appreciate quicker technical assistance, but overall they’re a solid partner for day-to-day contracting needs",
     "avatar": "DP",
     "gradient": "from-blue-500 to-sky-500"
   },
@@ -80,8 +80,8 @@ const Review = () => {
     "name": "Rahul Patel",
     "role": "Factory Supervisor",
     "location": "Vadodara",
-    "rating": 5,
-    "review": "We have been working with Avinya Electricals for many years, and they always maintain excellent quality and professionalism. Their wide range of industrial electrical products and prompt service makes them a highly reliable partner for our company's ongoing operations.",
+    "rating": 3,
+    "review": "Avinya offers good value for money. But in urgent procurement scenarios, their team needs to respond faster. Better coordination would make them an even better vendor",
     "avatar": "RP",
     "gradient": "from-orange-500 to-yellow-500"
   },
@@ -294,10 +294,10 @@ const Review = () => {
         {/* Stats Section */}
         <div className="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           {[
-            { number: '500+', label: 'Happy Customers', icon: '😊' },
-            { number: '95%', label: 'Satisfaction Rate', icon: '⭐' },
+            { number: '50+', label: 'Happy Customers', icon: '😊' },
+            { number: '85%', label: 'Satisfaction Rate', icon: '⭐' },
             { number: '2', label: 'Branch Locations', icon: '📍' },
-            { number: '24/7', label: 'Customer Support', icon: '🛟' }
+            { number: '24/7', label: 'Customer Support', icon: '🛟' },
           ].map((stat, index) => (
             <div
               key={index}

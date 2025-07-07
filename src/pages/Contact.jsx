@@ -17,21 +17,21 @@ export default function Contact() {
   const offices = [
     {
       name: "Vapi Office",
-      phone: "+91 98765 43210",
-      email: "vapi@avinyaelectricals.com",
+      phone: "+91 87993 60195",
+      email: "avinyaelectricals@gmail.com",
       address: "C-113, 1st Floor, City Center, Silvassa - Vapi Rd, Bhadakmora, Phase 1, GIDC, Vapi, Gujarat 396195",
       mapUrl: "https://maps.app.goo.gl/MDosEmQbCgSExxmQA",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3740.583480187053!2d72.92287887534829!3d20.358818681128056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0cf76e189a241%3A0xa033c44944bd0706!2sAvinya%20Electricals!5e0!3m2!1sen!2sin!4v1751862032833!5m2!1sen!2sin",
-      hours: "Mon - Sat: 9 AM to 7 PM"
+      hours: "Mon - Sat: 9 AM to 6:30 PM"
     },
     {
       name: "Surat Office",
-      phone: "+91 87654 32109",
-      email: "surat@avinyaelectricals.com",
-      address: "B-205, Business Hub, Ring Road, Surat, Gujarat 395002",
-      mapUrl: "https://maps.app.goo.gl/sample",
-      embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.9!2d72.8311!3d21.1702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDA5JzUwLjAiTiA3MsKwNDknNTIuMCJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin",
-      hours: "Mon - Sat: 9 AM to 7 PM"
+      phone: "+91 80005 29452",
+      email: "sales.avinyaelectricals@gmail.com",
+      address: "1ST FLLOR, HOU SOC 118, behind Ved Road, Avdhut Nagar, Chikuvadi, Raman Nagar, Katargam, Surat, Gujarat 395004",
+      mapUrl: "https://maps.app.goo.gl/wNUcrz5rTTNaf8YYA",
+      embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.285405345006!2d72.8225313757201!3d21.220528180477167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x41fe46592ed7b741%3A0x7e424164b3d18ec1!2sAVINYA%20ELECTRICALS%20-%20SURAT!5e0!3m2!1sen!2sin!4v1751866128614!5m2!1sen!2sin",
+      hours: "Mon - Sat: 9 AM to 6:30 PM"
     }
   ];
 

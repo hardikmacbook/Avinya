@@ -1,14 +1,50 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, Zap } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, Zap, Building2, Users, Shield, Award } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    phone: '',
+    company: '',
+    service: '',
     message: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeOffice, setActiveOffice] = useState(0);
+
+  const offices = [
+    {
+      name: "Vapi Office",
+      phone: "+91 98765 43210",
+      email: "vapi@avinyaelectricals.com",
+      address: "C-113, 1st Floor, City Center, Silvassa - Vapi Rd, Bhadakmora, Phase 1, GIDC, Vapi, Gujarat 396195",
+      mapUrl: "https://maps.app.goo.gl/MDosEmQbCgSExxmQA",
+      embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3740.583480187053!2d72.92287887534829!3d20.358818681128056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0cf76e189a241%3A0xa033c44944bd0706!2sAvinya%20Electricals!5e0!3m2!1sen!2sin!4v1751862032833!5m2!1sen!2sin",
+      hours: "Mon - Sat: 9 AM to 7 PM"
+    },
+    {
+      name: "Surat Office",
+      phone: "+91 87654 32109",
+      email: "surat@avinyaelectricals.com",
+      address: "B-205, Business Hub, Ring Road, Surat, Gujarat 395002",
+      mapUrl: "https://maps.app.goo.gl/sample",
+      embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.9!2d72.8311!3d21.1702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDA5JzUwLjAiTiA3MsKwNDknNTIuMCJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin",
+      hours: "Mon - Sat: 9 AM to 7 PM"
+    }
+  ];
+
+  const services = [
+    "Electrical Installation",
+    "Industrial Wiring",
+    "Power Systems",
+    "Lighting Solutions",
+    "Maintenance & Repair",
+    "Emergency Services",
+    "Consultation",
+    "Other"
+  ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,50 +60,45 @@ export default function Contact() {
     
     setTimeout(() => {
       alert('Thank you for your message! We will get back to you soon.');
-      setFormData({ fullName: '', email: '', message: '' });
+      setFormData({ fullName: '', email: '', phone: '', company: '', service: '', message: '' });
       setIsSubmitting(false);
-    }, 1000);
+    }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Hero Section */}
-      <div className="relative">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 pt-24 pb-20">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-600/5 to-slate-900/10"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-900 rounded-2xl mb-8">
-              <Zap className="w-8 h-8 text-white" />
-            </div>
-            <h1 className="text-6xl lg:text-7xl font-black text-gray-900 mb-6 tracking-tight">
-              Contact
-            </h1>
-            <div className="w-24 h-1 bg-gray-900 mx-auto mb-8"></div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Avinya Electricals - Your trusted partner for all electrical solutions. 
-              Let's discuss your project requirements.
-            </p>
+            <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 mb-4 sm:mb-6 tracking-tight">
+              Contact us
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 pb-24">
-        <div className="grid lg:grid-cols-12 gap-16">
+      {/* Trust Indicators */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24 pt-10">
+        
+
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
           
           {/* Contact Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white border-2 border-gray-100 rounded-3xl overflow-hidden shadow-2xl">
-              <div className="bg-gray-50 px-8 py-8 border-b border-gray-100">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Send Message</h2>
-                <p className="text-gray-600 text-lg">Tell us about your electrical needs</p>
+            <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-200/50">
+              <div className="bg-gradient-to-r from-slate-50 to-white px-6 sm:px-8 py-6 sm:py-8 border-b border-slate-200/50">
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Send Message</h2>
+                <p className="text-slate-600 text-base sm:text-lg">Tell us about your electrical project requirements</p>
               </div>
               
-              <div className="p-8">
-                <div className="space-y-8">
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="fullName" className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">
-                        Full Name
+              <div className="p-6 sm:p-8">
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="group">
+                      <label htmlFor="fullName" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
+                        Full Name *
                       </label>
                       <input
                         type="text"
@@ -76,14 +107,14 @@ export default function Contact() {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-900 transition-all duration-300 text-lg placeholder-gray-400"
+                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
                         placeholder="Your full name"
                       />
                     </div>
                     
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">
-                        Email Address
+                    <div className="group">
+                      <label htmlFor="email" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
+                        Email Address *
                       </label>
                       <input
                         type="email"
@@ -92,15 +123,65 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-900 transition-all duration-300 text-lg placeholder-gray-400"
+                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
                         placeholder="your@email.com"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">
-                      Message
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="group">
+                      <label htmlFor="phone" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
+                        placeholder="+91 98765 43210"
+                      />
+                    </div>
+                    
+                    <div className="group">
+                      <label htmlFor="company" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
+                        placeholder="Your company name"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="group">
+                    <label htmlFor="service" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
+                      Service Required
+                    </label>
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg text-slate-700 group-hover:border-slate-300 outline-none"
+                    >
+                      <option value="">Select a service</option>
+                      {services.map((service, index) => (
+                        <option key={index} value={service}>{service}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="group">
+                    <label htmlFor="message" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
+                      Project Details *
                     </label>
                     <textarea
                       id="message"
@@ -108,21 +189,21 @@ export default function Contact() {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
-                      rows={6}
-                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-gray-900 transition-all duration-300 text-lg placeholder-gray-400 resize-none"
-                      placeholder="Describe your electrical requirements, installation needs, or any questions you have..."
+                      rows={5}
+                      className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 resize-none group-hover:border-slate-300 outline-none"
+                      placeholder="Describe your electrical project requirements, timeline, and any specific needs..."
                     />
                   </div>
 
                   <button
-                    onClick={handleSubmit}
+                    type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gray-900 text-white py-5 px-8 rounded-2xl hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 transition-all duration-300 flex items-center justify-center space-x-3 font-bold text-lg shadow-xl disabled:opacity-50 group"
+                    className="w-full bg-[#8b2727] text-white py-4 sm:py-5 px-6 sm:px-8 rounded-2xl hover:from-slate-800 hover:to-slate-600 focus:ring-4 focus:ring-slate-300 transition-all duration-300 flex items-center justify-center space-x-3 font-bold text-base sm:text-lg shadow-2xl disabled:opacity-50 group transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer hover:bg-[#d2af6f] hover:text-black"
                   >
                     {isSubmitting ? (
                       <>
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        <span>Sending...</span>
+                        <span>Sending Message...</span>
                       </>
                     ) : (
                       <>
@@ -136,96 +217,124 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Contact Info & Map */}
-          <div className="lg:col-span-5 space-y-8">
+          {/* Office Information */}
+          <div className="lg:col-span-5 space-y-6 sm:space-y-8">
             
-            {/* Contact Information */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">Get In Touch</h3>
+            {/* Office Selector */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200/50">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 sm:mb-8">Our Offices</h3>
               
-              <div className="space-y-8">
-                <div className="flex items-start space-x-6">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
+                {offices.map((office, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveOffice(index)}
+                    className={`flex-1 py-3 sm:py-4 px-4 sm:px-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 ${
+                      activeOffice === index
+                        ? 'bg-slate-900 text-white shadow-lg'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    {office.name}
+                  </button>
+                ))}
+              </div>
+              
+              <div className="space-y-6 sm:space-y-8">
+                <div className="flex items-start space-x-4 sm:space-x-6 group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                      <Phone className="w-6 h-6 text-gray-700" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-slate-100 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:bg-slate-200 transition-colors duration-300">
+                      <Phone className="w-6 h-6 text-slate-700" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-2 text-lg">Phone</h4>
-                    <p className="text-gray-600 mb-2">Ready to help you</p>
-                    <p className="text-xl font-bold text-gray-900">+91 98765 43210</p>
+                    <h4 className="font-bold text-slate-900 mb-2 text-base sm:text-lg">Phone</h4>
+                    <p className="text-sm sm:text-base text-slate-600 mb-2">Call us directly</p>
+                    <a 
+                      href={`tel:${offices[activeOffice].phone}`}
+                      className="text-lg sm:text-xl font-bold text-slate-900 hover:text-slate-700 transition-colors"
+                    >
+                      {offices[activeOffice].phone}
+                    </a>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-6">
+                <div className="flex items-start space-x-4 sm:space-x-6 group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-gray-700" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-slate-100 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:bg-slate-200 transition-colors duration-300">
+                      <Mail className="w-6 h-6 text-slate-700" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-2 text-lg">Email</h4>
-                    <p className="text-gray-600 mb-2">Quick response guaranteed</p>
-                    <p className="text-xl font-bold text-gray-900">info@avinyaelectricals.com</p>
+                    <h4 className="font-bold text-slate-900 mb-2 text-base sm:text-lg">Email</h4>
+                    <p className="text-sm sm:text-base text-slate-600 mb-2">Quick response guaranteed</p>
+                    <a 
+                      href={`mailto:${offices[activeOffice].email}`}
+                      className="text-lg sm:text-xl font-bold text-slate-900 hover:text-slate-700 transition-colors break-all"
+                    >
+                      {offices[activeOffice].email}
+                    </a>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-6">
+                <div className="flex items-start space-x-4 sm:space-x-6 group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-gray-700" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-slate-100 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:bg-slate-200 transition-colors duration-300">
+                      <MapPin className="w-6 h-6 text-slate-700" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-2 text-lg">Address</h4>
-                    <p className="text-gray-600 mb-2">Come see our showroom</p>
-                    <p className="text-gray-900 font-medium">Shop No. 15, Electrical Market</p>
-                    <p className="text-gray-600">Ring Road, Surat, Gujarat 395002</p>
+                    <h4 className="font-bold text-slate-900 mb-2 text-base sm:text-lg">Address</h4>
+                    <p className="text-sm sm:text-base text-slate-600 mb-2">Visit our location</p>
+                    <p className="text-sm sm:text-base text-slate-900 font-medium leading-relaxed">
+                      {offices[activeOffice].address}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-6">
+                <div className="flex items-start space-x-4 sm:space-x-6 group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-gray-700" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-slate-100 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:bg-slate-200 transition-colors duration-300">
+                      <Clock className="w-6 h-6 text-slate-700" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-2 text-lg">Hours</h4>
-                    <p className="text-gray-600 mb-2">When we're available</p>
+                    <h4 className="font-bold text-slate-900 mb-2 text-base sm:text-lg">Business Hours</h4>
+                    <p className="text-sm sm:text-base text-slate-600 mb-2">When we're available</p>
                     <div className="space-y-1">
-                      <p className="text-gray-900 font-medium">Mon - Sat: 9 AM to 7 PM</p>
-                      <p className="text-gray-600">Sunday: Closed</p>
+                      <p className="text-sm sm:text-base text-slate-900 font-medium">{offices[activeOffice].hours}</p>
+                      <p className="text-sm sm:text-base text-slate-600">Sunday: Closed</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Map */}
-            <div className="border-2 border-gray-100 rounded-3xl overflow-hidden shadow-2xl">
-              <div className="p-6 bg-gray-50 border-b border-gray-100">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Our Location</h3>
-                <p className="text-gray-600">Visit our showroom</p>
+            {/* Interactive Map */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-200/50">
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-slate-50 to-white border-b border-slate-200/50">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{offices[activeOffice].name}</h3>
+                <p className="text-sm sm:text-base text-slate-600">Find us on the map</p>
               </div>
               <div className="relative">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.653!2d72.831!3d21.1959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAvinya%20Electricals!5e0!3m2!1sen!2sin!4v1234567890"
+                <iframe 
+                  src={offices[activeOffice].embedUrl}
                   width="100%"
                   height="280"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Avinya Electricals Location"
+                  title={`${offices[activeOffice].name} Location`}
+                  className="transition-all duration-500"
                 />
               </div>
-              <div className="p-6 bg-gray-50">
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-slate-50 to-white">
                 <a
-                  href="https://www.google.com/maps/place/Avinya+Electricals"
+                  href={offices[activeOffice].mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-gray-900 hover:text-gray-700 transition-colors font-bold group"
+                  className="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors font-bold group"
                 >
                   <MapPin className="w-5 h-5 mr-3 group-hover:translate-x-1 transition-transform duration-300" />
                   Open in Google Maps

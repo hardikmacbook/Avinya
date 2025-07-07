@@ -17,15 +17,14 @@ const BeautifulSlider = () => {
   const progressRef = useRef(null);
   const containerRef = useRef(null);
 
-  // Optimized media items with better image sizes and formats
+  // High-quality optimized media items for fast LCP
   const mediaItems = [
     {
       id: 1,
       type: 'image',
       title: "Neural Network Architecture",
       description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
-      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop&q=75&auto=format",
-      urlHD: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=85&auto=format",
+      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
       category: "AI Technology",
     },
     {
@@ -33,7 +32,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Machine Learning in Action",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=75&auto=format",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
       category: "Deep Learning",
     },
     {
@@ -41,8 +40,7 @@ const BeautifulSlider = () => {
       type: 'image',
       title: "Quantum Computing Revolution",
       description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
-      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop&q=75&auto=format",
-      urlHD: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=85&auto=format",
+      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
       category: "Quantum Tech",
     },
     {
@@ -50,7 +48,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Future of AI",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop&q=75&auto=format",
+      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
       category: "Innovation",
     },
     {
@@ -58,8 +56,7 @@ const BeautifulSlider = () => {
       type: 'image',
       title: "Data Visualization Mastery",
       description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
-      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=75&auto=format",
-      urlHD: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=85&auto=format",
+      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
       category: "Data Science",
     },
     {
@@ -67,7 +64,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Robotics & AI",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=75&auto=format",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
       category: "Robotics",
     }
   ];
@@ -75,35 +72,35 @@ const BeautifulSlider = () => {
   const currentItem = mediaItems[currentSlide];
   const isVideo = currentItem.type === 'video';
 
-  // Preload images for better performance
-  const preloadImage = useCallback((src, id) => {
-    const img = new Image();
-    img.onload = () => {
-      setImageLoaded(prev => ({ ...prev, [id]: true }));
-    };
-    img.onerror = () => {
-      setImageLoaded(prev => ({ ...prev, [id]: false }));
-    };
-    img.src = src;
-  }, []);
-
-  // Preload next and previous images
+  // Immediate preload of first image for fast LCP
   useEffect(() => {
-    const nextIndex = (currentSlide + 1) % mediaItems.length;
-    const prevIndex = (currentSlide - 1 + mediaItems.length) % mediaItems.length;
+    // Preload first image immediately for LCP optimization
+    const firstImage = mediaItems[0];
+    if (firstImage.type === 'image') {
+      const img = new Image();
+      img.onload = () => {
+        setImageLoaded(prev => ({ ...prev, [firstImage.id]: true }));
+      };
+      img.src = firstImage.url;
+    }
     
-    [currentSlide, nextIndex, prevIndex].forEach(index => {
+    // Preload current and next images
+    const nextIndex = (currentSlide + 1) % mediaItems.length;
+    [currentSlide, nextIndex].forEach(index => {
       const item = mediaItems[index];
       if (item.type === 'image' && !imageLoaded[item.id]) {
-        preloadImage(item.url, item.id);
+        const img = new Image();
+        img.onload = () => {
+          setImageLoaded(prev => ({ ...prev, [item.id]: true }));
+        };
+        img.src = item.url;
       }
     });
-  }, [currentSlide, mediaItems, imageLoaded, preloadImage]);
+  }, [currentSlide, mediaItems.length]);
 
   useEffect(() => {
-    // Set initial load state after a brief delay to ensure smooth animation
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
+    // Immediate load for LCP optimization
+    setIsLoaded(true);
   }, []);
 
   // Progress and auto-slide with RAF optimization
@@ -234,40 +231,33 @@ const BeautifulSlider = () => {
     setShowShareMenu(false);
   }, []);
 
-  // Optimized image component
+  // High-quality image component - no progressive loading for better quality
   const OptimizedImage = ({ item, className }) => {
-    const [currentSrc, setCurrentSrc] = useState(item.url);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     useEffect(() => {
-      // Load low-res first, then high-res
-      const lowResImg = new Image();
-      lowResImg.onload = () => {
-        setIsImageLoaded(true);
-        if (item.urlHD) {
-          const highResImg = new Image();
-          highResImg.onload = () => {
-            setCurrentSrc(item.urlHD);
-          };
-          highResImg.src = item.urlHD;
-        }
-      };
-      lowResImg.src = item.url;
-    }, [item.url, item.urlHD]);
+      const img = new Image();
+      img.onload = () => setIsImageLoaded(true);
+      img.onerror = () => setIsImageLoaded(false);
+      img.src = item.url;
+    }, [item.url]);
 
     return (
       <div className={`relative ${className}`}>
         {!isImageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900">
+            <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-yellow-400/20 animate-pulse" />
+          </div>
         )}
         <img
-          src={currentSrc}
+          src={item.url}
           alt={item.title}
-          className={`w-full h-full object-cover transition-all duration-700 ${
-            isImageLoaded ? 'opacity-100' : 'opacity-0'
+          className={`w-full h-full object-cover transition-all duration-500 ${
+            isImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
           } hover:scale-105`}
-          loading="eager"
+          loading={item.id === 1 ? "eager" : "lazy"}
           decoding="async"
+          fetchPriority={item.id === 1 ? "high" : "auto"}
         />
       </div>
     );

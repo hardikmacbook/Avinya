@@ -8,23 +8,23 @@ const BeautifulSlider = () => {
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [showControls, setShowControls] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState({});
-  const [videoLoaded, setVideoLoaded] = useState({});
+  const [preloadedImages, setPreloadedImages] = useState(new Set());
+  const [allImagesReady, setAllImagesReady] = useState(false);
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const containerRef = useRef(null);
+  const imageCache = useRef(new Map());
 
-  // High-quality optimized media items for fast LCP
+  // Optimized media items with smaller, faster-loading images
   const mediaItems = [
     {
       id: 1,
       type: 'image',
       title: "Neural Network Architecture",
       description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
-      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
+      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop&q=80&auto=format&fm=webp",
       category: "AI Technology",
     },
     {
@@ -32,7 +32,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Machine Learning in Action",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=80&auto=format&fm=webp",
       category: "Deep Learning",
     },
     {
@@ -40,7 +40,7 @@ const BeautifulSlider = () => {
       type: 'image',
       title: "Quantum Computing Revolution",
       description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
-      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
+      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop&q=80&auto=format&fm=webp",
       category: "Quantum Tech",
     },
     {
@@ -48,7 +48,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Future of AI",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
+      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop&q=80&auto=format&fm=webp",
       category: "Innovation",
     },
     {
@@ -56,7 +56,7 @@ const BeautifulSlider = () => {
       type: 'image',
       title: "Data Visualization Mastery",
       description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
-      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
+      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80&auto=format&fm=webp",
       category: "Data Science",
     },
     {
@@ -64,7 +64,7 @@ const BeautifulSlider = () => {
       type: 'video',
       title: "Robotics & AI",
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=800&fit=crop&q=85&auto=format&fm=webp",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=80&auto=format&fm=webp",
       category: "Robotics",
     }
   ];
@@ -72,40 +72,72 @@ const BeautifulSlider = () => {
   const currentItem = mediaItems[currentSlide];
   const isVideo = currentItem.type === 'video';
 
-  // Immediate preload of first image for fast LCP
+  // Critical: Immediate preload of first image for sub-2s LCP
   useEffect(() => {
-    // Preload first image immediately for LCP optimization
-    const firstImage = mediaItems[0];
-    if (firstImage.type === 'image') {
-      const img = new Image();
-      img.onload = () => {
-        setImageLoaded(prev => ({ ...prev, [firstImage.id]: true }));
-      };
-      img.src = firstImage.url;
-    }
-    
-    // Preload current and next images
-    const nextIndex = (currentSlide + 1) % mediaItems.length;
-    [currentSlide, nextIndex].forEach(index => {
-      const item = mediaItems[index];
-      if (item.type === 'image' && !imageLoaded[item.id]) {
+    const preloadImage = (item, priority = 'auto') => {
+      return new Promise((resolve, reject) => {
+        if (imageCache.current.has(item.id)) {
+          resolve(imageCache.current.get(item.id));
+          return;
+        }
+
         const img = new Image();
         img.onload = () => {
-          setImageLoaded(prev => ({ ...prev, [item.id]: true }));
+          imageCache.current.set(item.id, img);
+          setPreloadedImages(prev => new Set([...prev, item.id]));
+          resolve(img);
         };
+        img.onerror = reject;
+        
+        // Critical optimization for LCP
+        if (priority === 'high') {
+          img.fetchPriority = 'high';
+          img.loading = 'eager';
+        }
+        
         img.src = item.url;
+      });
+    };
+
+    // Immediately preload the first image with highest priority
+    const firstItem = mediaItems[0];
+    if (firstItem.type === 'image') {
+      preloadImage(firstItem, 'high');
+    }
+
+    // Preload current and next images
+    const preloadBatch = async () => {
+      const nextIndex = (currentSlide + 1) % mediaItems.length;
+      const prevIndex = (currentSlide - 1 + mediaItems.length) % mediaItems.length;
+      
+      const itemsToPreload = [
+        mediaItems[currentSlide],
+        mediaItems[nextIndex],
+        mediaItems[prevIndex]
+      ].filter(item => item.type === 'image');
+
+      try {
+        await Promise.all(itemsToPreload.map(item => preloadImage(item)));
+      } catch (error) {
+        console.warn('Image preload failed:', error);
       }
-    });
+    };
+
+    preloadBatch();
   }, [currentSlide, mediaItems.length]);
 
+  // Check if all critical images are ready
   useEffect(() => {
-    // Immediate load for LCP optimization
-    setIsLoaded(true);
-  }, []);
+    const criticalImages = mediaItems.filter(item => item.type === 'image');
+    const allReady = criticalImages.every(item => preloadedImages.has(item.id));
+    if (allReady && !allImagesReady) {
+      setAllImagesReady(true);
+    }
+  }, [preloadedImages, mediaItems, allImagesReady]);
 
   // Progress and auto-slide with RAF optimization
   useEffect(() => {
-    if (isAutoPlay && !isPlaying && isLoaded) {
+    if (isAutoPlay && !isPlaying && allImagesReady) {
       const duration = isVideo ? 8000 : 6000;
       const startTime = performance.now();
       
@@ -132,13 +164,13 @@ const BeautifulSlider = () => {
     } else {
       setProgress(0);
     }
-  }, [isAutoPlay, isPlaying, currentSlide, mediaItems.length, isVideo, isLoaded]);
+  }, [isAutoPlay, isPlaying, currentSlide, mediaItems.length, isVideo, allImagesReady]);
 
   // Video handling with better performance
   useEffect(() => {
     if (videoRef.current && isVideo) {
       videoRef.current.currentTime = 0;
-      videoRef.current.load(); // Ensure video is properly loaded
+      videoRef.current.load();
       if (isPlaying) {
         videoRef.current.play().catch(console.error);
       }
@@ -231,43 +263,40 @@ const BeautifulSlider = () => {
     setShowShareMenu(false);
   }, []);
 
-  // High-quality image component - no progressive loading for better quality
+  // Ultra-fast image component - no loading states, instant display
   const OptimizedImage = ({ item, className }) => {
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const cachedImage = imageCache.current.get(item.id);
+    const isReady = preloadedImages.has(item.id);
 
-    useEffect(() => {
-      const img = new Image();
-      img.onload = () => setIsImageLoaded(true);
-      img.onerror = () => setIsImageLoaded(false);
-      img.src = item.url;
-    }, [item.url]);
+    if (!isReady || !cachedImage) {
+      // Show a solid background while loading - no flashing
+      return (
+        <div className={`${className} bg-gradient-to-br from-gray-800 to-gray-900`}>
+          <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-yellow-400/10" />
+        </div>
+      );
+    }
 
     return (
-      <div className={`relative ${className}`}>
-        {!isImageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900">
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-yellow-400/20 animate-pulse" />
-          </div>
-        )}
-        <img
-          src={item.url}
-          alt={item.title}
-          className={`w-full h-full object-cover transition-all duration-500 ${
-            isImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-          } hover:scale-105`}
-          loading={item.id === 1 ? "eager" : "lazy"}
-          decoding="async"
-          fetchPriority={item.id === 1 ? "high" : "auto"}
-        />
-      </div>
+      <img
+        src={item.url}
+        alt={item.title}
+        className={`${className} w-full h-full object-cover hover:scale-105 transition-transform duration-500`}
+        loading="eager"
+        decoding="sync"
+        fetchPriority="high"
+        style={{
+          // Critical: Force immediate display
+          opacity: 1,
+          transform: 'none',
+          transition: 'transform 0.5s ease-out'
+        }}
+      />
     );
   };
 
   return (
-    <div className={`
-      relative w-full transition-all duration-700 ease-out
-      ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-    `}>
+    <div className="relative w-full opacity-100 translate-y-0">
       {/* Main Container */}
       <div 
         ref={containerRef}
@@ -300,7 +329,6 @@ const BeautifulSlider = () => {
               loop
               playsInline
               preload="metadata"
-              onLoadedData={() => setVideoLoaded(prev => ({ ...prev, [currentItem.id]: true }))}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             >

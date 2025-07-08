@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, Zap, Building2, Users, Shield, Award } from 'lucide-react';
-import { useForm, ValidationError } from '@formspree/react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,6 +12,8 @@ export default function Contact() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [errorDetails, setErrorDetails] = useState('');
   const [activeOffice, setActiveOffice] = useState(0);
 
   const offices = [
@@ -29,7 +30,7 @@ export default function Contact() {
       name: "Surat Office",
       phone: "+91 80005 29452",
       email: "sales.avinyaelectricals@gmail.com",
-      address: "1st Floor,118, Avdhut Nagar, Chikuvadi, Raman Nagar, Katargam, Surat, Gujarat 395004",
+      address: "1st Floor,118, Avdhut Nagar, Chikuvadi, Raman Nagar, Katargam, Surat, Gujarat 395004",
       mapUrl: "https://maps.app.goo.gl/wNUcrz5rTTNaf8YYA",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.285405345006!2d72.8225313757201!3d21.220528180477167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x41fe46592ed7b741%3A0x7e424164b3d18ec1!2sAVINYA%20ELECTRICALS%20-%20SURAT!5e0!3m2!1sen!2sin!4v1751866128614!5m2!1sen!2sin",
       hours: "Mon - Sat: 9 AM to 6:30 PM"
@@ -58,12 +59,74 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    setTimeout(() => {
-      alert('Thank you for your message! We will get back to you soon.');
-      setFormData({ fullName: '', email: '', phone: '', company: '', service: '', message: '' });
+    setSubmitStatus(null);
+    setErrorDetails('');
+
+    // Validate required fields
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmitStatus('error');
+      setErrorDetails('Please fill in all required fields (Full Name, Email, and Project Details).');
       setIsSubmitting(false);
-    }, 1500);
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setSubmitStatus('error');
+      setErrorDetails('Please enter a valid email address.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      console.log('Submitting form data:', formData);
+      
+      // Using FormData approach for better compatibility
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.fullName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('company', formData.company);
+      formDataToSend.append('service', formData.service);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('_replyto', formData.email);
+      formDataToSend.append('_subject', `New Contact Form Submission from ${formData.fullName}`);
+
+      const response = await fetch('https://formspree.io/f/xzzglbyp', {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+      
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          company: '',
+          service: '',
+          message: ''
+        });
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Response error:', errorData);
+        setSubmitStatus('error');
+        setErrorDetails(`Server responded with status ${response.status}. ${errorData.error || 'Please try again.'}`);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      setSubmitStatus('error');
+      setErrorDetails(`Network error: ${error.message}. Please check your internet connection and try again.`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -80,10 +143,35 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Trust Indicators */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24 pt-10">
-        
+      {/* Success/Error Messages */}
+      {submitStatus && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          {submitStatus === 'success' ? (
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-center space-x-4">
+              <CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" />
+              <div>
+                <h3 className="text-lg font-bold text-green-900 mb-1">Message Sent Successfully!</h3>
+                <p className="text-green-700">Thank you for your message. We'll get back to you within 1-2 hours.</p>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-6 flex items-center space-x-4">
+              <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-red-600 font-bold">!</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-red-900 mb-1">Message Failed to Send</h3>
+                <p className="text-red-700">
+                  {errorDetails || 'There was an error sending your message. Please try again or contact us directly.'}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
+      {/* Contact Form */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24 pt-10">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
           
           {/* Contact Form */}
@@ -199,6 +287,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
+                    onClick={handleSubmit}
                     className="w-full bg-[#8b2727] text-white py-4 sm:py-5 px-6 sm:px-8 rounded-2xl hover:from-slate-800 hover:to-slate-600 focus:ring-4 focus:ring-slate-300 transition-all duration-300 flex items-center justify-center space-x-3 font-bold text-base sm:text-lg shadow-2xl disabled:opacity-50 group transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer hover:bg-[#d2af6f] hover:text-black"
                   >
                     {isSubmitting ? (

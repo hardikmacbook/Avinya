@@ -12,8 +12,6 @@ const BeautifulSlider = () => {
   const [showControls, setShowControls] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showShareMenu, setShowShareMenu] = useState(false);
-  const [copySuccess, setCopySuccess] = useState(false);
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const containerRef = useRef(null);
@@ -147,39 +145,6 @@ const BeautifulSlider = () => {
     setIsAutoPlay(!isAutoPlay);
     if (!isAutoPlay) {
       setProgress(0);
-    }
-  };
-
-  const toggleShareMenu = () => {
-    setShowShareMenu(!showShareMenu);
-  };
-
-  const shareToWhatsApp = () => {
-    const text = `Check out this ${isVideo ? 'video' : 'article'}: ${currentItem.title}`;
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-  };
-
-  const shareToInstagram = () => {
-    window.open('https://www.instagram.com/', '_blank');
-  };
-
-  const copyLink = async () => {
-    const currentUrl = window.location.href;
-    try {
-      await navigator.clipboard.writeText(currentUrl);
-      setCopySuccess(true);
-      setTimeout(() => setCopySuccess(false), 2000);
-    } catch (err) {
-      const textArea = document.createElement('textarea');
-      textArea.value = currentUrl;
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setCopySuccess(true);
-      setTimeout(() => setCopySuccess(false), 2000);
     }
   };
 

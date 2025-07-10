@@ -154,7 +154,7 @@ const FlipCards = () => {
                       <div 
                         className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-0.5 rounded-full"
                         style={{ 
-                          background: `linear-gradient(to right, #d2af6f, #8b2727)`,
+                          background: `#8b2727`,
                           boxShadow: '0 2px 4px rgba(210, 175, 111, 0.3)'
                         }}
                       ></div>
@@ -166,29 +166,13 @@ const FlipCards = () => {
                     </p>
                   </div>
                   
-                  {/* Enhanced 3D highlight effect */}
-                  <div 
-                    className="absolute top-4 left-4 right-4 h-8 rounded-xl opacity-30"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(210, 175, 111, 0.3) 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
-                      transform: 'translateZ(5px)'
-                    }}
-                  ></div>
                   
-                  {/* Additional depth layer */}
-                  <div 
-                    className="absolute inset-2 rounded-xl opacity-15"
-                    style={{
-                      background: 'linear-gradient(45deg, transparent 0%, rgba(210, 175, 111, 0.1) 50%, transparent 100%)',
-                      transform: 'translateZ(2px)'
-                    }}
-                  ></div>
                   
                   {/* Bottom decorative element */}
                   <div 
                     className="absolute bottom-4 w-20 h-1 rounded-full"
                     style={{ 
-                      background: `linear-gradient(to right, #d2af6f, #8b2727)`,
+                      background: `#8b2727`,
                       boxShadow: '0 2px 8px rgba(210, 175, 111, 0.4), 0 4px 16px rgba(139, 39, 39, 0.2)'
                     }}
                   ></div>

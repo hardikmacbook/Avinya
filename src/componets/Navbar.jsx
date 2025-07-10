@@ -47,7 +47,7 @@ const Navbar = () => {
       <div
         className={`fixed top-0 w-full transition-all duration-300 ease-in-out z-[100] items-center ${
           isScrolled
-            ? "bg-white/15 backdrop-blur-md shadow-lg border-b border-white/30 items-center" 
+            ? "bg-white/15 backdrop-blur-lg shadow-lg border-b border-white/30 items-center" 
             : "bg-white shadow-xl items-center"
         }`}
       >
@@ -69,7 +69,7 @@ const Navbar = () => {
                         className={({ isActive }) =>
                           `${
                             isActive
-                              ? "border-b-3 border-[#d2af6f] transition-all text-[#8b2727]"
+                              ? "border-b-3 border-[#8b2727] transition-all text-[#8b2727]"
                               : ""
                           } text-black cursor-pointer hover:text-[#8b2727] transition-all duration-300 transform hover:scale-105`
                         }

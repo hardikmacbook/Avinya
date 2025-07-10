@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2, Eye, Clock, MoreHorizontal, MessageCircle, Instagram, Copy, X, RotateCcw } from 'lucide-react';
+import HeroVideo1 from '../assets/video/avinya-hero1.mp4'
+import HeroImg1 from '../assets/images/demo1.jpg'
+import thumbnail from '../assets/images/demo2.jpg'
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -19,51 +22,38 @@ const BeautifulSlider = () => {
     {
       id: 1,
       type: 'image',
-      title: "Neural Network Architecture",
+      title: "Demo",
       description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
-      url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&h=1080&fit=crop&q=80",
-      category: "AI Technology",
+      url: HeroImg1,
     },
     {
       id: 2,
       type: 'video',
       title: "Machine Learning in Action",
-      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
-      category: "Deep Learning",
+      url: HeroVideo1,
+      thumbnail: thumbnail,
     },
     {
       id: 3,
       type: 'image',
-      title: "Quantum Computing Revolution",
-      description: "Witness the convergence of quantum mechanics and artificial intelligence creating unprecedented computational possibilities.",
-      url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop&q=80",
-      category: "Quantum Tech",
+      title: "Demo",
+      description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
+      url: HeroImg1,
     },
     {
       id: 4,
       type: 'video',
-      title: "Future of AI",
-      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop&q=80",
-      category: "Innovation",
+      title: "Machine Learning in Action",
+      url: HeroVideo1,
+      thumbnail: thumbnail,
     },
     {
       id: 5,
       type: 'image',
-      title: "Data Visualization Mastery",
-      description: "Transform complex datasets into stunning visual narratives that reveal hidden patterns and insights.",
-      url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=80",
-      category: "Data Science",
+      title: "Demo",
+      description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
+      url: HeroImg1,
     },
-    {
-      id: 6,
-      type: 'video',
-      title: "Robotics & AI",
-      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&h=1080&fit=crop&q=80",
-      category: "Robotics",
-    }
   ];
 
   const currentItem = mediaItems[currentSlide];
@@ -216,7 +206,7 @@ const BeautifulSlider = () => {
           shadow-2xl
         "
       >
-        {/* Enhanced Progress Bar */}
+        {/* Enhanced Progress Bar
         <div className="absolute top-0 left-0 right-0 h-2 bg-black z-30">
           <div 
             className="h-full bg-[#8b2727] transition-all duration-100 ease-linear relative"
@@ -224,7 +214,7 @@ const BeautifulSlider = () => {
           >
             <div className="absolute right-0 top-0 w-2 h-full bg-[#d2af6f] rounded-full"></div>
           </div>
-        </div>
+        </div> */}
 
         {/* Media Display */}
         <div className="absolute inset-0 z-10">
@@ -345,57 +335,6 @@ const BeautifulSlider = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6">
-                  {/* Share Button with Menu */}
-                  <div className="relative">
-                    <button 
-                      onClick={toggleShareMenu}
-                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-2 sm:py-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-[#d2af6f]/20 hover:border-[#d2af6f]/40 transition-all duration-200"
-                    >
-                      <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="hidden sm:inline text-sm">Share</span>
-                    </button>
-
-                    {/* Share Menu */}
-                    {showShareMenu && (
-                      <div className="absolute bottom-full left-0 mb-2 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg p-3 min-w-[180px] sm:min-w-[200px] shadow-2xl">
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-white text-sm font-medium">Share this article</span>
-                          <button 
-                            onClick={() => setShowShareMenu(false)}
-                            className="text-white/60 hover:text-white transition-colors"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <button
-                            onClick={shareToWhatsApp}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
-                          >
-                            <MessageCircle className="w-4 h-4 text-green-400" />
-                            <span className="text-sm">WhatsApp</span>
-                          </button>
-                          
-                          <button
-                            onClick={shareToInstagram}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
-                          >
-                            <Instagram className="w-4 h-4 text-pink-400" />
-                            <span className="text-sm">Instagram</span>
-                          </button>
-                          
-                          <button
-                            onClick={copyLink}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-white hover:bg-[#d2af6f]/20 rounded-lg transition-colors"
-                          >
-                            <Copy className="w-4 h-4 text-blue-400" />
-                            <span className="text-sm">{copySuccess ? 'Copied!' : 'Copy Link'}</span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>

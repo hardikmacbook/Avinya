@@ -1,8 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize2, Heart, Share2, Eye, Clock, MoreHorizontal, MessageCircle, Instagram, Copy, X, RotateCcw } from 'lucide-react';
-import HeroVideo1 from '../assets/video/avinya-hero1.mp4'
-import HeroImg1 from '../assets/images/demo1.jpg'
-import thumbnail from '../assets/images/demo2.jpg'
+import React, { useState, useEffect, useRef } from "react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  Heart,
+  Share2,
+  Eye,
+  Clock,
+  MoreHorizontal,
+  MessageCircle,
+  Instagram,
+  Copy,
+  X,
+  RotateCcw,
+} from "lucide-react";
+import HeroImg1 from "../assets/images/demo1.jpg";
+import thumbnail from "../assets/images/demo2.jpg";
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -19,43 +36,46 @@ const BeautifulSlider = () => {
   const mediaItems = [
     {
       id: 1,
-      type: 'image',
+      type: "image",
       title: "Demo",
-      description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
+      description:
+        "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
       url: HeroImg1,
     },
     {
       id: 2,
-      type: 'video',
+      type: "video",
       title: "Machine Learning in Action",
-      url: HeroVideo1,
+      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
       thumbnail: thumbnail,
     },
     {
       id: 3,
-      type: 'image',
+      type: "image",
       title: "Demo",
-      description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
+      description:
+        "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
       url: HeroImg1,
     },
     {
       id: 4,
-      type: 'video',
+      type: "video",
       title: "Machine Learning in Action",
-      url: HeroVideo1,
+      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
       thumbnail: thumbnail,
     },
     {
       id: 5,
-      type: 'image',
+      type: "image",
       title: "Demo",
-      description: "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
-      url: HeroImg1,
+      description:
+        "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
+      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
     },
   ];
 
   const currentItem = mediaItems[currentSlide];
-  const isVideo = currentItem.type === 'video';
+  const isVideo = currentItem.type === "video";
 
   useEffect(() => {
     setIsLoaded(true);
@@ -66,11 +86,11 @@ const BeautifulSlider = () => {
     if (isAutoPlay && !isPlaying && isLoaded) {
       const duration = isVideo ? 8000 : 6000;
       const startTime = Date.now();
-      
+
       const updateProgress = () => {
         const elapsed = Date.now() - startTime;
         const newProgress = (elapsed / duration) * 100;
-        
+
         if (newProgress >= 100) {
           setProgress(0);
           setCurrentSlide((prev) => (prev + 1) % mediaItems.length);
@@ -79,9 +99,9 @@ const BeautifulSlider = () => {
           progressRef.current = requestAnimationFrame(updateProgress);
         }
       };
-      
+
       progressRef.current = requestAnimationFrame(updateProgress);
-      
+
       return () => {
         if (progressRef.current) {
           cancelAnimationFrame(progressRef.current);
@@ -90,7 +110,14 @@ const BeautifulSlider = () => {
     } else {
       setProgress(0);
     }
-  }, [isAutoPlay, isPlaying, currentSlide, mediaItems.length, isVideo, isLoaded]);
+  }, [
+    isAutoPlay,
+    isPlaying,
+    currentSlide,
+    mediaItems.length,
+    isVideo,
+    isLoaded,
+  ]);
 
   // Video handling
   useEffect(() => {
@@ -110,7 +137,9 @@ const BeautifulSlider = () => {
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
+    setCurrentSlide(
+      (prev) => (prev - 1 + mediaItems.length) % mediaItems.length
+    );
     setIsPlaying(false);
     setProgress(0);
     setShowShareMenu(false);
@@ -156,12 +185,14 @@ const BeautifulSlider = () => {
   };
 
   return (
-    <div className={`
+    <div
+      className={`
       relative w-full transition-all duration-700 ease-out
-      ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-    `}>
+      ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
+    `}
+    >
       {/* Main Container */}
-      <div 
+      <div
         ref={containerRef}
         className="
           relative w-full overflow-hidden
@@ -213,21 +244,20 @@ const BeautifulSlider = () => {
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-2 sm:p-4 md:p-6 z-40">
           {/* Left Side */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
-            
-
             {/* Auto Play Status */}
-            <div className={`my-2 px-1.5 py-0.5 sm:px-4 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 ${
-              isAutoPlay 
-                ? 'bg-[#d2af6f] text-black border border-[#d2af6f]/30' 
-                : 'bg-[#8b2727] text-white border border-[#8b2727]/30'
-            }`}>
-              {isAutoPlay ? 'AUTO' : 'MANUAL'}
+            <div
+              className={`my-2 px-1.5 py-0.5 sm:px-4 sm:py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+                isAutoPlay
+                  ? "bg-[#d2af6f] text-black border border-[#d2af6f]/30"
+                  : "bg-[#8b2727] text-white border border-[#8b2727]/30"
+              }`}
+            >
+              {isAutoPlay ? "AUTO" : "MANUAL"}
             </div>
           </div>
 
           {/* Right Side */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
-
             {/* Video Controls */}
             {isVideo && (
               <>
@@ -235,10 +265,14 @@ const BeautifulSlider = () => {
                   onClick={toggleMute}
                   className="p-1.5 sm:p-2 md:p-2.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 transition-all duration-200"
                 >
-                  {isMuted ? <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" /> : <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />}
+                  {isMuted ? (
+                    <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" />
+                  ) : (
+                    <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                  )}
                 </button>
               </>
-            )} 
+            )}
           </div>
         </div>
 
@@ -249,7 +283,7 @@ const BeautifulSlider = () => {
         >
           <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
         </button>
-        
+
         <button
           onClick={nextSlide}
           className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-200 z-40"
@@ -259,7 +293,7 @@ const BeautifulSlider = () => {
 
         {/* Video Play Button */}
         {isVideo && (
-          <div 
+          <div
             className="absolute inset-0 flex items-center justify-center z-30"
             onMouseEnter={() => setShowControls(true)}
             onMouseLeave={() => setShowControls(false)}
@@ -269,7 +303,7 @@ const BeautifulSlider = () => {
               className={`
                 p-3 sm:p-4 md:p-6 lg:p-8 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full text-white 
                 hover:bg-[#8b2727]/40 hover:border-[#8b2727]/40 hover:scale-110 transition-all duration-300 shadow-2xl
-                ${showControls ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
+                ${showControls ? "opacity-100 scale-100" : "opacity-0 scale-95"}
               `}
             >
               {isPlaying ? (
@@ -299,8 +333,7 @@ const BeautifulSlider = () => {
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6">
-                </div>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6"></div>
               </div>
             </div>
           </div>
@@ -317,14 +350,13 @@ const BeautifulSlider = () => {
                   onClick={() => goToSlide(index)}
                   className={`
                     relative overflow-hidden rounded-full transition-all duration-300 group
-                    ${index === currentSlide
-                      ? 'w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-[#8b2727] shadow-lg'
-                      : 'w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/60 hover:bg-white/60'
+                    ${
+                      index === currentSlide
+                        ? "w-6 sm:w-8 md:w-12 h-1.5 sm:h-2 md:h-2.5 bg-[#8b2727] shadow-lg"
+                        : "w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 bg-white/60 hover:bg-white/60"
                     }
                   `}
-                >
-                  
-                </button>
+                ></button>
               ))}
             </div>
 
@@ -333,11 +365,12 @@ const BeautifulSlider = () => {
               {/* Enhanced Pagination Counter */}
               <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full">
                 <span className="text-white text-xs sm:text-sm font-mono">
-                  {String(currentSlide + 1).padStart(2, '0')} of {String(mediaItems.length).padStart(2, '0')}
+                  {String(currentSlide + 1).padStart(2, "0")} of{" "}
+                  {String(mediaItems.length).padStart(2, "0")}
                 </span>
                 <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-white/60 rounded-full"></div>
                 <span className="text-white/80 text-xs hidden sm:inline">
-                  {isVideo ? 'VIDEO' : 'ARTICLE'}
+                  {isVideo ? "VIDEO" : "ARTICLE"}
                 </span>
               </div>
 
@@ -349,23 +382,28 @@ const BeautifulSlider = () => {
               >
                 <RotateCcw className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" />
               </button>
-              
+
               {/* Enhanced Auto-play Toggle */}
               <button
                 onClick={toggleAutoPlay}
                 className={`
                   flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200
-                  ${isAutoPlay
-                    ? 'bg-[#8b2727] text-white shadow-lg shadow-[#8b2727]/25'
-                    : 'bg-[#d2af6f] text-black hover:bg-[#8b2727] hover:text-white'
+                  ${
+                    isAutoPlay
+                      ? "bg-[#8b2727] text-white shadow-lg shadow-[#8b2727]/25"
+                      : "bg-[#d2af6f] text-black hover:bg-[#8b2727] hover:text-white"
                   }
                 `}
               >
-                <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
-                  isAutoPlay ? 'bg-white animate-pulse' : 'bg-white/60'
-                }`}></div>
-                <span className="hidden sm:inline">AUTO {isAutoPlay ? 'ON' : 'OFF'}</span>
-                <span className="sm:hidden">{isAutoPlay ? 'ON' : 'OFF'}</span>
+                <div
+                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
+                    isAutoPlay ? "bg-white animate-pulse" : "bg-white/60"
+                  }`}
+                ></div>
+                <span className="hidden sm:inline">
+                  AUTO {isAutoPlay ? "ON" : "OFF"}
+                </span>
+                <span className="sm:hidden">{isAutoPlay ? "ON" : "OFF"}</span>
               </button>
             </div>
           </div>

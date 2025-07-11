@@ -29,7 +29,7 @@ function MainLayout() {
   const hideFooterRoutes = ["/"];
 
   // Check if current path matches any known route
-  const knownRoutes = ["/", "/about", "/shop", "/contact", "/cart"];
+  const knownRoutes = ["/", "/about", "/shop", "/contact",];
   const isKnownRoute = knownRoutes.some(route =>
     location.pathname === route || location.pathname.startsWith("/shop/")
   );

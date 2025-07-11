@@ -5,8 +5,6 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phone: '',
-    company: '',
     service: '',
     message: ''
   });
@@ -15,6 +13,7 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errorDetails, setErrorDetails] = useState('');
   const [activeOffice, setActiveOffice] = useState(0);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const offices = [
     {
@@ -48,11 +47,63 @@ export default function Contact() {
     "Other"
   ];
 
+  const validateField = (name, value) => {
+    let error = '';
+    
+    switch (name) {
+      case 'fullName':
+        if (!value.trim()) {
+          error = 'Full Name is required';
+        }
+        break;
+      case 'email':
+        if (!value.trim()) {
+          error = 'Email is required';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          error = 'Please enter a valid email address';
+        }
+        break;
+      case 'message':
+        if (!value.trim()) {
+          error = 'Project Details are required';
+        }
+        break;
+      default:
+        break;
+    }
+    
+    return error;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+
+    // Clear field error when user starts typing
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+
+    // Clear submit status when user starts typing
+    if (submitStatus) {
+      setSubmitStatus(null);
+      setErrorDetails('');
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    
+    setFieldErrors(prev => ({
+      ...prev,
+      [name]: error
     }));
   };
 
@@ -62,19 +113,22 @@ export default function Contact() {
     setSubmitStatus(null);
     setErrorDetails('');
 
-    // Validate required fields
-    if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setSubmitStatus('error');
-      setErrorDetails('Please fill in all required fields (Full Name, Email, and Project Details).');
-      setIsSubmitting(false);
-      return;
-    }
+    // Validate all required fields
+    const errors = {};
+    errors.fullName = validateField('fullName', formData.fullName);
+    errors.email = validateField('email', formData.email);
+    errors.message = validateField('message', formData.message);
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setSubmitStatus('error');
-      setErrorDetails('Please enter a valid email address.');
+    // Remove empty errors
+    Object.keys(errors).forEach(key => {
+      if (!errors[key]) {
+        delete errors[key];
+      }
+    });
+
+    setFieldErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
       setIsSubmitting(false);
       return;
     }
@@ -114,6 +168,7 @@ export default function Contact() {
           service: '',
           message: ''
         });
+        setFieldErrors({});
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Response error:', errorData);
@@ -143,33 +198,6 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Success/Error Messages */}
-      {submitStatus && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-          {submitStatus === 'success' ? (
-            <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-center space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" />
-              <div>
-                <h3 className="text-lg font-bold text-green-900 mb-1">Message Sent Successfully!</h3>
-                <p className="text-green-700">Thank you for your message. We'll get back to you within 1-2 hours.</p>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-red-50 border border-red-200 rounded-2xl p-6 flex items-center space-x-4">
-              <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-red-600 font-bold">!</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-red-900 mb-1">Message Failed to Send</h3>
-                <p className="text-red-700">
-                  {errorDetails || 'There was an error sending your message. Please try again or contact us directly.'}
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
       {/* Contact Form */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24 pt-10">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
@@ -195,10 +223,14 @@ export default function Contact() {
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleInputChange}
+                        onBlur={handleBlur}
                         required
-                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
+                        className={`w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 ${fieldErrors.fullName ? 'border-[#d2af6f]' : 'border-slate-200'} focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none`}
                         placeholder="Your full name"
                       />
+                      {fieldErrors.fullName && (
+                        <p className="mt-2 text-sm text-[#8b2727]">{fieldErrors.fullName}</p>
+                      )}
                     </div>
                     
                     <div className="group">
@@ -211,42 +243,14 @@ export default function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
+                        onBlur={handleBlur}
                         required
-                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
+                        className={`w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 ${fieldErrors.email ? 'border-[#d2af6f]' : 'border-slate-200'} focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none`}
                         placeholder="your@email.com"
                       />
-                    </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-                    <div className="group">
-                      <label htmlFor="phone" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
-                        placeholder="+91 98765 43210"
-                      />
-                    </div>
-                    
-                    <div className="group">
-                      <label htmlFor="company" className="block text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">
-                        Company
-                      </label>
-                      <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 group-hover:border-slate-300 outline-none"
-                        placeholder="Your company name"
-                      />
+                      {fieldErrors.email && (
+                        <p className="mt-2 text-sm text-[#8b2727]">{fieldErrors.email}</p>
+                      )}
                     </div>
                   </div>
 
@@ -277,11 +281,15 @@ export default function Contact() {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
+                      onBlur={handleBlur}
                       required
                       rows={5}
-                      className="w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 resize-none group-hover:border-slate-300 outline-none"
+                      className={`w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b-2 ${fieldErrors.message ? 'border-[#d2af6f]' : 'border-slate-200'} focus:ring-0 focus:border-[#8b2727] transition-all duration-300 text-base sm:text-lg placeholder-slate-400 resize-none group-hover:border-slate-300 outline-none`}
                       placeholder="Describe your electrical project requirements, timeline, and any specific needs..."
                     />
+                    {fieldErrors.message && (
+                      <p className="mt-2 text-sm text-[#8b2727]">{fieldErrors.message}</p>
+                    )}
                   </div>
 
                   <button
@@ -302,6 +310,33 @@ export default function Contact() {
                       </>
                     )}
                   </button>
+
+                  {/* Success/Error Messages - Now below the button */}
+                  {submitStatus && (
+                    <div className="mt-4">
+                      {submitStatus === 'success' ? (
+                        <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-center space-x-4">
+                          <CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" />
+                          <div>
+                            <h3 className="text-lg font-bold text-green-900 mb-1">Message Sent Successfully!</h3>
+                            <p className="text-green-700">Thank you for your message. We'll get back to you within 1-2 hours.</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 flex items-center space-x-4">
+                          <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-red-600 font-bold">!</span>
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-bold text-red-900 mb-1">Message Failed to Send</h3>
+                            <p className="text-red-700">
+                              {errorDetails || 'There was an error sending your message. Please try again or contact us directly.'}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

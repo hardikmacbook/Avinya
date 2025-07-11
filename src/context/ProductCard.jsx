@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "./CartContext";
+// import { useCart } from "./CartContext";
 
 const ProductCard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
 
   useEffect(() => {
     fetch("https://dummyjson.com/products?limit=100")
@@ -30,7 +30,7 @@ const ProductCard = () => {
   const handleAddToCart = (e, product) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product);
+    // addToCart(product);
   };
 
   if (loading) {
@@ -96,7 +96,7 @@ const ProductCard = () => {
                       </span>
                     </div>
                   
-                    <button 
+                    {/* <button 
                       onClick={(e) => handleAddToCart(e, product)}
                       className="w-full bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium py-3 px-4 rounded-xl flex items-center justify-center gap-2 cursor-pointer mt-auto"
                     >
@@ -104,7 +104,7 @@ const ProductCard = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                       </svg>
                       Add to Cart
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}

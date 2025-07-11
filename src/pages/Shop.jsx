@@ -295,12 +295,12 @@ const Shop = () => {
                   </span>
                 </div>
               
-                <button 
+                {/* <button 
                 onClick={(e) => handleAddToCart(e, product)}
                 className="w-full bg-gradient-to-r from-[#8b2727] to-[#a83333] hover:from-[#6a1d1d] hover:to-[#8b2727] text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg cursor-pointer">
                   <ShoppingCart className="w-4 h-4" />
                   Add to Cart
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

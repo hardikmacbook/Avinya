@@ -8,13 +8,13 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import { useCart } from "../context/CartContext";
+// import { useCart } from "../context/CartContext";
 import Logo from "./Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { cartCount } = useCart();
+  // const { cartCount } = useCart();
 
   const navItems = [
     { name: "home", path: "/" },
@@ -80,7 +80,8 @@ const Navbar = () => {
                   ))}
                 </ul>
 
-                <div className="flex items-center gap-2 text-red-900 cursor-pointer relative group">
+                {/*-------- cart menu ---------*/}
+                {/* <div className="flex items-center gap-2 text-red-900 cursor-pointer relative group">
                   <Link
                     to={"/cart"}
                     className="transition-transform duration-300 group-hover:scale-110"
@@ -90,7 +91,7 @@ const Navbar = () => {
                       {cartCount ?? 0}
                     </span>
                   </Link>
-                </div>
+                </div> */}
 
                 <div className="px-3">
                   <SignedOut>
@@ -108,7 +109,7 @@ const Navbar = () => {
             {/* Mobile Menu Button and Cart */}
             <div className="flex items-center gap-4 lg:hidden">
               {/* Cart Icon for Mobile */}
-              <div className="flex items-center gap-2 text-[#8b2727] cursor-pointer relative group">
+              {/* <div className="flex items-center gap-2 text-[#8b2727] cursor-pointer relative group">
                 <Link
                   to={"/cart"}
                   onClick={closeMenu}
@@ -119,7 +120,7 @@ const Navbar = () => {
                     {cartCount ?? 0}
                   </span>
                 </Link>
-              </div>
+              </div> */}
 
               {/* Auth buttons for mobile */}
               <div className="flex items-center">

@@ -58,7 +58,6 @@ const TimeLine = () => {
 
           {milestones.map((milestone, idx) => {
             const isLeft = idx % 2 === 0;
-            const IconComponent = milestone.icon;
             
             return (
               <div key={milestone.year} className="relative mb-16 lg:mb-24">

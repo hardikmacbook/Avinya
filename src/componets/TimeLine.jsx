@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Rocket, ArrowRight, Calendar, Star, TrendingUp } from 'lucide-react';
 
 const milestones = [
@@ -30,9 +30,32 @@ const milestones = [
   {
     year: '2026 & Beyond',
     title: 'The Road Ahead',
-    description: 'Though we have achieved a lot since 2023, we believe this is just the beginning. Our journey has been shaped by partnership, trust, and hard work, and we are excited for what lies ahead. We are committed to continuing this growth together, aiming to make our company a well-known and respected name in the industry while always prioritizing our customers’ needs.',
+    description: 'Though we have achieved a lot since 2023, we believe this is just the beginning. Our journey has been shaped by partnership, trust, and hard work, and we are excited for what lies ahead. We are committed to continuing this growth together, aiming to make our company a well-known and respected name in the industry while always prioritizing our customers' needs.',
   },
 ];
+
+const ExpandableText = ({ text, maxWords = 25 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const words = text.split(' ');
+  const truncatedText = words.slice(0, maxWords).join(' ') + (words.length > maxWords ? '...' : '');
+  
+  return (
+    <div>
+      <p className="text-gray-600 text-lg leading-relaxed mb-4">
+        {isExpanded ? text : truncatedText}
+      </p>
+      {words.length > maxWords && (
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-gray-900 font-semibold hover:text-gray-700 transition-colors duration-200 text-sm"
+        >
+          {isExpanded ? 'Read Less' : 'Read More'}
+        </button>
+      )}
+    </div>
+  );
+};
 
 const TimeLine = () => {
   return (
@@ -54,7 +77,7 @@ const TimeLine = () => {
         <div className="relative">
           
           {/* Timeline line */}
-          <div className="absolute left-8 lg:left-1/2 lg:transform lg:-translate-x-0.5 w-1 h-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 rounded-full"></div>
+          <div className="absolute left-8 lg:left-1/2 lg:-translate-x-0.5 w-1 h-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 rounded-full"></div>
 
           {milestones.map((milestone, idx) => {
             const isLeft = idx % 2 === 0;
@@ -63,7 +86,7 @@ const TimeLine = () => {
               <div key={milestone.year} className="relative mb-16 lg:mb-24">
                 
                 {/* Timeline dot */}
-                <div className="absolute left-6 lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10">
+                <div className="absolute left-6 lg:left-1/2 lg:-translate-x-1/2 z-10">
                   <div className="w-6 h-6 bg-gray-900 rounded-full border-4 border-white shadow-lg">
                     <div className="absolute inset-0 bg-gray-900 rounded-full animate-ping opacity-20"></div>
                   </div>
@@ -101,13 +124,11 @@ const TimeLine = () => {
                     {/* Accent line */}
                     <div className="w-16 h-1 bg-gray-900 rounded-full mb-6 group-hover:w-24 transition-all duration-300"></div>
                     
-                    {/* Description */}
-                    <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                      {milestone.description}
-                    </p>
+                    {/* Expandable Description */}
+                    <ExpandableText text={milestone.description} maxWords={25} />
                     
                     {/* Action */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-6">
                       <div className="flex items-center text-gray-900 font-semibold hover:text-gray-700 transition-colors cursor-pointer group">
                         <span>Learn More</span>
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

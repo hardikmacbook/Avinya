@@ -3,39 +3,34 @@ import { Rocket, ArrowRight, Calendar, Star, TrendingUp } from 'lucide-react';
 
 const milestones = [
   {
-    year: '2019',
-    title: 'Company Foundation',
-    description: 'We started our journey with a vision to revolutionize the industry. Our founding team came together with decades of combined experience and shared passion for innovation.',
-    stats: '5 Founders',
+    year: '2023',
+    title: 'The Beginning of a New Chapter',
+    description: 'In 2023, we took the first step toward turning our shared dream into reality. With a common vision and mutual trust, we started our shop together, aiming to provide customers with high-quality products and dependable service. It was a bold step, but we were confident in our combined experience and dedication. The year was spent setting up the business, understanding customer needs, and laying a strong foundation for future growth.',
     icon: Star
   },
   {
-    year: '2020',
-    title: 'First Major Breakthrough',
-    description: 'Despite global challenges, we achieved our first major milestone by successfully launching our flagship product and gaining initial market traction.',
+    year: '2024',
+    title: 'Building Stability and Customer Trust',
+    description: 'In 2024, we focused on strengthening our roots in the market. Our priority was to build long-term relationships with customers through honesty, fair pricing, and reliable service. We also expanded our product range to meet the growing needs of our customers. Through hard work and consistency, we began earning customer loyalty, and slowly, our shop became known for its quality and trustworthiness in the industry.',
     stats: '1K Users',
     icon: Rocket
   },
   {
-    year: '2021',
-    title: 'Global Expansion', 
-    description: 'We expanded our operations internationally, establishing offices in three new countries and growing our team to serve a global customer base.',
+    year: '2025',
+    title: ' Moving Towards Growth', 
+    description: 'By 2025, our business had started gaining momentum. We worked on improving operations, streamlining supply chains, and offering even more variety in our products. With better systems in place, we were able to serve more customers effectively. Our partnership grew even stronger, and we continued to work together with full dedication, ensuring that every customer had a positive experience with us.',
     stats: '50K Users',
     icon: TrendingUp
   },
   {
-    year: '2022',
-    title: 'Innovation Award',
-    description: 'Our commitment to innovation was recognized with the Industry Excellence Award while establishing strategic partnerships with leading companies.',
-    stats: '100K Users',
-    icon: Star
+    year: '2026',
+    title: 'Planning for the Future',
+    description: 'As we look ahead to 2026, we are preparing for the next phase of our journey. Our future plans include expanding our business further, either by opening new locations or by introducing digital solutions to make shopping easier for our customers. We are also exploring new product lines to stay ahead of the market trends. Our focus remains on growth, innovation, and customer satisfaction.',
   },
   {
-    year: '2023',
-    title: 'Market Leadership',
-    description: 'We achieved market leadership position and our platform now serves users globally with incredible growth and industry recognition.',
-    stats: '1M Users',
-    icon: Calendar
+    year: '2026 & Beyond',
+    title: 'The Road Ahead',
+    description: 'Though we have achieved a lot since 2023, we believe this is just the beginning. Our journey has been shaped by partnership, trust, and hard work, and we are excited for what lies ahead. We are committed to continuing this growth together, aiming to make our company a well-known and respected name in the industry while always prioritizing our customers’ needs.',
   },
 ];
 
@@ -96,17 +91,12 @@ const TimeLine = () => {
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="bg-gray-100 px-3 py-1 rounded-full text-gray-700 font-semibold text-sm">
-                            {milestone.stats}
-                          </div>
                         </div>
                         <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                           {milestone.title}
                         </h3>
                       </div>
-                      <div className="bg-gray-50 p-3 rounded-xl group-hover:bg-gray-100 transition-colors ml-4">
-                        <IconComponent className="w-6 h-6 text-gray-600" />
-                      </div>
+                      
                     </div>
                     
                     {/* Accent line */}

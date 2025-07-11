@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Rocket, ArrowRight, Calendar, Star, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const milestones = [
   {
@@ -30,22 +31,25 @@ const milestones = [
   {
     year: '2026 & Beyond',
     title: 'The Road Ahead',
-    description: 'Though we have achieved a lot since 2023, we believe this is just the beginning. Our journey has been shaped by partnership, trust, and hard work, and we are excited for what lies ahead. We are committed to continuing this growth together, aiming to make our company a well-known and respected name in the industry while always prioritizing our customers' needs.',
+    description: 'Though we have achieved a lot since 2023, we believe this is just the beginning. Our journey has been shaped by partnership, trust, and hard work, and we are excited for what lies ahead. We are committed to continuing this growth together, aiming to make our company a well-known and respected name in the industry while always prioritizing our customers',
   },
 ];
 
 const ExpandableText = ({ text, maxWords = 25 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
+  if (!text) return null;
+  
   const words = text.split(' ');
-  const truncatedText = words.slice(0, maxWords).join(' ') + (words.length > maxWords ? '...' : '');
+  const shouldTruncate = words.length > maxWords;
+  const truncatedText = shouldTruncate ? words.slice(0, maxWords).join(' ') + '...' : text;
   
   return (
     <div>
       <p className="text-gray-600 text-lg leading-relaxed mb-4">
         {isExpanded ? text : truncatedText}
       </p>
-      {words.length > maxWords && (
+      {shouldTruncate && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-gray-900 font-semibold hover:text-gray-700 transition-colors duration-200 text-sm"
@@ -77,7 +81,7 @@ const TimeLine = () => {
         <div className="relative">
           
           {/* Timeline line */}
-          <div className="absolute left-8 lg:left-1/2 lg:-translate-x-0.5 w-1 h-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 rounded-full"></div>
+          <div className="absolute left-8 lg:left-1/2 lg:transform lg:-translate-x-0.5 w-1 h-full bg-gradient-to-b from-gray-300 via-[#8b2727] to-gray-700 rounded-full"></div>
 
           {milestones.map((milestone, idx) => {
             const isLeft = idx % 2 === 0;
@@ -86,9 +90,9 @@ const TimeLine = () => {
               <div key={milestone.year} className="relative mb-16 lg:mb-24">
                 
                 {/* Timeline dot */}
-                <div className="absolute left-6 lg:left-1/2 lg:-translate-x-1/2 z-10">
-                  <div className="w-6 h-6 bg-gray-900 rounded-full border-4 border-white shadow-lg">
-                    <div className="absolute inset-0 bg-gray-900 rounded-full animate-ping opacity-20"></div>
+                <div className="absolute left-6 lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10">
+                  <div className="w-6 h-6 bg-[#8b2727] rounded-full border-4 border-white shadow-lg">
+                    <div className="absolute inset-0 bg-[#8b2727] rounded-full animate-ping opacity-20"></div>
                   </div>
                 </div>
 
@@ -122,17 +126,13 @@ const TimeLine = () => {
                     </div>
                     
                     {/* Accent line */}
-                    <div className="w-16 h-1 bg-gray-900 rounded-full mb-6 group-hover:w-24 transition-all duration-300"></div>
+                    <div className="w-16 h-1 bg-[#8b2727] rounded-full mb-6 group-hover:w-24 transition-all duration-300"></div>
                     
                     {/* Expandable Description */}
                     <ExpandableText text={milestone.description} maxWords={25} />
                     
                     {/* Action */}
                     <div className="flex items-center justify-between mt-6">
-                      <div className="flex items-center text-gray-900 font-semibold hover:text-gray-700 transition-colors cursor-pointer group">
-                        <span>Learn More</span>
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </div>
                       <div className="text-gray-400 text-sm">
                         {idx + 1} of {milestones.length}
                       </div>
@@ -153,11 +153,11 @@ const TimeLine = () => {
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
               Join thousands of companies who trust us to power their growth
             </p>
-            <button className="group inline-flex items-center gap-4 bg-white text-gray-900 font-bold py-4 px-8 rounded-2xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg">
+            <Link to="/contact" className="group cursor-pointer inline-flex items-center gap-4 bg-[#8b2727] text-white font-bold py-4 px-8 rounded-2xl hover:bg-[#d2af6f] hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg">
               <Rocket className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
               <span>Start Your Journey</span>
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

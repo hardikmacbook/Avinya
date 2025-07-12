@@ -59,7 +59,7 @@ const BeautifulSlider = () => {
     {
       id: 4,
       type: "video",
-      url: "https://vimeo.com/1100816172?share=copy",
+      url: "https://www.dropbox.com/scl/fi/7ah3uk3m8t3n7gcwosmbq/avinya-hero-Made-with-Clipchamp.mp4?rlkey=ju0eg1cibzxjn8tyo1rwuwpn2&st=5m5xye9d&dl=0",
       thumbnail: thumbnail,
     },
     {

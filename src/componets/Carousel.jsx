@@ -45,7 +45,6 @@ const BeautifulSlider = () => {
     {
       id: 2,
       type: "video",
-      title: "Machine Learning in Action",
       url: "https://go.screenpal.com/watch/cTiXfInlgjI",
       thumbnail: thumbnail,
     },
@@ -60,8 +59,7 @@ const BeautifulSlider = () => {
     {
       id: 4,
       type: "video",
-      title: "Machine Learning in Action",
-      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
+      url: "https://vimeo.com/1100816172?share=copy",
       thumbnail: thumbnail,
     },
     {

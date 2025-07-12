@@ -68,9 +68,9 @@ const TimeLine = () => {
         
         {/* Header */}
         <div className="text-center mb-20">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight">
+          <p className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight">
             Our Journey
-          </h1>
+          </p>
           <div className="w-20 h-1 bg-gray-900 mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             The milestones that defined our path to success

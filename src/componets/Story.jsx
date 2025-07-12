@@ -3,7 +3,7 @@ import { BookOpen, Lightbulb, Target, Rocket, Users, Globe } from 'lucide-react'
 
 const CompanyStory = () => {
   return (
-    <div className="w-full bg-white py-20 lg:py-32">
+    <div className="w-full bg-white py-20 lg:py-15">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header
@@ -17,9 +17,10 @@ const CompanyStory = () => {
         {/* Founding Story Details */}
         <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 lg:p-12 mb-16">
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-              The Founding Moment
-            </h3>
+           <p className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight text-center">
+            The Founding Moment
+          </p>
+          <div className="w-20 h-1 bg-gray-900 mx-auto mb-6"></div>
             
             <div className="prose prose-lg max-w-none text-gray-700 space-y-6">
               <p className="text-xl leading-relaxed">

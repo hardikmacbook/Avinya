@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import HeroImg1 from "../assets/images/demo1.jpg";
 import thumbnail from "../assets/images/demo2.jpg";
+import HeroVideo from "../assets/images/avinya-hero.mp4"
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -46,7 +47,7 @@ const BeautifulSlider = () => {
       id: 2,
       type: "video",
       title: "Machine Learning in Action",
-      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
+      url: HeroVideo,
       thumbnail: thumbnail,
     },
     {

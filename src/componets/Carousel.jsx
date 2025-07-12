@@ -45,6 +45,7 @@ const BeautifulSlider = () => {
     {
       id: 2,
       type: "video",
+      title: "Machine Learning in Action",
       url: "https://go.screenpal.com/watch/cTiXfInlgjI",
       thumbnail: thumbnail,
     },
@@ -59,7 +60,8 @@ const BeautifulSlider = () => {
     {
       id: 4,
       type: "video",
-      url: "https://www.dropbox.com/scl/fi/7ah3uk3m8t3n7gcwosmbq/avinya-hero-Made-with-Clipchamp.mp4?rlkey=ju0eg1cibzxjn8tyo1rwuwpn2&st=5m5xye9d&dl=0",
+      title: "Machine Learning in Action",
+      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
       thumbnail: thumbnail,
     },
     {

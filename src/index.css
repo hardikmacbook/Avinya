@@ -5,8 +5,8 @@
   --color-accent: #d2af6f;
 }
 ::selection{
-  background-color: #d2af6f;
-  color: black;
+  background-color: #8b2727;
+  color: white;
 }
 /* clerk user button styling */
 .cl-avatarBox{

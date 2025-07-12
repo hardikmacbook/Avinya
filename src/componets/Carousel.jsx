@@ -69,8 +69,8 @@ const BeautifulSlider = () => {
       type: "image",
       title: "Demo",
       description:
-        "Explore the intricate connections and pathways that form the backbone of artificial intelligence systems.",
-      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
+        "Explore the intricate connections and pathways that form the backbone of AI systems.",
+      url: HeroImg1,
     },
   ];
 

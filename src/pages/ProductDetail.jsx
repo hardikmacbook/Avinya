@@ -247,7 +247,7 @@ const ProductDetails = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
-                <div className="flex items-center border rounded-lg shadow-sm bg-white w-full sm:w-auto">
+                {/* <div className="flex items-center border rounded-lg shadow-sm bg-white w-full sm:w-auto">
                   <button 
                     className="px-4 py-2 text-xl hover:bg-gray-100 transition-colors rounded-l-lg" 
                     onClick={decrementQuantity}
@@ -263,7 +263,7 @@ const ProductDetails = () => {
                   >
                     +
                   </button>
-                </div>
+                </div> */}
                 
                 {/* ADD TO CART BUTTON (COMMENTED OUT) */}
                 {/* <button 

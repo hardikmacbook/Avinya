@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Home, ChevronRight, Share2, Heart, ShoppingBag, Check } from "lucide-react";
-import { useCart } from "../context/CartContext";
+// import { useCart } from "../context/CartContext";
 
 
 const ProductDetails = () => {
@@ -15,13 +15,13 @@ const ProductDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ name: '', rating: 5, comment: '' });
   const [addedToCart, setAddedToCart] = useState(false);
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
 
   // Add to cart function with quantity
-  const handleAddToCart = (e, product) => {
-    e.preventDefault(); // Prevent navigation when clicking the button
-    e.stopPropagation(); // Stop event bubbling
-    addToCart({...product, quantity});
+  // const handleAddToCart = (e, product) => {
+  //   e.preventDefault(); // Prevent navigation when clicking the button
+  //   e.stopPropagation(); // Stop event bubbling
+  //   addToCart({...product, quantity});
     
     // Show added to cart confirmation
     setAddedToCart(true);
@@ -266,7 +266,7 @@ const ProductDetails = () => {
                   </button>
                 </div>
                 
-                <button 
+                {/* <button 
                   onClick={(e) => handleAddToCart(e, product)}
                   className={`cursor-pointer ${addedToCart ? 'bg-green-600' : 'bg-red-900 hover:bg-black'} text-white px-6 py-3 rounded-lg transition-colors duration-200 flex-grow flex items-center justify-center gap-2 shadow-lg`}
                   disabled={addedToCart}
@@ -282,22 +282,22 @@ const ProductDetails = () => {
                       Add to Cart
                     </>
                   )}
-                </button>
+                </button> */}
                 
-                <button 
+                {/* <button 
                   onClick={handleShare}
                   className="cursor-pointer border border-gray-300 hover:bg-gray-100 p-3 rounded-lg transition-colors duration-200 shadow-sm"
                   aria-label="Share product"
                 >
                   <Share2 className="w-5 h-5" />
-                </button>
+                </button> */}
                 
-                <button 
+                {/* <button 
                   className="cursor-pointer border border-gray-300 hover:bg-gray-100 p-3 rounded-lg transition-colors duration-200 shadow-sm"
                   aria-label="Add to wishlist"
                 >
                   <Heart className="w-5 h-5" />
-                </button>
+                </button> */}
               </div>
               
               <div className="border-t pt-4">

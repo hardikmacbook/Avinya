@@ -11,6 +11,7 @@ const Shop = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedBrand, setSelectedBrand] = useState("all"); // New brand filter state
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [sortBy, setSortBy] = useState("default");
   const [viewMode, setViewMode] = useState("grid");
@@ -18,6 +19,7 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(12);
   const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]); // New brands state
   // const { addToCart } = useCart();
 
    // Add to cart function
@@ -38,6 +40,10 @@ const Shop = () => {
         const uniqueCategories = [...new Set(data.products.map(product => product.category))];
         setCategories(uniqueCategories);
         
+        // Extract unique brands
+        const uniqueBrands = [...new Set(data.products.map(product => product.brand).filter(Boolean))];
+        setBrands(uniqueBrands.sort());
+        
         // Set max price for price range
         const maxPrice = Math.max(...data.products.map(product => product.price));
         setPriceRange([0, Math.ceil(maxPrice)]);
@@ -56,9 +62,10 @@ const Shop = () => {
       const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           product.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+      const matchesBrand = selectedBrand === "all" || product.brand === selectedBrand; // New brand filter
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
       
-      return matchesSearch && matchesCategory && matchesPrice;
+      return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
     });
 
     // Sort products
@@ -74,7 +81,7 @@ const Shop = () => {
 
     setFilteredData(filtered);
     setCurrentPage(1); // Reset to first page when filters change
-  }, [data, searchTerm, selectedCategory, priceRange, sortBy]);
+  }, [data, searchTerm, selectedCategory, selectedBrand, priceRange, sortBy]); // Added selectedBrand to dependencies
 
   // Function to create URL-friendly slugs from product titles
   const createSlug = (title) => {
@@ -93,6 +100,7 @@ const Shop = () => {
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedCategory("all");
+    setSelectedBrand("all"); // Reset brand filter
     setPriceRange([0, Math.max(...data.map(product => product.price))]);
     setSortBy("default");
   };
@@ -140,7 +148,7 @@ const Shop = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-
+            
             {/* Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -171,7 +179,7 @@ const Shop = () => {
           {/* Filters Panel */}
           {showFilters && (
             <div className="mt-6 pt-6 border-t border-[#d2af6f]/20">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Category Filter */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
@@ -184,6 +192,23 @@ const Shop = () => {
                     {categories.map(category => (
                       <option key={category} value={category}>
                         {category.charAt(0).toUpperCase() + category.slice(1)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Brand Filter - New Addition */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Shop by Company</label>
+                  <select
+                    value={selectedBrand}
+                    onChange={(e) => setSelectedBrand(e.target.value)}
+                    className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#8b2727] focus:border-transparent"
+                  >
+                    <option value="all">All Brands</option>
+                    {brands.map(brand => (
+                      <option key={brand} value={brand}>
+                        {brand}
                       </option>
                     ))}
                   </select>
@@ -279,6 +304,15 @@ const Shop = () => {
                     <span className="text-sm text-gray-700 ml-1 font-medium">{product.rating}</span>
                   </div>
                 </div>
+                
+                {/* Brand display */}
+                {product.brand && (
+                  <div className="mb-2">
+                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                      {product.brand}
+                    </span>
+                  </div>
+                )}
                 
                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                   {product.description.length > (viewMode === 'list' ? 120 : 80) 

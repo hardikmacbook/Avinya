@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom'
 import { Home, ChevronRight, Share2, Heart, ShoppingBag, Check } from "lucide-react";
 // import { useCart } from "../context/CartContext";
 
-
 const ProductDetails = () => {
   const { title } = useParams();
   const [products, setProducts] = useState([]);
@@ -17,16 +16,16 @@ const ProductDetails = () => {
   const [addedToCart, setAddedToCart] = useState(false);
   // const { addToCart } = useCart();
 
-  // Add to cart function with quantity
+  // Add to cart function with quantity (COMMENTED OUT)
   // const handleAddToCart = (e, product) => {
   //   e.preventDefault(); // Prevent navigation when clicking the button
   //   e.stopPropagation(); // Stop event bubbling
   //   addToCart({...product, quantity});
-    
-    // Show added to cart confirmation
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
-  };
+  //   
+  //   // Show added to cart confirmation
+  //   setAddedToCart(true);
+  //   setTimeout(() => setAddedToCart(false), 2000);
+  // };
 
   // Quantity handlers
   const incrementQuantity = () => {
@@ -41,22 +40,22 @@ const ProductDetails = () => {
     }
   };
 
-  // Share product function
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: product.title,
-        text: `Check out this amazing product: ${product.title}`,
-        url: window.location.href,
-      })
-      .catch(error => console.log('Error sharing:', error));
-    } else {
-      // Fallback for browsers that don't support Web Share API
-      navigator.clipboard.writeText(window.location.href)
-        .then(() => alert('Link copied to clipboard!'))
-        .catch(error => console.log('Error copying link:', error));
-    }
-  };
+  // Share product function (COMMENTED OUT)
+  // const handleShare = () => {
+  //   if (navigator.share) {
+  //     navigator.share({
+  //       title: product.title,
+  //       text: `Check out this amazing product: ${product.title}`,
+  //       url: window.location.href,
+  //     })
+  //     .catch(error => console.log('Error sharing:', error));
+  //   } else {
+  //     // Fallback for browsers that don't support Web Share API
+  //     navigator.clipboard.writeText(window.location.href)
+  //       .then(() => alert('Link copied to clipboard!'))
+  //       .catch(error => console.log('Error copying link:', error));
+  //   }
+  // };
 
   // Handle review submission
   const handleReviewSubmit = (e) => {
@@ -177,7 +176,7 @@ const ProductDetails = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className=" rounded-xl shadow-lg p-6 md:p-8 backdrop-blur-sm bg-white/90">
+        <div className="rounded-xl shadow-lg p-6 md:p-8 backdrop-blur-sm bg-white/90">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Product Images Section */}
             <div className="md:w-1/2">
@@ -266,6 +265,7 @@ const ProductDetails = () => {
                   </button>
                 </div>
                 
+                {/* ADD TO CART BUTTON (COMMENTED OUT) */}
                 {/* <button 
                   onClick={(e) => handleAddToCart(e, product)}
                   className={`cursor-pointer ${addedToCart ? 'bg-green-600' : 'bg-red-900 hover:bg-black'} text-white px-6 py-3 rounded-lg transition-colors duration-200 flex-grow flex items-center justify-center gap-2 shadow-lg`}
@@ -284,6 +284,7 @@ const ProductDetails = () => {
                   )}
                 </button> */}
                 
+                {/* SHARE BUTTON (COMMENTED OUT) */}
                 {/* <button 
                   onClick={handleShare}
                   className="cursor-pointer border border-gray-300 hover:bg-gray-100 p-3 rounded-lg transition-colors duration-200 shadow-sm"
@@ -292,6 +293,7 @@ const ProductDetails = () => {
                   <Share2 className="w-5 h-5" />
                 </button> */}
                 
+                {/* WISHLIST BUTTON (COMMENTED OUT) */}
                 {/* <button 
                   className="cursor-pointer border border-gray-300 hover:bg-gray-100 p-3 rounded-lg transition-colors duration-200 shadow-sm"
                   aria-label="Add to wishlist"

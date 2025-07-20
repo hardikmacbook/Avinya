@@ -44,7 +44,7 @@ Product Details:
 - Name: ${product.title}
 - Brand: ${product.brand}
 - Category: ${product.category}
-- Price: $${product.price}
+- Price: ₹${product.price}
 - Description: ${product.description}
 - Quantity Interested: ${quantity}
 

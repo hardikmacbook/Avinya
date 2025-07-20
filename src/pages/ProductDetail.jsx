@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Home, ChevronRight, Share2, Heart, ShoppingBag, Check } from "lucide-react";
+import { Home, ChevronRight, Share2, Heart, ShoppingBag, Check, Mail, MessageCircle } from "lucide-react";
 // import { useCart } from "../context/CartContext";
 
 const ProductDetails = () => {
@@ -16,6 +16,10 @@ const ProductDetails = () => {
   const [addedToCart, setAddedToCart] = useState(false);
   // const { addToCart } = useCart();
 
+  // Your contact details - UPDATE THESE WITH YOUR ACTUAL DETAILS
+  const CONTACT_EMAIL = "your-email@example.com";
+  const WHATSAPP_NUMBER = "1234567890"; // Your WhatsApp number without + sign
+
   // Add to cart function with quantity (COMMENTED OUT)
   // const handleAddToCart = (e, product) => {
   //   e.preventDefault(); // Prevent navigation when clicking the button
@@ -26,6 +30,66 @@ const ProductDetails = () => {
   //   setAddedToCart(true);
   //   setTimeout(() => setAddedToCart(false), 2000);
   // };
+
+  // Email inquiry function
+  const handleEmailInquiry = () => {
+    if (!product) return;
+    
+    const subject = `Inquiry about ${product.title}`;
+    const body = `Hi,
+
+I'm interested in the following product:
+
+Product Details:
+- Name: ${product.title}
+- Brand: ${product.brand}
+- Category: ${product.category}
+- Price: $${product.price}
+- Discount: ${product.discountPercentage}%
+- Rating: ${product.rating}/5
+- Stock: ${product.stock} units
+- Description: ${product.description}
+- Quantity Interested: ${quantity}
+
+Product Images:
+${product.images.map((img, index) => `Image ${index + 1}: ${img}`).join('\n')}
+
+Please provide more information about this product and availability.
+
+Best regards`;
+
+    const mailtoLink = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink);
+  };
+
+  // WhatsApp inquiry function
+  const handleWhatsAppInquiry = () => {
+    if (!product) return;
+    
+    const message = `Hi! I'm interested in this product:
+
+*${product.title}*
+
+📋 *Product Details:*
+• Brand: ${product.brand}
+• Category: ${product.category}
+• Price: $${product.price}
+• Discount: ${product.discountPercentage}%
+• Rating: ${product.rating}/5 ⭐
+• Stock: ${product.stock} units
+• Quantity Interested: ${quantity}
+
+📝 *Description:*
+${product.description}
+
+🖼️ *Product Images:*
+${product.images.map((img, index) => `Image ${index + 1}: ${img}`).join('\n')}
+
+Could you please provide more information about this product?`;
+
+    const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappLink, '_blank');
+  };
 
   // Quantity handlers
   const incrementQuantity = () => {
@@ -247,7 +311,7 @@ const ProductDetails = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
-                {/* <div className="flex items-center border rounded-lg shadow-sm bg-white w-full sm:w-auto">
+                <div className="flex items-center border rounded-lg shadow-sm bg-white w-full sm:w-auto">
                   <button 
                     className="px-4 py-2 text-xl hover:bg-gray-100 transition-colors rounded-l-lg" 
                     onClick={decrementQuantity}
@@ -263,7 +327,7 @@ const ProductDetails = () => {
                   >
                     +
                   </button>
-                </div> */}
+                </div>
                 
                 {/* ADD TO CART BUTTON (COMMENTED OUT) */}
                 {/* <button 
@@ -300,6 +364,30 @@ const ProductDetails = () => {
                 >
                   <Heart className="w-5 h-5" />
                 </button> */}
+              </div>
+
+              {/* INQUIRY BUTTONS - NEW ADDITION */}
+              <div className="mb-6 bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-medium mb-3 text-gray-800">Interested in this product?</h3>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={handleEmailInquiry}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-md"
+                  >
+                    <Mail className="w-5 h-5" />
+                    Inquire via Email
+                  </button>
+                  <button
+                    onClick={handleWhatsAppInquiry}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-md"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Inquire via WhatsApp
+                  </button>
+                </div>
+                <p className="text-sm text-gray-600 mt-2 text-center">
+                  Click above to send product details directly to us
+                </p>
               </div>
               
               <div className="border-t pt-4">

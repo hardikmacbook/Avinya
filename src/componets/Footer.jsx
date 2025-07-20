@@ -7,193 +7,262 @@ import {
   Twitter,
   Instagram,
   Linkedin,
-  Send,
+  ArrowRight,
+  CheckCircle,
 } from "lucide-react";
 import AvinyaLogo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
 
 function Footer() {
   const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Shop", href: "/shop" },
+    { name: "About Us", href: "/about" },
+    { name: "Our Services", href: "/shop" },
     { name: "Contact", href: "/contact" },
-    { name: "Blog", href: "/blog" },
+    { name: "Projects", href: "/blog" },
   ];
 
   const services = [
-    { name: "Electrical Solutions", href: "#" },
-    { name: "Installation Services", href: "#" },
-    { name: "Maintenance", href: "#" },
-    { name: "Consulting", href: "#" },
-    { name: "Emergency Support", href: "#" },
+    { name: "Residential Wiring", href: "#" },
+    { name: "Commercial Solutions", href: "#" },
+    { name: "Smart Home Setup", href: "#" },
+    { name: "Emergency Repairs", href: "#" },
+    { name: "Safety Inspections", href: "#" },
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Newsletter signup:", email);
-    setEmail("");
+    if (email) {
+      console.log("Newsletter signup:", email);
+      setIsSubscribed(true);
+      setEmail("");
+      setTimeout(() => setIsSubscribed(false), 3000);
+    }
   };
 
   return (
-    <footer className="bg-slate-50 border-t border-gray-200">
-      {/* Main Footer Content */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
-          {/* Logo & Company Info */}
-          <div className="lg:col-span-1">
-            <div className="mb-6">
-              <Link to="/" className="inline-block">
-                <img
-                  className="h-12 w-auto object-contain"
-                  src={AvinyaLogo}
-                  alt="Avinya Logo"
-                />
-              </Link>
-            </div>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-xs">
-              Professional electrical solutions with cutting-edge technology and reliable service for businesses and homes.
-            </p>
+    <footer className="relative">
+      {/* Main Footer */}
+      <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Social Links */}
-            <div className="flex space-x-3">
-              {[
-                { Icon: Facebook, href: "#" },
-                { Icon: Twitter, href: "#" },
-                { Icon: Instagram, href: "#" },
-                { Icon: Linkedin, href: "#" }
-              ].map(({ Icon, href }, index) => (
-                <a
-                  key={index}
-                  href={href}
-                  className="w-9 h-9 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:text-blue-600 hover:border-blue-200 hover:shadow-sm transition-all duration-200"
-                >
-                  <Icon size={16} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-gray-900 mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {navLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    to={link.href}
-                    className="text-gray-600 text-sm hover:text-gray-900 hover:translate-x-1 transition-all duration-200 inline-block"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold text-gray-900 mb-4">Services</h4>
-            <ul className="space-y-2">
-              {services.map((service, index) => (
-                <li key={index}>
-                  <a
-                    href={service.href}
-                    className="text-gray-600 text-sm hover:text-gray-900 hover:translate-x-1 transition-all duration-200 inline-block"
-                  >
-                    {service.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter & Contact */}
-          <div>
-            <h4 className="font-semibold text-gray-900 mb-4">Stay Updated</h4>
-            
-            {/* Newsletter */}
-            <div className="mb-6">
-              <p className="text-gray-600 text-xs mb-3">
-                Get the latest updates and offers
-              </p>
-              <form onSubmit={handleSubmit} className="space-y-2">
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                    className="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-gray-400"
-                    required
+            {/* Brand Section - Takes more space */}
+            <div className="lg:col-span-4 space-y-6">
+              <div>
+                <Link to="/" className="inline-block group">
+                  <img
+                    className="h-16 w-auto object-contain filter brightness-0 invert group-hover:scale-105 transition-transform duration-300"
+                    src={AvinyaLogo}
+                    alt="Avinya Electricals"
                   />
+                </Link>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-white">
+                  Powering Your Future
+                </h3>
+                <p className="text-gray-300 leading-relaxed max-w-sm">
+                  Expert electrical solutions with 15+ years of experience. 
+                  From residential installations to commercial projects, 
+                  we deliver excellence with every connection.
+                </p>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-400">500+</div>
+                  <div className="text-xs text-gray-400">Projects</div>
                 </div>
-                <button
-                  type="submit"
-                  className="w-full bg-gray-900 text-white text-sm py-2 px-4 rounded-lg hover:bg-gray-800 hover:shadow-md transition-all duration-200 flex items-center justify-center space-x-2"
-                >
-                  <span>Subscribe</span>
-                  <Send size={14} />
-                </button>
-              </form>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-400">15+</div>
+                  <div className="text-xs text-gray-400">Years</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-yellow-400">24/7</div>
+                  <div className="text-xs text-gray-400">Support</div>
+                </div>
+              </div>
             </div>
 
-            {/* Contact Info */}
-            <div className="space-y-2 pt-4 border-t border-gray-100">
-              <a
-                href="mailto:avinyaelectricals@gmail.com"
-                className="flex items-center space-x-2 text-gray-600 text-xs hover:text-gray-900 transition-colors duration-200"
-              >
-                <Mail size={14} />
-                <span>avinyaelectricals@gmail.com</span>
-              </a>
-              <a
-                href="tel:+918799360195"
-                className="flex items-center space-x-2 text-gray-600 text-xs hover:text-gray-900 transition-colors duration-200"
-              >
-                <Phone size={14} />
-                <span>+91 87993 60195</span>
-              </a>
-              <a
-                href="https://maps.app.goo.gl/BefToyT4nEjuPh2x8"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-gray-600 text-xs hover:text-gray-900 transition-colors duration-200"
-              >
-                <MapPin size={14} />
-                <span>Vapi, Gujarat</span>
-              </a>
+            {/* Quick Links */}
+            <div className="lg:col-span-2 space-y-6">
+              <h4 className="text-lg font-semibold text-white border-b border-gray-700 pb-3">
+                Quick Links
+              </h4>
+              <ul className="space-y-3">
+                {navLinks.map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      to={link.href}
+                      className="text-gray-300 hover:text-white hover:pl-2 transition-all duration-300 inline-block relative group"
+                    >
+                      <span className="relative z-10">{link.name}</span>
+                      <div className="absolute inset-0 bg-blue-600/20 rounded scale-0 group-hover:scale-100 transition-transform duration-300 -z-0"></div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div className="lg:col-span-3 space-y-6">
+              <h4 className="text-lg font-semibold text-white border-b border-gray-700 pb-3">
+                Our Services
+              </h4>
+              <ul className="space-y-3">
+                {services.map((service, index) => (
+                  <li key={index}>
+                    <a
+                      href={service.href}
+                      className="text-gray-300 hover:text-white hover:pl-2 transition-all duration-300 inline-block relative group"
+                    >
+                      <span className="relative z-10">{service.name}</span>
+                      <div className="absolute inset-0 bg-blue-600/20 rounded scale-0 group-hover:scale-100 transition-transform duration-300 -z-0"></div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Newsletter & Contact */}
+            <div className="lg:col-span-3 space-y-6">
+              <h4 className="text-lg font-semibold text-white border-b border-gray-700 pb-3">
+                Stay Connected
+              </h4>
+              
+              {/* Newsletter */}
+              <div className="bg-gray-800/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700">
+                <h5 className="font-semibold text-white mb-2">Newsletter</h5>
+                <p className="text-gray-400 text-sm mb-4">
+                  Get updates on latest electrical technologies and safety tips
+                </p>
+                
+                {!isSubscribed ? (
+                  <form onSubmit={handleSubmit} className="space-y-3">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 flex items-center justify-center space-x-2 group"
+                    >
+                      <span>Subscribe Now</span>
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+                    </button>
+                  </form>
+                ) : (
+                  <div className="flex items-center space-x-2 text-green-400 py-3">
+                    <CheckCircle size={20} />
+                    <span className="font-medium">Successfully subscribed!</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <a
+                    href="mailto:avinyaelectricals@gmail.com"
+                    className="flex items-center space-x-3 text-gray-300 hover:text-white group transition-all duration-300"
+                  >
+                    <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-300">
+                      <Mail size={16} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium">Email Us</div>
+                      <div className="text-xs text-gray-400">avinyaelectricals@gmail.com</div>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="tel:+918799360195"
+                    className="flex items-center space-x-3 text-gray-300 hover:text-white group transition-all duration-300"
+                  >
+                    <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center group-hover:bg-green-600 transition-colors duration-300">
+                      <Phone size={16} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium">Call Us</div>
+                      <div className="text-xs text-gray-400">+91 87993 60195</div>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="https://maps.app.goo.gl/BefToyT4nEjuPh2x8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 text-gray-300 hover:text-white group transition-all duration-300"
+                  >
+                    <div className="w-10 h-10 bg-red-600/20 rounded-lg flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                      <MapPin size={16} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium">Visit Us</div>
+                      <div className="text-xs text-gray-400">Vapi, Gujarat</div>
+                    </div>
+                  </a>
+                </div>
+
+                {/* Social Media */}
+                <div className="pt-4">
+                  <p className="text-sm font-medium text-white mb-3">Follow Us</p>
+                  <div className="flex space-x-3">
+                    {[
+                      { Icon: Facebook, color: "hover:bg-blue-600", href: "#" },
+                      { Icon: Twitter, color: "hover:bg-sky-500", href: "#" },
+                      { Icon: Instagram, color: "hover:bg-pink-600", href: "#" },
+                      { Icon: Linkedin, color: "hover:bg-blue-700", href: "#" }
+                    ].map(({ Icon, color, href }, index) => (
+                      <a
+                        key={index}
+                        href={href}
+                        className={`w-10 h-10 bg-gray-700 ${color} rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:scale-110 transition-all duration-300`}
+                      >
+                        <Icon size={18} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div className="border-t border-gray-200 bg-white">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
-            <div className="text-gray-500 text-xs">
-              © 2025 Avinya Electricals. All rights reserved.
+      {/* Bottom Bar */}
+      <div className="bg-gray-950 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+            <div className="text-gray-400 text-sm">
+              © 2025 <span className="font-semibold text-white">Avinya Electricals</span>. All rights reserved.
             </div>
-            <div className="flex space-x-4 text-xs">
+            <div className="flex items-center space-x-6 text-sm">
               <a
                 href="#"
-                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                className="text-gray-400 hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-blue-500 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                className="text-gray-400 hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-blue-500 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full"
               >
                 Terms of Service
               </a>
               <a
                 href="#"
-                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                className="text-gray-400 hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-blue-500 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full"
               >
                 Sitemap
               </a>

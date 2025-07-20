@@ -17,7 +17,7 @@ const ProductDetails = () => {
   // const { addToCart } = useCart();
 
   // Your contact details - UPDATE THESE WITH YOUR ACTUAL DETAILS
-  const CONTACT_EMAIL = "your-email@example.com";
+  const CONTACT_EMAIL = "hardikkamaliya0000@gmail.com";
   const WHATSAPP_NUMBER = "7575837112"; // Your WhatsApp number without + sign
 
   // Add to cart function with quantity (COMMENTED OUT)

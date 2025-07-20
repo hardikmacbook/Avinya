@@ -7,7 +7,7 @@ import {
   Twitter,
   Instagram,
   Linkedin,
-  ArrowRight,
+  Send,
 } from "lucide-react";
 import AvinyaLogo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
@@ -24,11 +24,11 @@ function Footer() {
   ];
 
   const services = [
-    { name: "Demo", href: "#" },
-    { name: "Demo", href: "#" },
-    { name: "Demo", href: "#" },
-    { name: "Demo", href: "#" },
-    { name: "Demo", href: "#" },
+    { name: "Electrical Solutions", href: "#" },
+    { name: "Installation Services", href: "#" },
+    { name: "Maintenance", href: "#" },
+    { name: "Consulting", href: "#" },
+    { name: "Emergency Support", href: "#" },
   ];
 
   const handleSubmit = (e) => {
@@ -38,64 +38,71 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-slate-50 border-t border-gray-200">
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
           {/* Logo & Company Info */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3">
-              <Link to="/">
+          <div className="lg:col-span-1">
+            <div className="mb-6">
+              <Link to="/" className="inline-block">
                 <img
-                  className="w-auto h-[80px] sm:h-[100px] lg:h-[100px] object-contain transition-all duration-300"
+                  className="h-12 w-auto object-contain"
                   src={AvinyaLogo}
-                  alt="avinya logo"
+                  alt="Avinya Logo"
                 />
               </Link>
             </div>
-            <p className="text-gray-300 leading-relaxed max-w-sm">
-              Crafting digital experiences that inspire, engage, and transform
-              businesses worldwide with cutting-edge technology and creative
-              excellence.
+            <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-xs">
+              Professional electrical solutions with cutting-edge technology and reliable service for businesses and homes.
             </p>
-            <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
-                <div
+            
+            {/* Social Links */}
+            <div className="flex space-x-3">
+              {[
+                { Icon: Facebook, href: "#" },
+                { Icon: Twitter, href: "#" },
+                { Icon: Instagram, href: "#" },
+                { Icon: Linkedin, href: "#" }
+              ].map(({ Icon, href }, index) => (
+                <a
                   key={index}
-                  className="w-10 h-10 bg-gray-800 hover:bg-[#8b2727] hover:text-[#d2af6f] rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300"
+                  href={href}
+                  className="w-9 h-9 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:text-blue-600 hover:border-blue-200 hover:shadow-sm transition-all duration-200"
                 >
-                  <Icon size={18} />
-                </div>
+                  <Icon size={16} />
+                </a>
               ))}
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="space-y-6">
-            <h4 className="text-xl font-semibold text-white">Quick Links</h4>
-            <ul className="space-y-3">
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-4">Quick Links</h4>
+            <ul className="space-y-2">
               {navLinks.map((link, index) => (
                 <li key={index}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer"
+                  <Link
+                    to={link.href}
+                    className="text-gray-600 text-sm hover:text-gray-900 hover:translate-x-1 transition-all duration-200 inline-block"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Services */}
-          <div className="space-y-6">
-            <h4 className="text-xl font-semibold text-white">Services</h4>
-            <ul className="space-y-3">
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-4">Services</h4>
+            <ul className="space-y-2">
               {services.map((service, index) => (
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer"
+                    className="text-gray-600 text-sm hover:text-gray-900 hover:translate-x-1 transition-all duration-200 inline-block"
                   >
                     {service.name}
                   </a>
@@ -105,76 +112,90 @@ function Footer() {
           </div>
 
           {/* Newsletter & Contact */}
-          <div className="space-y-6">
-            <h4 className="text-xl font-semibold text-white">Stay Connected</h4>
-
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-4">Stay Updated</h4>
+            
             {/* Newsletter */}
-            <div className="space-y-4">
-              <p className="text-gray-300 text-sm">
-                Subscribe to our newsletter for updates
+            <div className="mb-6">
+              <p className="text-gray-600 text-xs mb-3">
+                Get the latest updates and offers
               </p>
-              <div className="space-y-3">
+              <form onSubmit={handleSubmit} className="space-y-2">
                 <div className="relative">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-[#d2af6f] focus:outline-none transition-colors duration-300 text-white placeholder-gray-400"
+                    placeholder="Your email address"
+                    className="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-gray-400"
+                    required
                   />
                 </div>
                 <button
-                  onClick={handleSubmit}
-                  className="w-full bg-white text-black hover:text-[#d2af6f] hover:bg-[#8b2727] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center space-x-2 cursor-pointer"
+                  type="submit"
+                  className="w-full bg-gray-900 text-white text-sm py-2 px-4 rounded-lg hover:bg-gray-800 hover:shadow-md transition-all duration-200 flex items-center justify-center space-x-2"
                 >
                   <span>Subscribe</span>
-                  <ArrowRight size={16} />
+                  <Send size={14} />
                 </button>
-              </div>
+              </form>
             </div>
 
             {/* Contact Info */}
-            <div className="space-y-3 pt-4 border-t border-gray-700">
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
-                <Mail size={16} />
-                <Link target="_blank" to="mailto:avinyaelectricals@gmail.com" className="text-sm">avinyaelectricals@gmail.com</Link>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
-                <Phone size={16} />
-                <Link to="tel:+918799360195" target="_blank" className="text-sm">+91 87993 60195</Link>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300 hover:text-[#d2af6f] transition-colors duration-300 cursor-pointer">
-                <MapPin size={16} />
-                <Link target="_blank" to="https://maps.app.goo.gl/BefToyT4nEjuPh2x8" className="text-sm">Vapi, Gujarat</Link>
-              </div>
+            <div className="space-y-2 pt-4 border-t border-gray-100">
+              <a
+                href="mailto:avinyaelectricals@gmail.com"
+                className="flex items-center space-x-2 text-gray-600 text-xs hover:text-gray-900 transition-colors duration-200"
+              >
+                <Mail size={14} />
+                <span>avinyaelectricals@gmail.com</span>
+              </a>
+              <a
+                href="tel:+918799360195"
+                className="flex items-center space-x-2 text-gray-600 text-xs hover:text-gray-900 transition-colors duration-200"
+              >
+                <Phone size={14} />
+                <span>+91 87993 60195</span>
+              </a>
+              <a
+                href="https://maps.app.goo.gl/BefToyT4nEjuPh2x8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-gray-600 text-xs hover:text-gray-900 transition-colors duration-200"
+              >
+                <MapPin size={14} />
+                <span>Vapi, Gujarat</span>
+              </a>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-700">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">
-              © 2025 LogoName. All rights reserved.
+      {/* Bottom Section */}
+      <div className="border-t border-gray-200 bg-white">
+        <div className="max-w-6xl mx-auto px-6 py-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+            <div className="text-gray-500 text-xs">
+              © 2025 Avinya Electricals. All rights reserved.
             </div>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex space-x-4 text-xs">
               <a
                 href="#"
-                className="text-gray-400 hover:text-[#d2af6f] transition-colors duration-300"
+                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-[#d2af6f] transition-colors duration-300"
+                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
               >
                 Terms of Service
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-[#d2af6f] transition-colors duration-300"
+                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
               >
-                Cookie Policy
+                Sitemap
               </a>
             </div>
           </div>

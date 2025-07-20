@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Search, Filter, Grid, List, ChevronDown, Star, ShoppingCart, Home, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+// import { useCart } from "../context/CartContext";
 
 
 
@@ -18,14 +18,14 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(12);
   const [categories, setCategories] = useState([]);
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
 
    // Add to cart function
-   const handleAddToCart = (e, product) => {
-    e.preventDefault(); // Prevent navigation when clicking the button
-    e.stopPropagation(); // Stop event bubbling
-    addToCart(product);
-  };
+  //  const handleAddToCart = (e, product) => {
+  //   e.preventDefault(); // Prevent navigation when clicking the button
+  //   e.stopPropagation(); // Stop event bubbling
+  //   addToCart(product);
+  // };
 
   useEffect(() => {
     fetch("https://dummyjson.com/products?limit=100")

@@ -10,7 +10,7 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
-import AvinyaLogo from "../assets/images/logo.png";
+import AvinyaLogo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 
 function Footer() {

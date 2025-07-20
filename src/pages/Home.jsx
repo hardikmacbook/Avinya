@@ -3,7 +3,7 @@ import Carousel from '../componets/Home/Slider/Carousel'
 import ProductCard from '../context/ProductCard'
 import OurCoreValue from '../componets/Home/OurCoreValue/OurCoreValue'
 import Review from '../componets/Home/Review/Review'
-import Footer from '../componets/Footer'
+import Footer from '../componets/Footer/Footer'
 const Home = () => {
   return (
    <>

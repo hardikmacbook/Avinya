@@ -1,6 +1,6 @@
 import React from 'react'
-import TimeLine from '../componets/TimeLine'
-import CompanyStory from '../componets/Story'
+import TimeLine from '../componets/About/TimeLine'
+import CompanyStory from '../componets/About/Story'
 
 const About = () => {
   return (

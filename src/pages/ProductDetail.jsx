@@ -13,12 +13,12 @@ const ProductDetails = () => {
   const [activeTab, setActiveTab] = useState('description');
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ name: '', rating: 5, comment: '' });
-  const [addedToCart, setAddedToCart] = useState(false);
+  // const [addedToCart, setAddedToCart] = useState(false);
   // const { addToCart } = useCart();
 
   // Your contact details - UPDATE THESE WITH YOUR ACTUAL DETAILS
   const CONTACT_EMAIL = "your-email@example.com";
-  const WHATSAPP_NUMBER = "1234567890"; // Your WhatsApp number without + sign
+  const WHATSAPP_NUMBER = "7575837112"; // Your WhatsApp number without + sign
 
   // Add to cart function with quantity (COMMENTED OUT)
   // const handleAddToCart = (e, product) => {
@@ -45,9 +45,6 @@ Product Details:
 - Brand: ${product.brand}
 - Category: ${product.category}
 - Price: $${product.price}
-- Discount: ${product.discountPercentage}%
-- Rating: ${product.rating}/5
-- Stock: ${product.stock} units
 - Description: ${product.description}
 - Quantity Interested: ${quantity}
 
@@ -74,9 +71,6 @@ Best regards`;
 • Brand: ${product.brand}
 • Category: ${product.category}
 • Price: $${product.price}
-• Discount: ${product.discountPercentage}%
-• Rating: ${product.rating}/5 ⭐
-• Stock: ${product.stock} units
 • Quantity Interested: ${quantity}
 
 📝 *Description:*
@@ -291,7 +285,7 @@ Could you please provide more information about this product?`;
               
               <div className="mb-6 bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-baseline">
-                  <span className="text-3xl font-bold text-red-900">${product.price}</span>
+                  <span className="text-3xl font-bold text-red-900">₹{product.price}</span>
                   {product.discountPercentage > 0 && (
                     <span className="ml-2 text-sm text-green-600 font-medium">{product.discountPercentage}% off</span>
                   )}

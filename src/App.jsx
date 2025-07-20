@@ -4,7 +4,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Error from "./pages/Error";
 // import Cart from "./pages/Cart";
-import Navbar from "./componets/Navbar";
+import Navbar from "./componets/Header/Navbar";
 import ProductDetails from "./pages/ProductDetail";
 import Shop from "./pages/Shop";
 import Footer from "./componets/Footer";

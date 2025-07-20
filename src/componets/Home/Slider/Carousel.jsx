@@ -18,9 +18,9 @@ import {
   X,
   RotateCcw,
 } from "lucide-react";
-import HeroImg1 from "../assets/images/demo1.jpg";
-import thumbnail from "../assets/images/demo2.jpg";
-import HeroVideo from "../assets/images/avinya-hero.mp4"
+import HeroImg1 from "../../../assets/images/demo1.jpg";
+import thumbnail from "../../../assets/images/demo2.jpg";
+import HeroVideo from "../../../assets/images/avinya-hero.mp4"
 
 const BeautifulSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

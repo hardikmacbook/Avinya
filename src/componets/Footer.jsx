@@ -109,7 +109,7 @@ function Footer() {
                 <li key={index}>
                   <Link
                     to={link.href}
-                    className="text-gray-600 hover:text-gray-900 transition-colors duration-200 relative inline-block after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-900 after:left-0 after:-bottom-1 after:transition-all after:duration-200 hover:after:w-full"
+                    className="text-black hover:text-[#8b2727] transition-colors duration-200 relative inline-block after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-[#8b2727] after:left-0 after:-bottom-1 after:transition-all after:duration-200 hover:after:w-full"
                   >
                     {link.name}
                   </Link>
@@ -126,7 +126,7 @@ function Footer() {
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-gray-600 hover:text-gray-900 transition-colors duration-200 relative inline-block after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-900 after:left-0 after:-bottom-1 after:transition-all after:duration-200 hover:after:w-full"
+                    className="text-black hover:text-[#8b2727] transition-colors duration-200 relative inline-block after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-[#8b2727] after:left-0 after:-bottom-1 after:transition-all after:duration-200 hover:after:w-full"
                   >
                     {service.name}
                   </a>
@@ -156,7 +156,7 @@ function Footer() {
                   />
                   <button
                     type="submit"
-                    className="w-full bg-gray-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2 group"
+                    className="w-full bg-[#8b2727] text-white py-3 px-4 rounded-lg font-medium hover:bg-[#d2af6f] transition-colors duration-200 flex items-center justify-center space-x-2 group cursor-pointer hover:text-black"
                   >
                     <span>Subscribe</span>
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />

@@ -224,10 +224,10 @@ Could you please provide more information about this product?`;
               Shop
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <Link to={`/shop?category=${product.category}`} className="hover:text-[#8b2727] transition-colors">
+            {/* <Link to={`/shop?category=${product.category}`} className="hover:text-[#8b2727] transition-colors">
               {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
             </Link>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" /> */}
             <span className="text-[#8b2727] font-medium truncate max-w-[200px]">{product.title}</span>
           </nav>
         </div>

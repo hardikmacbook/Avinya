@@ -70,7 +70,7 @@ Best regards`;
 📋 *Product Details:*
 • Brand: ${product.brand}
 • Category: ${product.category}
-• Price: $${product.price}
+• Price: ₹${product.price}
 • Quantity Interested: ${quantity}
 
 📝 *Description:*

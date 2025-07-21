@@ -20,7 +20,6 @@ const CompanyStory = () => {
            <p className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight text-center">
             The Founding Moment
           </p>
-          <div className="w-20 h-1 bg-gray-900 mx-auto mb-6"></div>
             
             <div className="prose prose-lg max-w-none text-gray-700 space-y-6">
               <p className="text-xl leading-relaxed">

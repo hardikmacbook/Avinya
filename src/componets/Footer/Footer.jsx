@@ -53,7 +53,7 @@ function Footer() {
             <div className="">
               <Link to="/" className="inline-block">
                 <img
-                  className="h-40 w-45 object-contain"
+                  className="h-25 w-35 object-contain"
                   src={AvinyaTextLogo}
                   alt="Avinya Electricals"
                 />

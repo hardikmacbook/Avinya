@@ -10,7 +10,7 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
-import AvinyaLogo from "../../assets/images/text-logo.png";
+import AvinyaTextLogo from "../../assets/images/text-logo.png";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -54,7 +54,7 @@ function Footer() {
               <Link to="/" className="inline-block">
                 <img
                   className="h-40 w-45 object-contain"
-                  src={AvinyaLogo}
+                  src={AvinyaTextLogo}
                   alt="Avinya Electricals"
                 />
               </Link>

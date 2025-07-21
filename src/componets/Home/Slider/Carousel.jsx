@@ -47,25 +47,11 @@ const BeautifulSlider = () => {
       url: HeroImg1,
     },
     {
-      id: 2,
-      type: "video",
-      title: "Machine Learning in Action",
-      url: HeroVideo,
-      thumbnail: thumbnail,
-    },
-    {
       id: 3,
       type: "image",
       title: "Demo",
       description: "Explore the intricate connections and pathways that form the backbone of AI systems.",
       url: HeroImg1,
-    },
-    {
-      id: 4,
-      type: "video",
-      title: "Machine Learning in Action",
-      url: "https://go.screenpal.com/watch/cTiXfInlgjI",
-      thumbnail: thumbnail,
     },
     {
       id: 5,

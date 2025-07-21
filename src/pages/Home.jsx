@@ -9,8 +9,8 @@ const Home = () => {
    <>
    <div className='w-full h-screen'>
    <Carousel/>
-   <ProductCard/>
    <OurCoreValue/>
+   <ProductCard/>
    <Review/>
    <Footer/>
    </div>

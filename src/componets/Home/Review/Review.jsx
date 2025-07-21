@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Title from '../../SectionTitles/Title';
 
 const Review = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -153,12 +154,10 @@ const Review = () => {
             <span className="text-xs sm:text-sm font-medium text-[#fff]">Customer Reviews</span>
           </div>
           
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 px-2">
-            What Our Customers Say
-          </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-2">
-            Trusted by industries across Vapi and Silvassa for quality electrical products and exceptional service
-          </p>
+          <Title
+          title="What Our Customers Say"
+          subtitle="Trusted by industries across Vapi and Silvassa for quality electrical products and exceptional service"
+        />
         </div>
 
         {/* Review Slider */}

@@ -12,8 +12,10 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.31.8",
     "@formspree/react": "^3.0.0",
+    "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.9.0",
+    "framer-motion": "^12.23.6",
     "gsap": "^3.13.0",
     "locomotive-scroll": "^4.1.4",
     "lucide-react": "^0.511.0",

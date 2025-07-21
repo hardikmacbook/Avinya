@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Title from "../componets/SectionTitles/Title";
 // import { useCart } from "./CartContext";
 
 const ProductCard = () => {
@@ -54,7 +55,10 @@ const ProductCard = () => {
       <div className="container mx-auto max-w-[1200px] w-full px-4 py-6">
         <div className="product-inner">
           <div className="product-inner-content">
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Our Products</h1>
+          <Title
+          title="Our Products"
+          subtitle="Trusted by industries across Vapi and Silvassa for quality electrical products and exceptional service"
+        />
             <div className="product-cards grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {data.slice(0,8).map((product) => (
                 <div 

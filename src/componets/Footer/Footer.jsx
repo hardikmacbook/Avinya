@@ -50,10 +50,10 @@ function Footer() {
           
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            <div className="mb-6">
+            <div className="">
               <Link to="/" className="inline-block">
                 <img
-                  className="h-20 w-auto object-contain"
+                  className="h-40 w-45 object-contain"
                   src={AvinyaLogo}
                   alt="Avinya Electricals"
                 />

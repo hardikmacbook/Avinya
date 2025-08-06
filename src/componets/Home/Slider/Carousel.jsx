@@ -34,7 +34,7 @@ const BeautifulSlider = () => {
   const currentItem = mediaItems.length > 0 ? mediaItems[currentSlide] : null;
   const isVideo = currentItem?.type === "video";
 
-  // Fetch slider data from API on mount
+  // Fetch slider data from API
   useEffect(() => {
     const fetchSliderData = async () => {
       setIsLoading(true);
@@ -298,7 +298,7 @@ const BeautifulSlider = () => {
           }`}
         >
           <div
-            className="h-full bg-gradient-to-r from-[#8b2727] to-[#d2af6f] transition-all duration-100 ease-linear relative"
+            className="h-full bg-[#8b2727] transition-all duration-100 ease-linear relative"
             style={{ width: `${progress}%` }}
           >
             <div className="absolute right-0 top-0 w-1 md:w-2 h-full bg-white rounded-full shadow-lg"></div>

@@ -427,23 +427,24 @@ const BeautifulSlider = () => {
           </div>
         )}
 
-        {/* Bottom Content - Improved mobile layout */}
+        {/* Bottom Content */}
         {!isVideo && currentItem && (
-          <div className="absolute bottom-16 md:bottom-32 left-0 right-0 z-30">
-            <div className="px-4 md:px-8 lg:px-12">
-              <div className="max-w-4xl">
-                <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight">
-                  {currentItem.title}
-                </h1>
+         <div className="absolute top-70 md:bottom-32 left-0 right-0 z-30">
+  <div className="px-4 md:px-8 lg:px-12">
+    <div className="max-w-4xl mx-auto pl-4 md:pl-6 lg:pl-12">
+      <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight">
+        {currentItem.title}
+      </h1>
 
-                {currentItem.description && (
-                  <p className="text-white/90 text-sm md:text-lg mb-4 md:mb-6 max-w-3xl leading-relaxed line-clamp-3">
-                    {currentItem.description}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
+      {currentItem.description && (
+        <p className="text-white/90 text-sm md:text-lg mb-4 md:mb-6 max-w-3xl leading-relaxed line-clamp-3">
+          {currentItem.description}
+        </p>
+      )}
+    </div>
+  </div>
+</div>
+
         )}
 
         {/* Bottom Controls - Enhanced mobile layout */}

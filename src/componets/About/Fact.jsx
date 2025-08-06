@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const facts = [
-  "Our first customer was a close friend—now we serve over 50,000 happy customers!",
+  "Did you know? The name Avinya means innovation in Sanskrit — and true to its name, Avinya Electricals once lit up an entire community event using just solar-powered LEDs, proving that bright ideas can literally light up the night! 💡⚡",
   "We hand-pick every product in our catalogue; no imposters allowed.",
   "The founding duo met over a mutual love of chai and well-made gadgets.",
   "We’ve delivered to over 100 cities all around India!",

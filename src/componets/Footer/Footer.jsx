@@ -183,7 +183,7 @@ function Footer() {
                   <a
                     key={index}
                     href={href}
-                    className="w-10 h-10 bg-gray-100 hover:bg-gray-900 hover:text-white rounded-lg flex items-center justify-center text-gray-600 transition-all duration-200"
+                    className="w-10 h-10 bg-gray-100 hover:bg-[#d2af6f] hover:text-black rounded-lg flex items-center justify-center text-black transition-all duration-200"
                   >
                     <Icon size={18} />
                   </a>

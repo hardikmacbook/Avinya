@@ -23,7 +23,7 @@ const FAQAccordion = () => {
   const [active, setActive] = useState(null);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-16">
+    <div className="max-w-2xl mx-auto py-16 px-4">
       <div
         className="text-center mb-10"
         style={{
@@ -46,8 +46,8 @@ const FAQAccordion = () => {
         {faqs.map((item, i) => (
           <div
             key={item.question}
-            className={`transition-all duration-300 hover:bg-orange-50/80 relative ${
-              active === i ? "bg-orange-50/80" : ""
+            className={`cursor-pointer group relative transition-all duration-300 hover:bg-orange-50/70 ${
+              active === i ? "bg-gradient-to-br from-orange-50 via-orange-100 to-white" : ""
             }`}
             onClick={() => setActive(i === active ? null : i)}
           >
@@ -63,17 +63,19 @@ const FAQAccordion = () => {
                 {item.question}
               </span>
               <ChevronDown
-                className={`w-6 h-6 text-orange-500 transition-transform duration-300 ${
+                className={`w-6 h-6 text-orange-500 transition-transform duration-500 ${
                   active === i ? "rotate-180" : ""
                 }`}
               />
             </div>
             <div
-              className={`overflow-hidden grid transition-[grid-template-rows] duration-300 ${
-                active === i ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              className={`overflow-hidden max-h-0 transition-all duration-500 ease-in-out ${
+                active === i
+                  ? "max-h-96 shadow-lg p-6 bg-gradient-to-tr from-orange-50 to-white/70"
+                  : "max-h-0 p-0 shadow-none bg-none"
               }`}
             >
-              <div className="px-14 pb-5 text-gray-700 text-base">
+              <div className="text-gray-700 text-base">
                 {item.answer}
               </div>
             </div>

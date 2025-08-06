@@ -27,18 +27,21 @@ const FAQAccordion = () => {
       <div
         className="text-center mb-10"
         style={{
-          background: "linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%)",
+          background: "linear-gradient(90deg, #8b2727 50%, #d2af6f 50%)",
           borderRadius: "1rem",
           padding: "1.5rem 0 1.75rem 0",
           boxShadow:
             "0 8px 24px 0 rgba(251, 146, 60, 0.07), 0 1.5px 3px 0 #fb923c18",
         }}
       >
-        <h2 className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-amber-600 to-red-400 text-transparent bg-clip-text tracking-tight">
+        <h2 className="text-black text-4xl font-extrabold mb-2 bg-clip-text tracking-tight">
           Why Choose Us?
         </h2>
-        <p className="text-gray-700 text-md flex items-center gap-2 justify-center">
-          <Info className="w-5 h-5 text-orange-400" />
+        {/* <h2 className="text-4xl font-extrabold mb-2 text-transparent bg-clip-text tracking-tight bg-[linear-gradient(90deg,_#d2af6f_50%,_#8b2727_50%)]" >
+          Why Choose Us?
+        </h2> */}
+        <p className="text-white text-md flex items-center gap-2 justify-center">
+          <Info className="w-5 h-5 text-white" />
           Get to know us and what we stand for.
         </p>
       </div>

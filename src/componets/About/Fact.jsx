@@ -40,7 +40,7 @@ const Fact = () => {
         className="px-6 py-2 rounded-full border border-[#8b2727] bg-transparent text-[#8b2727] font-semibold hover:bg-[#8b2727] hover:text-white active:scale-95 transition-all duration-150 text-sm shadow-sm"
         aria-label="Show another fun fact"
       >
-        Show another fact
+        Show another facts
       </button>
       {/* Decorative underline bar for style */}
       <div className="mt-5 mx-auto w-20 h-[3px] rounded-full bg-[#e1c7a5]" />

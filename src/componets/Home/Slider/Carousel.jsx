@@ -429,7 +429,7 @@ const BeautifulSlider = () => {
 
         {/* Bottom Content */}
         {!isVideo && currentItem && (
-         <div className="absolute inset-0 flex items-end justify-center z-30 pb-16 md:pb-32">
+         <div className="absolute inset-0 flex items-center justify-center z-30">
   <div className="px-4 md:px-8 lg:px-12 w-full max-w-6xl">
     <div className="text-center">
       <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight">
@@ -447,7 +447,7 @@ const BeautifulSlider = () => {
 
         )}
 
-        {/* Bottom Controls - Enhanced mobile layout */}
+        {/* Bottom Controls */}
         <div
           className={`
             absolute bottom-0 left-0 right-0 z-30 transition-opacity duration-300
@@ -465,8 +465,8 @@ const BeautifulSlider = () => {
                     relative overflow-hidden rounded-full transition-all duration-300
                     ${
                       index === currentSlide
-                        ? "w-8 md:w-12 h-2 md:h-2.5 bg-gradient-to-r from-[#8b2727] to-[#d2af6f] shadow-lg"
-                        : "w-2 md:w-2.5 h-2 md:h-2.5 bg-white/40 hover:bg-white/60"
+                        ? "w-8 md:w-12 h-2 md:h-2.5 bg-[#8b2727] shadow-lg"
+                        : "w-2 md:w-2.5 h-2 md:h-2.5 bg-white/30 hover:bg-white/60"
                     }
                   `}
                   aria-label={`Go to slide ${index + 1}`}

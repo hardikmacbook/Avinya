@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 
 const facts = [
-  "Did you know? The name Avinya means innovation in Sanskrit — and true to its name, Avinya Electricals once lit up an entire community event using just solar-powered LEDs, proving that bright ideas can literally light up the night! 💡⚡",
-  "We hand-pick every product in our catalogue; no imposters allowed.",
-  "The founding duo met over a mutual love of chai and well-made gadgets.",
-  "We’ve delivered to over 100 cities all around India!",
+  "At Avinya Electricals, we don’t just sell industrial electrical products — we power factories, workshops, and industries with trusted solutions that keep operations running smoothly.",
+  "From control panels and contactors to industrial-grade cables and safety gear, every product in our shop reflects our commitment to quality, durability, and performance.",
+  "What started as a small store with a big dream has grown into a trusted name across the region — all thanks to consistent support, honest service, and strong relationships with our customers.",
+  "Avinya Electricals — where industries find their power.",
+  "We believe in empowering industries with the right tools and solutions, ensuring that every product we offer meets the highest standards of quality and reliability.",
+  "Our team is dedicated to providing personalized service, expert advice, and a wide range of products to meet the unique needs of every customer.",
+  "We’re not just a shop; we’re a partner in your industrial journey, committed to helping you succeed with every transaction.",
+  "At Avinya Electricals, we understand that every industry has its own challenges and requirements, which is why we offer tailored solutions that fit your specific needs.",
+  "Our passion for electrical products drives us to continuously innovate and expand our offerings, ensuring that you always have access to the latest and most reliable solutions.",
+  "We take pride in our transparent pricing, honest recommendations, and unwavering commitment to customer satisfaction — because your success is our success.",
 ];
 
 const Fact = () => {

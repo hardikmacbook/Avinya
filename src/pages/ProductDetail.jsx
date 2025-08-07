@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  Home,
-  ChevronRight,
-  Mail,
-  MessageCircle,
-  User,
-  ArrowLeft,
+  Home, ChevronRight, Mail, MessageCircle, User, ArrowLeft,
 } from "lucide-react";
 
 const ProductDetails = () => {
@@ -80,35 +75,25 @@ const ProductDetails = () => {
     }
   }, [products, title]);
 
-  // Loader
+  // Loader, 404, and minimal shadow sections use your background scheme, colors, and only soft, low elevation where needed
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-200">
-        <div className="text-lg text-gray-600 bg-white/70 p-12 rounded-3xl shadow-2xl flex flex-col items-center">
-          <div className="loader-custom mb-6" />
-          <span className="font-medium tracking-wide">Loading product details...</span>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#f8f3e9] to-[#f0e6d2]">
+        <div className="text-lg text-gray-600 bg-white p-8 rounded-xl flex flex-col items-center">
+          <div className="w-12 h-12 border-4 border-t-[#8b2727] border-r-[#8b2727] border-b-transparent border-l-transparent rounded-full animate-spin mb-4"></div>
+          Loading product details...
         </div>
-        <style>{`
-        .loader-custom {
-          width: 52px; height: 52px; border: 4px solid #be123c;
-          border-bottom-color: transparent;
-          border-radius: 50%; animation: spin 0.9s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg);} }
-      `}</style>
       </div>
     );
   }
-
-  // 404 or no title
   if (!title || !product) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-platinum via-red-50 to-yellow-100">
-        <div className="bg-white/70 rounded-[2rem] shadow-2xl border border-[#f2d5bb] p-12 text-center flex flex-col items-center max-w-lg">
-          <ArrowLeft className="mb-4 w-8 h-8 text-[#b36a26]" />
-          <h1 className="text-2xl font-extrabold text-neutral-700 mb-3">Product Not Found</h1>
-          <p className="text-base text-neutral-500 mb-7">Sorry, the product you're looking for doesn't exist.</p>
-          <Link to="/" className="bg-gradient-to-r from-[#ea5c3b] to-[#a81140] hover:from-[#a81140] hover:to-[#ea5c3b] text-white px-8 py-3 rounded-xl flex items-center gap-2 font-bold shadow-lg transition-all duration-300">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8f3e9] to-[#f0e6d2]">
+        <div className="bg-white/80 rounded-2xl border border-[#d2af6f]/50 p-12 text-center flex flex-col items-center max-w-lg">
+          <ArrowLeft className="mb-4 w-8 h-8 text-[#8b2727]" />
+          <h1 className="text-2xl font-extrabold text-[#8b2727] mb-3">Product Not Found</h1>
+          <p className="text-base text-gray-600 mb-7">Sorry, the product you're looking for doesn't exist.</p>
+          <Link to="/" className="bg-[#8b2727] hover:bg-[#6a1d1d] text-white px-8 py-3 rounded-lg flex items-center gap-2 font-bold">
             <Home className="w-5 h-5" />
             Go to Home
           </Link>
@@ -117,218 +102,200 @@ const ProductDetails = () => {
     );
   }
 
-  // Premium Product Details UI
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fdfcfb] via-[#f7ece6] to-[#fde5ed]">
-      {/* Breadcrumbs */}
-      <nav className="backdrop-blur-md bg-white/80 border-b sticky top-0 z-30 shadow-inner">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center gap-2 text-gray-500 text-xs sm:text-base">
-          <Link to="/" className="hover:text-[#e53e3e] transition font-semibold flex items-center">
-            <Home className="w-4 h-4 mr-1 opacity-80" />
+    <div className="min-h-screen bg-gradient-to-br from-[#f8f3e9] to-[#f0e6d2]">
+      <nav className="bg-white/95 border-b border-[#d2af6f]/20 sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-2 text-gray-600 text-xs sm:text-base">
+          <Link to="/" className="flex items-center hover:text-[#8b2727] font-medium">
+            <Home className="w-4 h-4 mr-1" />
             Home
           </Link>
           <ChevronRight className="w-4 h-4" />
-          <Link to="/shop" className="hover:text-[#e53e3e] transition">
+          <Link to="/shop" className="hover:text-[#8b2727]">
             Shop
           </Link>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-[#a33e3e] font-semibold truncate whitespace-nowrap">{product.title}</span>
+          <span className="text-[#8b2727] font-semibold truncate max-w-[200px]">{product.title}</span>
         </div>
       </nav>
-
-      <div className="mx-auto max-w-6xl p-4 md:py-10 min-h-[80vh]">
-        <div className="rounded-3xl shadow-[0_30px_60px_-20px_rgba(181,70,107,0.13)] border border-[#fde6d0] bg-white/90 p-4 md:p-10 flex flex-col gap-10 backdrop-blur-xl">
-          {/* Main Product Row */}
-          <div className="flex flex-col md:flex-row gap-12">
-            {/* Big image & thumbs */}
-            <div className="md:w-[44%] flex flex-col gap-6 items-center md:items-start relative">
-              <div className="relative w-full rounded-3xl overflow-hidden shadow-xl group bg-gradient-to-br from-white/80 to-[#f8e7d9]/60 border border-[#eddad1] backdrop-blur-lg">
+      {/* Main Layout */}
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="rounded-xl border border-[#d2af6f]/50 bg-white/90 flex flex-col gap-7 p-5 md:p-10">
+          <div className="flex flex-col md:flex-row gap-7">
+            <div className="md:w-1/2 flex flex-col items-center">
+              <div className="mb-4 w-full h-80 md:h-96 flex items-center justify-center bg-gradient-to-br from-[#f8f3e9] to-[#f0e6d2] rounded-lg border border-[#d2af6f]/60 transition-all">
                 <img
                   src={product.images[currentImage]}
                   alt={product.title}
-                  className="w-full aspect-[4/3] object-contain transition-all duration-500 group-hover:scale-105 group-hover:brightness-105"
-                  style={{ minHeight: 320, maxHeight: 400, background: 'linear-gradient(120deg, #fdf6ee 70%, #f2ecd6 100%)' }}
+                  className="max-h-full max-w-full object-contain"
                   draggable={false}
                 />
                 {product.discountPercentage > 0 && (
-                  <span className="absolute top-4 left-4 bg-gradient-to-br from-[#fa5252] to-[#ffb4a2] text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-xl border border-white/30 tracking-wide uppercase">
+                  <span className="absolute top-4 left-4 bg-[#8b2727] text-white text-sm font-bold px-4 py-1.5 rounded-full border border-[#d2af6f]/50">
                     {Math.round(product.discountPercentage)}% OFF
                   </span>
                 )}
-                {/* FABs */}
-                <div className="flex gap-3 absolute right-4 bottom-5 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <button className="rounded-full border px-3 py-2 bg-white/80 hover:bg-white/95 shadow-lg backdrop-blur-lg text-[#a33e3e] hover:text-[#ea5c3b] transition" title="Share">
-                    {/* You can connect the Share function */}
-                    <svg width={18} height={18} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 5l-8.5 7L16 19"/></svg>
-                  </button>
-                  <button className="rounded-full border px-3 py-2 bg-white/80 hover:bg-white/95 shadow-lg backdrop-blur-lg text-[#a33e3e] hover:text-[#ea5c3b] transition" title="Wishlist">
-                    <svg width={18} height={18} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 
-                                16.5 3 19.58 3 22 5.41 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                  </button>
-                </div>
               </div>
-              {/* Thumbnails */}
-              <div className="flex gap-3 overflow-x-auto pt-3 w-full">
+              <div className="flex gap-2 overflow-x-auto w-full pt-1">
                 {product.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentImage(idx)}
-                    className={`transition-all hover:scale-105 border rounded-xl shadow-sm ${currentImage === idx ? "border-[#e53e3e] ring-2 ring-[#fa5252]/40" : "border-[#ececec]"}`}
+                    className={`rounded-md border-2 p-0.5 transition ${currentImage === idx
+                      ? "border-[#8b2727]" 
+                      : "border-transparent hover:border-[#d2af6f]"}`}
                   >
                     <img
                       src={img}
-                      alt={`Product preview ${idx + 1}`}
-                      className="w-20 h-20 object-contain rounded-xl"
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-16 h-16 object-contain rounded"
                     />
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Details */}
-            <section className="flex-1 flex flex-col gap-9">
+            {/* Product Details */}
+            <section className="md:w-1/2 flex flex-col gap-5">
               <div>
-                <h1 className="text-3xl md:text-4xl font-extrabold leading-snug text-transparent bg-gradient-to-r from-[#e53e3e] via-[#3e1c6e] to-[#ad4d25] bg-clip-text mb-3">
-                  {product.title}
-                </h1>
-                <div className="flex items-center gap-4 mt-2">
-                  <div className="flex items-center gap-2 bg-yellow-50 px-3 py-1.5 rounded-xl shadow text-yellow-700 font-bold">
-                    <span className="text-lg">★</span>
-                    <span>{product.rating}</span>
-                  </div>
-                  <span className="text-xs font-semibold tracking-wider uppercase px-3 py-1 rounded-full bg-gradient-to-br from-[#e53e3e]/20 via-yellow-100 to-white shadow border">
-                    {product.category}
-                  </span>
-                  <span className="text-xs bg-white border border-[#f2d5bb] px-3 py-1 rounded-full text-[#a33e3e] font-medium">{product.brand}</span>
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-[#8b2727]">{product.title}</h1>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="bg-[#ffeec1] text-[#8b2727] font-medium px-3 py-1 rounded">{product.rating}★</span>
+                  <span className="bg-[#8b2727] text-white px-3 py-1 rounded text-xs">{product.category}</span>
+                  <span className="border border-[#d2af6f] px-3 py-1 rounded text-[#8b2727] bg-white text-xs">{product.brand}</span>
                 </div>
               </div>
-              <p className="text-neutral-600 mb-3 text-lg">{product.description}</p>
-              <div className="flex items-center gap-6 mb-2">
-                <span className="text-3xl text-[#e53e3e] font-extrabold">₹{product.price}</span>
+              <p className="text-gray-700 text-base">{product.description}</p>
+              <div className="flex flex-wrap gap-4 items-center">
+                <span className="text-3xl font-bold text-[#8b2727]">₹{product.price}</span>
                 {product.discountPercentage > 0 && (
-                  <span className="px-3 py-1 text-green-700 bg-green-50 rounded-full text-xs tracking-wider">
-                    {product.discountPercentage}% off
-                  </span>
+                  <span className="bg-[#d2af6f] text-[#8b2727] text-xs font-semibold rounded px-4 py-1">{product.discountPercentage}% OFF</span>
                 )}
                 {product.stock <= 10 ? (
-                  <span className="flex items-center gap-1 text-orange-600 font-medium">
-                    <span className="inline-block w-2 h-2 bg-orange-500 animate-pulse rounded-full" />
-                    Only {product.stock} left
+                  <span className="text-orange-700 flex items-center gap-1 text-xs px-2">
+                    <span className="w-2 h-2 bg-orange-500 rounded-full inline-block" /> Only {product.stock} left!
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 text-green-700 font-medium">
-                    <span className="inline-block w-2 h-2 bg-green-500 rounded-full" />
-                    In stock
+                  <span className="text-green-700 flex items-center gap-1 text-xs px-2">
+                    <span className="w-2 h-2 bg-green-500 rounded-full inline-block" /> In stock
                   </span>
                 )}
               </div>
-              <div className="flex gap-4 sm:gap-7 items-center">
-                <div className="flex items-center bg-white/80 border border-[#f2d5bb] rounded-xl shadow transition-all duration-200">
-                  <button onClick={decrementQuantity} disabled={quantity <= 1}
-                    className="px-4 py-2 font-black text-xl text-gray-500 hover:text-[#e53e3e] transition-colors disabled:opacity-60">-</button>
-                  <span className="px-8 py-2 border-x text-lg">{quantity}</span>
-                  <button onClick={incrementQuantity} disabled={quantity >= product.stock}
-                    className="px-4 py-2 font-black text-xl text-gray-500 hover:text-[#e53e3e] transition-colors rounded-r-xl disabled:opacity-60">+</button>
+
+              <div className="flex flex-col sm:flex-row gap-3 items-center mt-3">
+                <div className="flex items-center border border-[#d2af6f] rounded-lg bg-white px-2">
+                  <button
+                    onClick={decrementQuantity}
+                    disabled={quantity <= 1}
+                    className="px-3 py-2 text-lg font-bold text-[#8b2727] transition"
+                  >-</button>
+                  <span className="px-6 py-2 border-l border-r border-[#d2af6f] text-center">{quantity}</span>
+                  <button
+                    onClick={incrementQuantity}
+                    disabled={quantity >= product.stock}
+                    className="px-3 py-2 text-lg font-bold text-[#8b2727] transition"
+                  >+</button>
                 </div>
-                <button onClick={handleEmailInquiry}
-                  className="group flex-1 sm:flex-none bg-gradient-to-br from-[#70a1e7] via-blue-400 to-[#357edd] hover:from-[#357edd] hover:to-[#6bbaf7] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300">
-                  <Mail className="w-5 h-5 opacity-80 group-hover:-translate-y-1 transition" /> Email
+                <button
+                  onClick={handleEmailInquiry}
+                  className="bg-[#8b2727] hover:bg-[#6a1d1d] text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-semibold"
+                >
+                  <Mail className="w-5 h-5" /> Email Inquiry
                 </button>
-                <button onClick={handleWhatsAppInquiry}
-                  className="group flex-1 sm:flex-none bg-gradient-to-br from-[#63d471] via-[#a3eea0] to-[#2dd563] hover:from-[#129535] hover:to-[#63d471] text-green-900 px-5 py-3 rounded-2xl shadow-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300">
-                  <MessageCircle className="w-5 h-5 opacity-80 group-hover:scale-125 transition" /> WhatsApp
+                <button
+                  onClick={handleWhatsAppInquiry}
+                  className="bg-[#d2af6f] hover:bg-[#c9a546] text-[#8b2727] px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-semibold"
+                >
+                  <MessageCircle className="w-5 h-5" /> WhatsApp
                 </button>
               </div>
             </section>
           </div>
 
-          {/* Tabs */}
-          <div className="mt-2">
-            <div className="border-b flex gap-2 sm:gap-8 font-semibold text-base">
+          {/* Tabs Section */}
+          <div>
+            <nav className="flex border-b border-[#d2af6f]/50">
               {["description", "details", "reviews"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`py-3 px-4 transition-all rounded-t-2xl duration-300
-                    ${activeTab === tab ? "bg-gradient-to-tr from-[#ffdeda] via-[#ffefef]/80 to-[#fffbe6] border-b-2 border-[#e53e3e] text-[#e53e3e] shadow"
-                      : "bg-transparent text-neutral-500 hover:bg-[#f6f6f6] hover:text-[#e53e3e]/70"}`}>
+                  className={`py-3 px-4 transition ${activeTab === tab
+                    ? "text-[#8b2727] border-b-2 border-[#8b2727] bg-[#f8f3e9]/70 font-semibold"
+                    : "text-gray-600 hover:text-[#8b2727]"}`
+                  }
+                >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
               ))}
-            </div>
-            <div className="pt-7 pb-2">
+            </nav>
+            <div className="pt-6">
               {activeTab === "description" && (
-                <div className="bg-white/90 p-8 rounded-2xl shadow-inner border border-[#ecd5b4]/50">
-                  <h3 className="text-xl font-bold mb-3 text-[#e53e3e]">Product Description</h3>
-                  <p className="text-neutral-700 text-lg">{product.description}</p>
+                <div className="bg-white/90 p-7 rounded border border-[#d2af6f]/50">
+                  <h3 className="text-lg font-bold text-[#8b2727] mb-2">Product Description</h3>
+                  <p className="text-gray-700">{product.description}</p>
                 </div>
               )}
               {activeTab === "details" && (
-                <div className="bg-white p-8 rounded-2xl shadow-inner border border-[#ecd5b4]/50">
-                  <h3 className="text-xl font-bold mb-3 text-[#e53e3e]">Additional Details</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <span className="flex justify-between border-b py-2"><span className="font-bold">Brand:</span> <span>{product.brand}</span></span>
-                    <span className="flex justify-between border-b py-2"><span className="font-bold">Category:</span> <span>{product.category}</span></span>
-                    <span className="flex justify-between border-b py-2"><span className="font-bold">Stock:</span> <span>{product.stock} units</span></span>
-                    <span className="flex justify-between border-b py-2"><span className="font-bold">Rating:</span> <span>{product.rating}/5</span></span>
-                    <span className="flex justify-between border-b py-2"><span className="font-bold">Discount:</span> <span>{product.discountPercentage}%</span></span>
+                <div className="bg-white/90 p-7 rounded border border-[#d2af6f]/50">
+                  <h3 className="text-lg font-bold text-[#8b2727] mb-2">Additional Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="flex justify-between pb-2"><span className="font-medium text-gray-700">Brand:</span> <span>{product.brand}</span></div>
+                    <div className="flex justify-between pb-2"><span className="font-medium text-gray-700">Category:</span> <span>{product.category}</span></div>
+                    <div className="flex justify-between pb-2"><span className="font-medium text-gray-700">Stock:</span> <span>{product.stock} units</span></div>
+                    <div className="flex justify-between pb-2"><span className="font-medium text-gray-700">Rating:</span> <span>{product.rating}/5</span></div>
+                    <div className="flex justify-between pb-2"><span className="font-medium text-gray-700">Discount:</span> <span>{product.discountPercentage}%</span></div>
                   </div>
                 </div>
               )}
               {activeTab === "reviews" && (
-                <div className="bg-white/95 p-8 rounded-2xl shadow-lg border border-[#eec7a0]/40">
-                  <h3 className="text-xl font-bold mb-6 text-[#e53e3e]">Customer Reviews</h3>
+                <div className="bg-white/95 p-7 rounded border border-[#d2af6f]/50">
+                  <h3 className="text-lg font-bold text-[#8b2727] mb-4">Customer Reviews</h3>
                   {reviews.length > 0 ? (
                     <div className="space-y-4 mb-8">
                       {reviews.map((review) => (
-                        <div key={review.id} className="border-b pb-4 flex gap-4 items-center hover:bg-[#fffbe6]/60 rounded-xl transition">
-                          <div className="flex items-center justify-center bg-gradient-to-br from-[#fde6e3] to-[#fdeced] w-11 h-11 rounded-full shadow">
-                            <User className="text-[#e53e3e]" size={20} />
+                        <div key={review.id} className="border-b pb-4 flex gap-4 items-start transition">
+                          <div className="flex items-center justify-center bg-[#f8f3e9] w-10 h-10 rounded-full border border-[#d2af6f]/60">
+                            <User className="text-[#8b2727]" size={18} />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
-                              <span className="font-semibold text-[#a33e3e]">{review.name}</span>
-                              <span className="text-xs text-gray-400">{review.date}</span>
+                              <span className="font-bold text-[#8b2727]">{review.name}</span>
+                              <span className="text-xs text-gray-500">{review.date}</span>
                             </div>
-                            <div className="flex items-center my-1 gap-0.5">
+                            <div className="flex items-center gap-0.5">
                               {[...Array(5)].map((_, i) => (
-                                <span key={i} className={i < review.rating ? "text-yellow-400 text-lg" : "text-gray-200 text-lg"}>
-                                  ★
-                                </span>
+                                <span key={i} className={i < review.rating ? "text-[#d2af6f]" : "text-gray-300"}>★</span>
                               ))}
                             </div>
-                            <p className="text-gray-700 mt-1">{review.comment}</p>
+                            <p className="text-gray-700 mt-2">{review.comment}</p>
                           </div>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className="text-gray-500 mb-5 bg-[#fffbe6]/80 p-4 rounded-lg font-medium">
+                    <p className="text-gray-500 mb-5 bg-[#f8f3e9] p-4 rounded font-medium">
                       No reviews yet. Be the first to review this product!
                     </p>
                   )}
-                  {/* Review form */}
-                  <div className="p-6 bg-gradient-to-br from-[#fffbe6]/70 to-white/90 rounded-2xl shadow-inner border border-[#ecd5b4]/60">
-                    <h4 className="font-bold mb-4 text-[#e53e3e]">Leave a Review</h4>
+                  <div className="p-6 bg-[#f8f3e9]/60 rounded border border-[#d2af6f]/50 mt-5">
+                    <h4 className="font-bold mb-3 text-[#8b2727]">Leave a Review</h4>
                     <form onSubmit={handleReviewSubmit} className="space-y-4">
                       <div>
-                        <label htmlFor="name" className="block text-xs font-semibold text-gray-500 mb-1">Your Name</label>
+                        <label htmlFor="name" className="block text-xs font-semibold text-gray-700 mb-1">Your Name</label>
                         <input type="text" id="name" name="name" value={newReview.name} onChange={handleReviewChange}
-                          className="w-full px-3 py-2 border border-[#ecd5b4] rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#e53e3e]" required />
+                          className="w-full px-3 py-2 border border-[#d2af6f] rounded bg-white focus:outline-[#8b2727] focus:ring-2 focus:ring-[#8b2727]" required />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-gray-500 mb-1">Rating</label>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">Rating</label>
                         <div className="flex items-center gap-1 mb-2">
                           {[...Array(5)].map((_, i) => (
                             <button type="button" key={i} onClick={() => setNewReview({ ...newReview, rating: i + 1 })}
-                              className="text-2xl focus:outline-none">{i < newReview.rating ? <span className="text-yellow-500">★</span> : <span className="text-gray-300">★</span>}
+                              className="text-xl focus:outline-none">{i < newReview.rating ? <span className="text-[#d2af6f]">★</span> : <span className="text-gray-300">★</span>}
                             </button>
                           ))}
                         </div>
                         <select id="rating" name="rating" value={newReview.rating} onChange={handleReviewChange}
-                          className="w-full px-3 py-2 border border-[#ecd5b4] rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#e53e3e]">
+                          className="w-full px-3 py-2 border border-[#d2af6f] rounded bg-white focus:outline-[#8b2727]">
                           <option value="5">5 - Excellent</option>
                           <option value="4">4 - Very Good</option>
                           <option value="3">3 - Good</option>
@@ -337,12 +304,12 @@ const ProductDetails = () => {
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="comment" className="block text-xs font-semibold text-gray-500 mb-1">Your Review</label>
+                        <label htmlFor="comment" className="block text-xs font-semibold text-gray-700 mb-1">Your Review</label>
                         <textarea id="comment" name="comment" value={newReview.comment} onChange={handleReviewChange} rows={3}
-                          className="w-full px-3 py-2 border border-[#ecd5b4] rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#e53e3e]" required />
+                          className="w-full px-3 py-2 border border-[#d2af6f] rounded bg-white focus:outline-[#8b2727]" required />
                       </div>
                       <button type="submit"
-                        className="bg-gradient-to-r from-[#fa5252] via-[#ea5c3b] to-[#ad4d25] hover:from-[#ad4d25] hover:to-[#e53e3e] text-white px-7 py-3 rounded-full shadow-lg transition font-bold">
+                        className="bg-[#8b2727] hover:bg-[#6a1d1d] text-white px-7 py-3 rounded-lg font-bold">
                         Submit Review
                       </button>
                     </form>
@@ -352,8 +319,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-        {/* Spacer */}
-        <div className="h-12" />
+        <div className="h-10" />
       </div>
     </div>
   );

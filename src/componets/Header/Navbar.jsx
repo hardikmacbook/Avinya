@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaLuggageCart, FaBars, FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+// import {
+//   SignedIn,
+//   SignedOut,
+//   SignInButton,
+//   UserButton,
+// } from "@clerk/clerk-react";
 // import { useCart } from "../context/CartContext";
 import Logo from "./Logo";
 
@@ -93,7 +93,7 @@ const Navbar = () => {
                   </Link>
                 </div> */}
 
-                <div className="px-3">
+                {/* <div className="px-3">
                   <SignedOut>
                     <SignInButton className="p-1 text-xl rounded-md px-3 bg-[#8b2727] text-white cursor-pointer hover:bg-[#d2af6f] hover:text-black transition-all duration-300 transform hover:scale-105" />
                   </SignedOut>
@@ -102,7 +102,7 @@ const Navbar = () => {
                       <UserButton />
                     </div>
                   </SignedIn>
-                </div>
+                </div> */}
               </nav>
             </div>
 
@@ -123,7 +123,7 @@ const Navbar = () => {
               </div> */}
 
               {/* Auth buttons for mobile */}
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <SignedOut>
                   <SignInButton className="text-sm rounded-md px-2 py-1 bg-[#8b2727] text-white cursor-pointer hover:bg-[#d2af6f] transition-all duration-300 hover:text-black" />
                 </SignedOut>
@@ -132,7 +132,7 @@ const Navbar = () => {
                     <UserButton />
                   </div>
                 </SignedIn>
-              </div>
+              </div> */}
 
               {/* Hamburger Menu Button */}
               <button

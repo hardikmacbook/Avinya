@@ -130,11 +130,6 @@ const ProductDetails = () => {
                   className="max-h-full max-w-full object-contain"
                   draggable={false}
                 />
-                {product.discountPercentage > 0 && (
-                  <span className="absolute top-4 left-4 bg-[#8b2727] text-white text-sm font-bold px-4 py-1.5 rounded-full border border-[#d2af6f]/50">
-                    {Math.round(product.discountPercentage)}% OFF
-                  </span>
-                )}
               </div>
               <div className="flex gap-2 overflow-x-auto w-full pt-1">
                 {product.images.map((img, idx) => (
@@ -167,8 +162,8 @@ const ProductDetails = () => {
               </div>
               <p className="text-gray-700 text-base">{product.description}</p>
               <div className="flex flex-wrap gap-4 items-center">
-                <span className="text-3xl font-bold text-[#8b2727]">₹{product.price}</span>
-                {product.discountPercentage > 0 && (
+                {/* <span className="text-3xl font-bold text-[#8b2727]">₹{product.price}</span> */}
+                {/* {product.discountPercentage > 0 && (
                   <span className="bg-[#d2af6f] text-[#8b2727] text-xs font-semibold rounded px-4 py-1">{product.discountPercentage}% OFF</span>
                 )}
                 {product.stock <= 10 ? (
@@ -179,7 +174,7 @@ const ProductDetails = () => {
                   <span className="text-green-700 flex items-center gap-1 text-xs px-2">
                     <span className="w-2 h-2 bg-green-500 rounded-full inline-block" /> In stock
                   </span>
-                )}
+                )} */}
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 items-center mt-3">
@@ -198,13 +193,13 @@ const ProductDetails = () => {
                 </div>
                 <button
                   onClick={handleEmailInquiry}
-                  className="bg-[#8b2727] hover:bg-[#6a1d1d] text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-semibold"
+                  className="bg-[#8b2727] hover:bg-[#d2af6f] text-white hover:text-black px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-semibold cursor-pointer"
                 >
                   <Mail className="w-5 h-5" /> Email Inquiry
                 </button>
                 <button
                   onClick={handleWhatsAppInquiry}
-                  className="bg-[#d2af6f] hover:bg-[#c9a546] text-[#8b2727] px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-semibold"
+                  className="bg-[#d2af6f] hover:bg-[#8b2727] hover:text-white text-black px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-semibold cursor-pointer"
                 >
                   <MessageCircle className="w-5 h-5" /> WhatsApp
                 </button>
